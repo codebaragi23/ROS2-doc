@@ -1,0 +1,222 @@
+{
+  "main": {
+    "id": "afb4e6e3a495cf10",
+    "type": "split",
+    "children": [
+      {
+        "id": "5fb0b8901a603a02",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "864783ff0616bcb7",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "그래프 뷰"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "713e631da441d18b",
+    "type": "split",
+    "children": [
+      {
+        "id": "5da64c7735bf8f15",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ec1c541d694830f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "a6bdabea99bd820d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "940ef74404e5d2ae",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 423.5
+  },
+  "right": {
+    "id": "35920d73b2797cf3",
+    "type": "split",
+    "children": [
+      {
+        "id": "03880d11c3673696",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "99b5be18041f9865",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "RTAB-Map & Nav2 심화/B8_Relocalization이_일어나는_위치.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "백링크"
+            }
+          },
+          {
+            "id": "e7088a537a51bd50",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "RTAB-Map & Nav2 심화/B8_Relocalization이_일어나는_위치.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "나가는 링크"
+            }
+          },
+          {
+            "id": "8f4086b2d1a59868",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "94eaaf72ac6876f3",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "모든 속성"
+            }
+          },
+          {
+            "id": "b00d18d898e6ff9c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "RTAB-Map & Nav2 심화/B8_Relocalization이_일어나는_위치.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "bases:새 베이스 생성하기": false
+    }
+  },
+  "active": "864783ff0616bcb7",
+  "lastOpenFiles": [
+    "ROS2 기초/05_Parameter와_실행_설정.md",
+    "SLAM 백엔드/D1-2_Visual-Inertial_초기화_알고리즘.md",
+    "ROS2 기초/09_문제_해결_자주_발생하는_오류_모음.md",
+    "ROS2 기초/08_rqt_rviz2_활용.md",
+    "SLAM 백엔드/D1-1_ORB-SLAM3_시스템_개요.md",
+    "ROS2 기초/04_Service와_Action.md",
+    "ROS2 기초/06_Launch_파일_작성법.md",
+    "ROS2 기초/07_TF2_기초.md",
+    "RTAB-Map & Nav2 심화/C7_Relocalization_감시_로직_구현.md",
+    "RTAB-Map & Nav2 심화/B8_Relocalization이_일어나는_위치.md",
+    "RTAB-Map & Nav2 심화/C5_실전_진단_체크리스트.md",
+    "C7_Relocalization_감시_로직_구현.md",
+    "RTAB-Map & Nav2 심화/C6_Nav2_표준_relocalization과의_차이.md",
+    "SLAM 백엔드/D1-5_이_프로젝트의_VIO_이슈_재해석.md",
+    "SLAM 백엔드/D1-4_Loop_Closing과_Place_Recognition.md",
+    "SLAM 백엔드/D1-3_Multi-Map_System_Atlas와_재추적_병합.md",
+    "SLAM 백엔드",
+    "2026-08-13.md",
+    "무제 1.canvas",
+    "무제.canvas",
+    "RTAB-Map & Nav2 심화/C4_Pose_Jump_제어와_안정화.md",
+    "RTAB-Map & Nav2 심화/C3_RTAB-Map_핵심_파라미터_대응표.md",
+    "RTAB-Map & Nav2 심화/C1_개요와_학술적_정의.md",
+    "RTAB-Map & Nav2 심화/D1_ORB-SLAM3_구조와_실행.md",
+    "ROS2 기초/03_Topic과_Message.md",
+    "ROS2 기초/00_ROS2란_무엇이고_왜_쓰는가.md",
+    "ROS2 기초/01_개발_환경과_워크스페이스_구조.md",
+    "ROS2 응용 & 센서 연동/01_colcon_빌드_오류_모음.md",
+    "ROS2 응용 & 센서 연동/02_Composable_Node와_Executor_구조.md",
+    "ROS2 응용 & 센서 연동",
+    "RTAB-Map & Nav2 심화",
+    "ROS2 기초"
+  ]
+}

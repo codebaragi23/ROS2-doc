@@ -1,0 +1,52 @@
+# C6. Nav2 표준 relocalization과의 차이
+
+> RTAB-Map & Nav2 심화 시리즈 · Part C. Relocalization 심화 (마지막 문서)
+> 이전 문서: C5. 실전 진단 체크리스트
+
+## 1. 개요
+
+이 시리즈의 마지막 문서로, B6·C1에서 반복해온 "Nav2 표준 relocalization(AMCL 전용) vs 이 프로젝트의 RTAB-Map 커스텀 전략"의 차이를 한곳에 정리하고, 향후 구조 개선 방향을 짚는다.
+
+## 2. 핵심 개념: 전체 대응표
+
+| 항목 | Nav2 표준 (AMCL 기준) | 이 프로젝트 (RTAB-Map localization) |
+|---|---|---|
+| relocalization 트리거 방식 | `reinitialize_global_localization` 서비스, BT 액션 `ReinitializeGlobalLocalization`으로 **공식 지원** | 공식 서비스 없음 — 프로젝트가 직접 감시 로직을 만들어 판단(C2) |
+| Kidnapped robot 대응 | 파티클을 지도 전체에 다시 흩뿌려 전역 재탐색(파티클 필터 고유 메커니즘) | Spin Recovery(Nav2 표준 기능을 재활용) + RTAB-Map 자체 loop closure 재탐색에 의존 |
+| 초기 위치 지정 | `/initialpose` 토픽, `set_initial_pose` 서비스 | `/rtabmap/initialpose` 토픽 (별도 메커니즘) |
+| Pose Jump 특성 | 파티클 필터는 점진적으로 수렴하는 경향이 있어 상대적으로 완만 | REP105에 따라 loop closure/relocalization 시 이산적 점프 발생 (C4) |
+| 지도 요구사항 | 2D occupancy grid만 있으면 됨 | RTAB-Map DB(그래프+시각적 특징) 필요 — 지도 제작 단계(Part A)의 품질이 그대로 relocalization 품질에 영향 |
+| 계산 자원 | 상대적으로 가벼움 (2D 파티클 필터) | 시각적 특징 매칭이 포함되어 상대적으로 무거움 — Yahboom X3의 Jetson 자원 제약과 직결([[ros2-nav-yahboom]] CPU 병목 이력 참고) |
+
+## 3. 이 프로젝트에서의 적용: 이 구조를 선택한 이유(추정)와 트레이드오프
+
+이 프로젝트가 AMCL 대신 RTAB-Map localization을 택한 이유는 명시적으로 기록되어 있지는 않지만, 구조상 다음과 같은 트레이드오프가 있다.
+
+- **장점**: RTAB-Map은 매핑과 로컬라이제이션을 같은 파이프라인(같은 DB)으로 처리하므로, 별도로 AMCL용 occupancy grid를 관리하지 않아도 된다. 또한 시각적 특징을 쓰기 때문에 LiDAR만으로는 구분이 안 되는 대칭적인 공간(비슷하게 생긴 복도 여러 개 등)에서 AMCL보다 유리할 수 있다.
+- **단점**: Nav2가 공식 제공하는 relocalization 인프라(BT 액션, 서비스)를 그대로 못 쓰기 때문에, 이 시리즈 Part C 전체가 다룬 것처럼 **감시·트리거·안정화 로직을 전부 프로젝트가 직접 설계**해야 한다. AMCL이었다면 상당 부분이 `ReinitializeGlobalLocalization` BT 노드 하나로 해결됐을 것이다.
+
+## 4. 관련 파라미터 (시리즈 전체 요약)
+
+| 계층 | 핵심 파라미터 | 관련 문서 |
+|---|---|---|
+| 매핑 품질 | `Vis/MinInliers`, `Rtabmap/LoopThr`, `Mem/*` | A1~A3 |
+| Nav2 좌표계/costmap | `robot_radius`, `inflation_radius` | B2~B3 |
+| Nav2 recovery | `progress_checker`, `goal_checker`, Spin/Wait/BackUp | B6 |
+| RTAB-Map relocalization | `Mem/IncrementalMemory`, `RGBD/SavedLocalizationIgnored`, `RGBD/OptimizeMaxError` | C3 |
+| Pose Jump 안정화 | `RGBD/OptimizeFromGraphEnd`, `robot_localization` 필터링 | C4 |
+
+## 5. 진단 관점: 향후 고려할 수 있는 방향
+
+- **AMCL 병행**: 만약 시각적 특징이 부족한 환경(어둡거나 텍스처 없는 공간)이 많다면, RTAB-Map 단독보다 LiDAR 기반 AMCL을 별도 또는 보조로 병행하는 구조도 검토할 수 있다. 다만 이 경우 `map→odom`을 누가 최종적으로 발행할지 충돌 문제를 새로 설계해야 한다.
+- **감시 로직의 노드화**: C2의 5분류를 실제로 자동 판단하려면, `/rtabmap/info`(inlier 수)와 공분산을 구독해 트리거 조건을 판단하는 전용 ROS2 노드가 필요하다. 현재는 이 로직이 문서(전략)로만 존재하고 실제 구현 여부는 이 시리즈의 범위 밖이다 — 구현 시 별도 프로젝트 문서로 다룰 필요가 있다.
+
+## 6. 다음 문서와의 연결
+
+- 이것으로 "RTAB-Map & Nav2 심화" 시리즈(A1~C6, 총 17편)가 완결된다.
+- 이후 확장 후보: C5에서 언급한 "감시 로직 노드화"를 실제로 구현하는 문서, 또는 ORB-SLAM3/센서 연동처럼 [[ros2-nav-yahboom]]에 기록된 다른 활성 스레드(VIO 초기화 이슈 등)를 다루는 별도 시리즈.
+
+## 7. 참고자료
+
+- Nav2 공식 문서 — AMCL과 `ReinitializeGlobalLocalization`
+- RTAB-Map 공식 문서 — localization mode 및 관련 파라미터
+- [[ros2-nav-yahboom]] — 이 프로젝트의 하드웨어 제약(Jetson) 및 과거 진단 이력
