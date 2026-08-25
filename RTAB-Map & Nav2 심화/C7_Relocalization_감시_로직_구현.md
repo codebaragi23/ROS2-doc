@@ -1,12 +1,12 @@
-# D2. Relocalization 감시 로직 구현
+# C7. Relocalization 감시 로직 구현
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 및 구현
-> 이전 문서: D1. ORB-SLAM3 구조와 실행
+> RTAB-Map & Nav2 심화 시리즈 · Part C. Relocalization 심화 (C7, 확장 추가분)
+> 이전 문서: C6. Nav2 표준 relocalization과의 차이
 > 이 문서는 C2(트리거 시점 5분류)에서 이론으로만 정리했던 감시 로직을 실제 ROS2 노드 설계 수준으로 구체화한 것이다. 코드는 개념 검증용 예시이며, 실제 배포 전 프로젝트 환경에서 검증이 필요하다.
 
 ## 1. 개요
 
-C2·C3에서 정리한 5가지 relocalization 트리거는 Nav2나 RTAB-Map이 자동으로 감지해주지 않는다. C6에서 짚었듯, 이 감시 자체를 프로젝트가 직접 구현해야 한다. 이 문서는 그 구현의 최소 골격을 제시한다.
+C2·C3에서 정리한 5가지 relocalization 트리거는 Nav2나 RTAB-Map이 자동으로 감지해주지 않는다. C6에서 짚었듯, 이 감시 자체를 프로젝트가 직접 구현해야 한다. 이 문서는 그 구현의 최소 골격을 제시하며, C 시리즈(C1~C6) 전체의 이론을 실제 코드로 마무리하는 문서다.
 
 ## 2. 핵심 개념: 감시 노드가 구독해야 할 정보
 
@@ -16,7 +16,7 @@ C2·C3에서 정리한 5가지 relocalization 트리거는 Nav2나 RTAB-Map이 �
 | 포즈 공분산 | `map→odom` TF 또는 커스텀 covariance 토픽 | ②③ |
 | 오도메트리 연속성 | `/odom` | ③ 누적 드리프트 |
 | AprilTag 검출 결과 | (AprilTag 노드의 detection topic) | ④ 랜드마크 보정 |
-| 목표 진입 상태 | Nav2 Action Feedback(D편 B6-1 참고) | ⑤ 정밀 작업 직전 |
+| 목표 진입 상태 | Nav2 Action Feedback(B6-1 참고) | ⑤ 정밀 작업 직전 |
 
 `/rtabmap/info`는 RTAB-Map이 표준으로 발행하는 진단 정보 토픽으로, loop closure 성공 여부와 매칭 통계를 담고 있다 — 이 문서의 감시 로직이 새로 만들어야 하는 것은 이 정보를 **해석해서 행동을 트리거하는 판단 계층**이다.
 
@@ -95,8 +95,9 @@ if __name__ == '__main__':
 
 ## 6. 다음 문서와의 연결
 
-- 이것으로 "RTAB-Map & Nav2 심화" 시리즈 Part D(D1~D2)가 마무리된다.
+- 이것으로 "RTAB-Map & Nav2 심화" 시리즈 Part C(C1~C7)가 완결된다. 이 시리즈는 Part A(지도제작) → Part B(Nav2) → Part C(Relocalization 이론+구현)로 마무리된다.
 - 향후 이 감시 노드가 실제로 구현·검증되면, 결과를 C5(실전 진단 체크리스트)에 반영하는 별도 갱신이 필요하다.
+- 별도 심화가 필요한 대안 SLAM 백엔드 논의(ORB-SLAM3, OpenVINS, VINS-Fusion)는 독립된 "SLAM 백엔드 평가" 시리즈(D1~D4)에서 다룬다.
 
 ## 7. 참고자료
 

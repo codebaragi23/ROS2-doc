@@ -165,13 +165,23 @@
               "icon": "lucide-list",
               "title": "개요"
             }
+          },
+          {
+            "id": "e276a0388d9d8966",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -181,16 +191,23 @@
       "daily-notes:오늘의 일일 노트 열기": false,
       "templates:템플릿 삽입": false,
       "command-palette:명령어 팔레트 열기": false,
-      "bases:새 베이스 생성하기": false
+      "bases:새 베이스 생성하기": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "864783ff0616bcb7",
   "lastOpenFiles": [
-    "ROS2 기초/05_Parameter와_실행_설정.md",
     "SLAM 백엔드/D1-2_Visual-Inertial_초기화_알고리즘.md",
+    "SLAM 백엔드/D1-1_ORB-SLAM3_시스템_개요.md",
+    "SLAM 백엔드/D1-5_이_프로젝트의_VIO_이슈_재해석.md",
+    "SLAM 백엔드/D1-5_이_프로젝트의_VIO_이슈_재해석.md.tmp.1124714.5e041e92c5f1",
+    "SLAM 백엔드/D1-4_Loop_Closing과_Place_Recognition.md.tmp.1124714.160b36aeb004",
+    "SLAM 백엔드/D1-3_Multi-Map_System_Atlas와_재추적_병합.md.tmp.1124714.c462804f9496",
+    "SLAM 백엔드/D1-2_Visual-Inertial_초기화_알고리즘.md.tmp.1124714.e5fd7d50a5aa",
+    "SLAM 백엔드/D1-1_ORB-SLAM3_시스템_개요.md.tmp.1124714.fec4c463200b",
+    "ROS2 기초/05_Parameter와_실행_설정.md",
     "ROS2 기초/09_문제_해결_자주_발생하는_오류_모음.md",
     "ROS2 기초/08_rqt_rviz2_활용.md",
-    "SLAM 백엔드/D1-1_ORB-SLAM3_시스템_개요.md",
     "ROS2 기초/04_Service와_Action.md",
     "ROS2 기초/06_Launch_파일_작성법.md",
     "ROS2 기초/07_TF2_기초.md",
@@ -199,7 +216,6 @@
     "RTAB-Map & Nav2 심화/C5_실전_진단_체크리스트.md",
     "C7_Relocalization_감시_로직_구현.md",
     "RTAB-Map & Nav2 심화/C6_Nav2_표준_relocalization과의_차이.md",
-    "SLAM 백엔드/D1-5_이_프로젝트의_VIO_이슈_재해석.md",
     "SLAM 백엔드/D1-4_Loop_Closing과_Place_Recognition.md",
     "SLAM 백엔드/D1-3_Multi-Map_System_Atlas와_재추적_병합.md",
     "SLAM 백엔드",
@@ -214,7 +230,6 @@
     "ROS2 기초/00_ROS2란_무엇이고_왜_쓰는가.md",
     "ROS2 기초/01_개발_환경과_워크스페이스_구조.md",
     "ROS2 응용 & 센서 연동/01_colcon_빌드_오류_모음.md",
-    "ROS2 응용 & 센서 연동/02_Composable_Node와_Executor_구조.md",
     "ROS2 응용 & 센서 연동",
     "RTAB-Map & Nav2 심화",
     "ROS2 기초"
