@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 2 — 기초 실습 |
-| 예상 선행 지식 | `ROS2 기초 - ROS2란 무엇이고 왜 쓰는가`, `ROS2 기초 - 노드란 무엇인가`, `ROS2 기초 - 개발 환경과 워크스페이스 구조` |
+| 예상 선행 지식 | [[00_ROS2란_무엇이고_왜_쓰는가|ROS2 기초 - ROS2란 무엇이고 왜 쓰는가]], [[02_노드란_무엇인가|ROS2 기초 - 노드란 무엇인가]], [[01_개발_환경과_워크스페이스_구조|ROS2 기초 - 개발 환경과 워크스페이스 구조]] |
 | 학습 목표 | Topic과 Message의 개념을 설명할 수 있다 / Publisher/Subscriber 노드를 직접 작성·실행할 수 있다 / `ros2 topic` 명령으로 통신 상태를 진단할 수 있다 |
 | 기준 환경 | Ubuntu 22.04, ROS2 Humble |
-| 관련 문서 | 이전: `ROS2 기초 - 개발 환경과 워크스페이스 구조` / 다음: `ROS2 통신 - Service와 Action` |
+| 관련 문서 | 이전: [[01_개발_환경과_워크스페이스_구조|ROS2 기초 - 개발 환경과 워크스페이스 구조]] / 다음: [[04_Service와_Action|ROS2 통신 - Service와 Action]] |
 
 ---
 
@@ -112,7 +112,7 @@ RViz2]
 
 ### 준비 사항
 
-* 이전 문서(`개발 환경과 워크스페이스 구조`)에서 만든 `~/ros2_ws` 워크스페이스와 `my_first_pkg` 패키지
+* 이전 문서([[01_개발_환경과_워크스페이스_구조|개발 환경과 워크스페이스 구조]])에서 만든 `~/ros2_ws` 워크스페이스와 `my_first_pkg` 패키지
 * ROS2 환경이 source된 터미널
 
 ### 설치
@@ -334,7 +334,7 @@ ros2 topic list
 ## 11. 개념 간 연결
 
 * Topic 통신의 주체는 이전 문서에서 배운 **노드**다. 즉 "노드 = 일하는 사람", "Topic = 정보가 흐르는 통로", "Message = 통로를 흐르는 데이터의 형식"으로 세 개념이 이어진다.
-* 이 문서에서 만든 Publisher/Subscriber는 앞선 문서 `개발 환경과 워크스페이스 구조`에서 배운 `colcon build → source → ros2 run` 절차를 그대로 사용한다.
+* 이 문서에서 만든 Publisher/Subscriber는 앞선 문서 [[01_개발_환경과_워크스페이스_구조|개발 환경과 워크스페이스 구조]]에서 배운 `colcon build → source → ros2 run` 절차를 그대로 사용한다.
 * Topic은 "한쪽이 계속 보내고 다른 쪽은 언제든 받는" 비동기 방식이라, "요청하면 응답이 오는" 방식이 필요한 경우에는 적합하지 않다. 이런 경우를 위한 통신 방식이 다음 문서에서 다룰 **Service**와 **Action**이다.
 * 앞으로 다룰 LiDAR C1의 `/scan`, RealSense D435i의 `/camera/color/image_raw`, 로봇 속도 명령 `/cmd_vel`은 모두 이 문서에서 배운 Topic 구조를 그대로 사용한다.
 
@@ -377,24 +377,20 @@ Publisher와 Subscriber의 QoS 설정이 서로 호환되지 않으면(예: 한�
 4. 왜 Topic 방식은 "요청-응답"이 필요한 상황에는 적합하지 않은가?
 5. 실제 X3 로봇에서 LiDAR 데이터를 Nav2와 RViz2가 동시에 사용할 수 있는 이유는 무엇인가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. Topic이라는 이름 기반의 통로를 DDS가 자동으로 연결해주기 때문에, 서로의 위치나 존재를 몰라도 같은 이름·타입만 맞으면 통신이 성립한다.
-2. Topic 이름과 Message 타입이 양쪽에서 정확히 일치하는지부터 확인해야 한다.
-3. `ros2 topic echo`는 실제 데이터 내용을 확인할 때, `ros2 topic hz`는 데이터가 얼마나 자주(주기적으로) 들어오는지 확인할 때 사용한다.
-4. Topic은 발행자가 일방적으로 계속 데이터를 흘려보내는 비동기 구조이므로, "특정 요청에 대한 하나의 응답"을 주고받는 구조에는 맞지 않는다.
-5. 두 노드 모두 같은 Topic(`/scan`)을 구독하기만 하면 되고, Topic은 여러 Subscriber가 동시에 같은 데이터를 받을 수 있는 구조이기 때문이다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. Topic이라는 이름 기반의 통로를 DDS가 자동으로 연결해주기 때문에, 서로의 위치나 존재를 몰라도 같은 이름·타입만 맞으면 통신이 성립한다.
+> 2. Topic 이름과 Message 타입이 양쪽에서 정확히 일치하는지부터 확인해야 한다.
+> 3. `ros2 topic echo`는 실제 데이터 내용을 확인할 때, `ros2 topic hz`는 데이터가 얼마나 자주(주기적으로) 들어오는지 확인할 때 사용한다.
+> 4. Topic은 발행자가 일방적으로 계속 데이터를 흘려보내는 비동기 구조이므로, "특정 요청에 대한 하나의 응답"을 주고받는 구조에는 맞지 않는다.
+> 5. 두 노드 모두 같은 Topic(`/scan`)을 구독하기만 하면 되고, Topic은 여러 Subscriber가 동시에 같은 데이터를 받을 수 있는 구조이기 때문이다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `ROS2 통신 - Service와 Action` — Topic만으로는 "요청하고 응답받기", "장시간 걸리는 작업 처리"가 어려우므로, 이를 보완하는 통신 방식을 배운다.
-2. **함께 보면 좋은 주제**: `ROS2 기초 - Parameter와 실행 설정` — Publisher의 발행 주기(1.0초)처럼 코드에 고정된 값을 실행 시점에 바꾸는 방법을 배우면 이번 예제를 더 유연하게 만들 수 있다.
-3. **나중에 학습할 심화 주제**: `ROS2 통신 심화 - DDS와 QoS 이해하기` — 실제 센서 연동에서 자주 겪는 "Topic은 보이는데 데이터가 안 보이는" 문제의 근본 원인을 진단하려면 QoS를 깊이 이해해야 한다.
+1. **바로 다음**: [[04_Service와_Action|ROS2 통신 - Service와 Action]] — Topic만으로는 "요청하고 응답받기", "장시간 걸리는 작업 처리"가 어려우므로, 이를 보완하는 통신 방식을 배운다.
+2. **함께 보면 좋은 주제**: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] — Publisher의 발행 주기(1.0초)처럼 코드에 고정된 값을 실행 시점에 바꾸는 방법을 배우면 이번 예제를 더 유연하게 만들 수 있다.
+3. **나중에 학습할 심화 주제**: [[03_DDS와_QoS_이해하기|ROS2 통신 심화 - DDS와 QoS 이해하기]] — 실제 센서 연동에서 자주 겪는 "Topic은 보이는데 데이터가 안 보이는" 문제의 근본 원인을 진단하려면 QoS를 깊이 이해해야 한다.
 
 ---
 
@@ -402,6 +398,6 @@ Publisher와 Subscriber의 QoS 설정이 서로 호환되지 않으면(예: 한�
 
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
-| 공식 문서 | ROS2 Documentation (Humble) – Understanding topics | Topic의 정의, Publisher/Subscriber 관계, `ros2 topic` CLI 도구 사용법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Writing a simple publisher and subscriber (Python) | `create_publisher`, `create_subscription`, `entry_points` 설정 방식 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – About Quality of Service settings | Reliability, Durability 등 QoS 프로파일의 정의와 호환성 규칙 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Understanding topics](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html) | Topic의 정의, Publisher/Subscriber 관계, `ros2 topic` CLI 도구 사용법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Writing a simple publisher and subscriber (Python)](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html) | `create_publisher`, `create_subscription`, `entry_points` 설정 방식 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – About Quality of Service settings](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Quality-of-Service-Settings.html) | Reliability, Durability 등 QoS 프로파일의 정의와 호환성 규칙 확인 |

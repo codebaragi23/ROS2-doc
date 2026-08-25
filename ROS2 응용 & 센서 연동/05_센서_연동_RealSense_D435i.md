@@ -63,5 +63,5 @@ RViz2에서 `Image`, `PointCloud2`, `TF` Display를 추가해 실제 영상과 �
 
 ## 7. 참고자료
 
-- realsense2_camera 공식 GitHub — 파라미터 전체 목록, launch 인자
+- [realsense2_camera 공식 GitHub](https://github.com/IntelRealSense/realsense-ros) — 파라미터 전체 목록, launch 인자
 - [[ros2-nav-yahboom]] — 이 프로젝트의 실제 해상도/fps 튜닝 이력

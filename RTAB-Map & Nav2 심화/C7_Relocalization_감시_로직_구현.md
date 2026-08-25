@@ -12,7 +12,7 @@ C2·C3에서 정리한 5가지 relocalization 트리거는 Nav2나 RTAB-Map이 �
 
 | 정보 | Topic/서비스 | 어떤 트리거(C2)와 관련되나 |
 |---|---|---|
-| Loop closure inlier 수 | `/rtabmap/info` | ② 긴급 재위치인정 |
+| Loop closure inlier 수 | `/rtabmap/info` | ② 긴급 relocalization |
 | 포즈 공분산 | `map→odom` TF 또는 커스텀 covariance 토픽 | ②③ |
 | 오도메트리 연속성 | `/odom` | ③ 누적 드리프트 |
 | AprilTag 검출 결과 | (AprilTag 노드의 detection topic) | ④ 랜드마크 보정 |

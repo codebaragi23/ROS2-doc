@@ -1,7 +1,7 @@
 # D3-1. VINS-Fusion 개요와 최적화 기반 알고리즘 원리
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 (SLAM 백엔드 평가)
-> 참고: Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018 / GitHub HKUST-Aerial-Robotics/VINS-Fusion
+> SLAM 백엔드 평가 시리즈
+> 참고: Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018 / [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion)
 > ⚠️ **이 D3 시리즈 전체는 이 프로젝트에서 아직 코드 통합·실측이 이루어지지 않은 상태로, 공개 문헌(논문·GitHub)만을 근거로 작성됐다.** D1(ORB-SLAM3), D2(OpenVINS)처럼 프로젝트 실측 데이터를 포함하지 않는다는 점을 유의해야 한다.
 
 ## 1. 개요
@@ -60,6 +60,6 @@ GitHub 공식 저장소는 VINS-Fusion을 "최적화 기반 멀티센서 상태 
 ## 7. 참고자료
 
 - Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018
-- Qin, Cao, Pan, Shen, "A General Optimization-based Framework for Local Odometry Estimation with Multiple Sensors," arXiv:1901.03638 (VINS-Fusion의 이론적 기반)
-- GitHub HKUST-Aerial-Robotics/VINS-Fusion 공식 저장소
+- Qin, Cao, Pan, Shen, "A General Optimization-based Framework for Local Odometry Estimation with Multiple Sensors," [arXiv:1901.03638](https://arxiv.org/abs/1901.03638) (VINS-Fusion의 이론적 기반)
+- [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) 공식 저장소
 - [[ros2-nav-yahboom]] — 다음 SLAM 백엔드 후보로 언급된 이력

@@ -7,12 +7,12 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | `SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요`(세 스레드 구조, 특히 Local Mapping Thread) |
+| 예상 선행 지식 | [[D1-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요]](세 스레드 구조, 특히 Local Mapping Thread) |
 | 학습 목표 | Visual-Inertial 초기화가 왜 필요한지 설명할 수 있다 / 3단계 MAP 추정 알고리즘의 각 단계가 무엇을 추정하는지 설명할 수 있다 / 이 프로젝트의 리셋 현상을 3단계 중 어디와 연결할 수 있는지 판단할 수 있다 |
 | 기준 환경 | ORB-SLAM3 RGB-D-Inertial 모드, Yahboom X3 (RealSense D435i) |
-| 관련 문서 | 이전: `SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요` / 다음: `SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합` |
+| 관련 문서 | 이전: [[D1-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요]] / 다음: [[D1-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합]] |
 
-> 참고 논문: Campos, Montiel, Tardós, "Inertial-Only Optimization for Visual-Inertial Initialization," ICRA 2020 (arXiv:2003.05766) / ORB-SLAM3 논문 4장(IMU Initialization)
+> 참고 논문: Campos, Montiel, Tardós, "Inertial-Only Optimization for Visual-Inertial Initialization," ICRA 2020 ([arXiv:2003.05766](https://arxiv.org/abs/2003.05766)) / ORB-SLAM3 논문 4장(IMU Initialization)
 
 ---
 
@@ -22,14 +22,13 @@
 2. 초기화를 대충 하면(관성 변수를 처음부터 본 최적화에 섞어 넣으면) 수렴에 최대 30초까지 걸릴 수 있다는 것이 기존 방식(VI-DSO 등)의 문제였다.
 3. ORB-SLAM3는 이 문제를 **3단계 MAP(Maximum-a-Posteriori) 추정**으로 재정의해, 몇 초 안에 초기화를 끝내는 것을 목표로 설계됐다.
 4. 이 초기화는 D1-1에서 배운 **Local Mapping Thread**에서 실행된다 — 즉 "Local Mapping이 IMU 초기화를 반복 시도하다 실패한다"는 이 프로젝트의 관찰은, 곧 이 문서의 3단계 알고리즘이 어딘가에서 실패하고 있다는 뜻이다.
-5. 이 프로젝트(RGB-D-Inertial)는 모노큘러와 달리 **스케일은 깊이 정보로 이미 알려져 있어** 1단계 결과가 처음부터 metric 스케일이라는 차이가 있지만, 중력 방향·바이어스·속도 추정(2단계)은 동일하게 필요하다.
+5. 이 프로젝트(RGB-D-Inertial)는 모노큘러와 달리 **스케일은 깊이 정보로 이미 알려져 있어** 1단계 결과가 처음부터 metric 스케일이라는 차이가 있다. 다만 이 이론적 장점이 실제로 그대로 활용되는지는 별개 문제다 — **ORB-SLAM3 공식 저장소가 지원을 명시하는 조합은 monocular, monocular-inertial, stereo, stereo-inertial, RGB-D뿐이며, RGB-D-Inertial은 원저자가 설계·검증한 조합이 아니라 커뮤니티가 별도로 얹은 비공식 확장**이다(자세한 근거는 12장 참고). 중력 방향·바이어스·속도 추정(2단계)은 어느 모드든 동일하게 필요하다.
 
 ---
 
 ## 2. 이 개념은 무엇인가
 
 Visual-Inertial 초기화는 "카메라만으로 만든 지도"와 "IMU가 측정한 관성 정보"를 하나로 묶기 전에, 그 둘을 정확히 이어 붙이는 데 필요한 몇 가지 미지수(스케일, 중력 방향, 속도, 바이어스)를 짧은 시간 안에 추정해내는 준비 단계다.
-e
 **비유로 이해하기**
 
 두 사람이 처음 만나 한 팀으로 물건을 옮기는 상황을 떠올려보자.
@@ -42,7 +41,7 @@ e
 **비유가 실제와 다른 부분**
 
 - 사람은 감각적으로 "대충 맞춰간다"고 표현할 수 있지만, ORB-SLAM3의 각 단계는 **MAP(Maximum-a-Posteriori) 추정**이라는 명확한 확률 최적화 문제로 정식화되어 있다 — 즉 "대충"이 아니라 센서의 불확실성(노이즈 특성)까지 수식에 반영해 최적값을 계산한다.
-- 두 사람은 손을 맞잡으면 계속 함께 걷지만, ORB-SLAM3는 3단계(Joint VI-BA)가 끝난 뒤에도 이후 문서(D1-3)에서 다루듯 초기화가 실패로 판정되면 **처음(1단계)부터 다시 시작**할 수 있다.
+- 두 사람은 손을 맞잡으면 계속 함께 걷지만, ORB-SLAM3는 3단계(Joint **VI-BA**, Visual-Inertial Bundle Adjustment — visual 잔차와 inertial 잔차를 함께 최소화하는 Bundle Adjustment)가 끝난 뒤에도 이후 문서(D1-3)에서 다루듯 초기화가 실패로 판정되면 **처음(1단계)부터 다시 시작**할 수 있다.
 
 ---
 
@@ -57,6 +56,7 @@ e
 
 - 이 프로젝트는 RGB-D라 스케일 문제는 없지만, **중력 방향과 IMU 바이어스를 정확히 추정하지 못하면** 이후 관성 정보를 신뢰할 수 없어 결국 순수 시각 정보(RGB-D-only)로 되돌아가는 것과 큰 차이가 없어진다 — IMU를 쓰는 의미(빠른 회전이나 저텍스처 구간에서 시각 정보를 보완하는 것)가 사라진다.
 - `[[ros2-nav-yahboom]]`에서 관찰된 "active-map IMU reset"이 왜 반복되는지 이해하려면, 정확히 어느 단계(1/2/3단계)에서 실패 판정이 나는지 구분할 수 있어야 한다 — 이 구분이 이후 D1-5의 진단 우선순위를 결정한다.
+- 이 프로젝트에서 실측으로 먼저 확인된 것은 **stereo-inertial 모드가 RGB-D-Inertial보다 초기화·리셋 문제가 뚜렷이 덜하다**는 경향이었다. 처음에는 이를 "RGB-D는 스케일을 몰라서 초기화 부담이 크다"는 가설로 설명하려 했지만, 이는 정확하지 않다 — RGB-D는 오히려 스케일을 이미 알고 있다. 실제 원인은 12장에서 다루듯 **RGB-D-Inertial 자체의 구현 성숙도 문제(비공식 확장)**일 가능성이 훨씬 크다.
 
 ---
 
@@ -89,7 +89,7 @@ Visual-Inertial MAP]
 
 | 구성 요소 | 역할 | 초보자가 기억할 점 |
 |---|---|---|
-| 1단계: Vision-only MAP Estimation | 순수 시각 정보만으로 짧은 시간(2초, 4Hz) 동안 스케일 미정(모노큘러 기준) 지도를 만듦 | RGB-D에서는 스케일이 이미 metric이라는 점이 다름 |
+| 1단계: Vision-only MAP Estimation | 순수 시각 정보만으로 짧은 시간(2초, 4Hz) 동안 스케일 미정(모노큘러 기준) 지도를 만듦 | RGB-D에서는 스케일이 이미 metric이라는 점이 다름 (단, RGB-D-Inertial 조합 자체는 비공식 확장 — 12장 참고) |
 | 2단계: Inertial-only MAP Estimation | 1단계 궤적 + 관성 측정값으로 자이로 바이어스, 중력 방향, 속도, (모노큘러의 경우) 스케일을 추정 | 이 프로젝트 리셋 진단에서 가장 자주 언급되는 단계 |
 | 3단계: Visual-Inertial MAP Estimation | 1·2단계 결과를 시드로 visual+inertial 잔차를 함께 최소화하는 완전한 Joint VI-BA | 성공하면 이후 지역 VI-BA가 본격 가동됨 |
 | MAP(Maximum-a-Posteriori) 추정 | 센서 노이즈 불확실성을 반영해 사후 확률이 최대가 되는 값을 찾는 최적화 방식 | 기존 방식(대수방정식, 임시 최소자승법)과의 핵심 차별점 |
@@ -101,7 +101,7 @@ Visual-Inertial MAP]
 
 1. **1단계 진입**: 순수 모노큘러(또는 RGB-D) SLAM 방식으로 2초 동안 4Hz 주기로 키프레임을 삽입해, k=10개 정도의 카메라 pose와 수백 개의 포인트로 이루어진 지도를 만들고 visual-only BA로 최적화한다.
 2. **좌표계 변환**: 1단계에서 얻은 카메라 기준 pose들을 IMU(body) 기준 좌표계로 변환한다.
-3. **2단계 진입**: 1단계 궤적과 그 사이의 관성 측정값(preintegration)만을 이용해, 자이로 바이어스·중력 방향(SO(3))·(모노큘러의 경우) 스케일·가속도계 바이어스·각 키프레임 시점의 속도를 MAP 추정으로 계산한다.
+3. **2단계 진입**: 1단계 궤적과 그 사이의 관성 측정값(preintegration)만을 이용해, 자이로 바이어스·중력 방향(**SO(3)** — 3차원 회전을 표현하는 수학적 공간. 중력이 "어느 쪽을 향하는지"를 이 회전 값으로 표현한다)·(모노큘러의 경우) 스케일·가속도계 바이어스·각 키프레임 시점의 속도를 MAP 추정으로 계산한다.
 4. **3단계 진입**: 1·2단계 결과를 초기값(시드)으로 삼아 visual 잔차와 inertial 잔차를 함께 최소화하는 완전한 Joint VI-BA를 수행한다.
 5. **성공 판정**: 3단계 결과가 시스템 내부 수렴/일관성 기준을 만족하면 초기화가 완료되고, 이후 지역 VI-BA(일반적인 Visual-Inertial 추적)가 본격 가동된다.
 6. **실패 시 재시도**: 어느 단계든 기준을 만족하지 못하면, Local Mapping Thread는 해당 Active Map에 대한 초기화를 **1단계부터 다시** 시작한다 — 이것이 이 프로젝트에서 관찰되는 "active-map IMU reset"이다.
@@ -159,9 +159,9 @@ IMU.Frequency: 200         # IMU 측정 주파수(Hz)
 IMU.fastInit: 0            # 1이면 빠른 초기화(게이팅 완화) 모드 사용
 ```
 
-* `IMU.NoiseGyro` / `IMU.NoiseAcc` / `IMU.GyroWalk` / `IMU.AccWalk`: 이 네 값이 바로 2단계(Inertial-only MAP Estimation)에서 "센서 불확실성을 얼마나 신뢰할지"를 결정하는 파라미터다. 실제 D435i의 노이즈 특성과 이 값이 잘 맞지 않으면, 2단계 최적화가 수렴 기준을 만족하기 어려워진다 — 이 프로젝트에서 `rs-imu-calibration`(D435i IMU 공장 보정)이 우선순위 높은 미시도 변수로 꼽히는 이유가 바로 이 지점이다.
+* `IMU.NoiseGyro` / `IMU.NoiseAcc` / `IMU.GyroWalk` / `IMU.AccWalk`: 이 네 값이 바로 2단계(Inertial-only MAP Estimation)에서 "센서 불확실성을 얼마나 신뢰할지"를 결정하는 파라미터다. 실제 IMU의 노이즈 특성과 이 값이 잘 맞지 않으면, 2단계 최적화가 수렴 기준을 만족하기 어려워진다(이 프로젝트의 진단 사례는 D1-5 참고).
 * `IMU.Frequency`: IMU preintegration의 입력 주파수다. 6장에서 설명한 "키프레임 삽입 주기를 짧게(4~10Hz) 잡는 이유"와 함께, 이 값이 실제 카메라 사이 preintegration 구간의 불확실성 크기를 좌우한다.
-* `IMU.fastInit`: 이 프로젝트에서 실제로 진단에 쓰인 설정 항목이다. 값을 켜면 게이팅(자극/이동거리 조건)을 완화해 초기화를 더 빨리 시도하게 만드는데, 이 프로젝트에서는 이 값을 켜도 리셋이 사라지지 않았다는 것이 D1-5의 핵심 관찰 중 하나다 — 즉 문제가 "게이팅이 너무 엄격해서"가 아니라는 반증으로 쓰였다.
+* `IMU.fastInit`: 값을 켜면 게이팅(자극/이동거리 조건)을 완화해 초기화를 더 빨리 시도하게 만든다 — 즉 2단계 **진입 조건**만 완화할 뿐, 그 이후 단계의 수렴 문제는 해결하지 못한다(이 프로젝트에서 이 옵션을 켜도 리셋이 줄지 않았던 진단 사례는 D1-5 참고).
 
 ---
 
@@ -214,7 +214,7 @@ grep -i "gate\|excitation\|gravity\|scale.*error" vi_init.log
 
 * 이 문서의 세 단계는 D1-1에서 배운 **Local Mapping Thread** 안에서 일어난다 — 즉 D1-1의 스레드 구조를 모르면 이 문서에서 "누가 이 계산을 하는지"를 놓치게 된다.
 * 초기화가 실패해 Active Map 자체가 리셋되는 상황은, 다음 문서(D1-3)에서 다룰 "Tracking 유실 → 새 지도 생성"과 원인이 다르지만 겉보기 현상(새 지도가 자꾸 생김)은 비슷할 수 있어 로그로 구분해서 봐야 한다.
-* 이 문서에서 다룬 "MAP 추정에서 센서 노이즈 불확실성을 반영한다"는 개념은, `ROS2 응용 & 센서 연동 - 03. DDS와 QoS 이해하기`에서 다룬 "신뢰성(Reliability)"과는 다른 층위의 개념이다 — QoS는 통신 신뢰성, 이 문서의 불확실성은 센서 측정값 자체의 물리적 노이즈다. 혼동하지 않도록 주의한다.
+* 이 문서에서 다룬 "MAP 추정에서 센서 노이즈 불확실성을 반영한다"는 개념은, [[03_DDS와_QoS_이해하기|ROS2 응용 & 센서 연동 - 03. DDS와 QoS 이해하기]]에서 다룬 "신뢰성(Reliability)"과는 다른 층위의 개념이다 — QoS는 통신 신뢰성, 이 문서의 불확실성은 센서 측정값 자체의 물리적 노이즈다. 혼동하지 않도록 주의한다.
 
 ---
 
@@ -232,6 +232,17 @@ grep -i "gate\|excitation\|gravity\|scale.*error" vi_init.log
 | 초기 스케일 오차 | 평균 약 5.3%(~5.29%) |
 | 2초 시점 스케일 오차 | 5% 미만으로 수렴 |
 | 15초 시점 스케일 오차 | 약 1% 수준까지 추가 수렴(루프가 없는 시퀀스에서도) |
+
+**정정: RGB-D-Inertial은 사실 공식 지원 조합이 아니다**
+
+이 문서는 원래 "RGB-D는 depth로 스케일을 이미 알고 있어 초기화가 더 간단하다"는 뉘앙스로 서술되어 있었다. 스케일을 이미 안다는 사실 자체는 SLAM의 일반 원리로서 틀리지 않지만, 여기서 "그래서 초기화가 더 수월할 것"이라는 결론으로 이어간 것은 검증 부족이었다. 실제로 확인한 근거는 다음과 같다.
+
+- **공식 저장소가 명시하는 지원 조합**: ORB-SLAM3 공식 GitHub(UZ-SLAMLab/ORB_SLAM3) README는 지원 조합을 "monocular, monocular-inertial, stereo, stereo-inertial, **RGB-D**"로 나열한다 — 다른 모드와 달리 RGB-D 뒤에만 "-inertial"이 빠져 있다. 즉 **RGB-D-Inertial은 원저자가 공식적으로 지원한다고 밝힌 조합이 아니다.**
+- **논문의 헤드라인 정확도**도 전부 mono-inertial/stereo-inertial 기준이며, RGB-D-Inertial 조합에 대한 검증 수치는 원 논문에 없다.
+- 실제로 RGB-D-Inertial을 지원하는 저장소(예: `xiefei2929/ORB_SLAM3-RGBD-Inertial`, `flymu/ORB_SLAM3-RGBD-Inertial`)는 **전부 커뮤니티가 별도로 얹은 포크**다 — 원 저자가 만든 것도 아니고, 이 문서에서 다룬 MAP 기반 IMU 초기화가 이 조합을 대상으로 설계·검증된 것도 아니다.
+- D435i를 RGB-D+IMU로 쓴 제3자 보고에서도 "Unfortunately, for RGB-D+IMU systems such as the RealSense D435i, ORB-SLAM3 does not have great performance and can sometimes lose track in featureless areas"라는 관찰이 확인되어, 이 프로젝트의 경험과 정확히 일치한다.
+
+**재해석**: "스케일을 이미 안다"는 이론적 장점은 맞지만, RGB-D-Inertial 자체가 미검증·비공식 확장이라 이 장점이 실제 구현에서 그대로 활용된다는 보장이 없다. 이 프로젝트에서 **stereo-inertial이 RGB-D-Inertial보다 초기화·리셋 문제가 뚜렷이 덜했던 실측 경향**은, 단순한 스케일 유무 문제가 아니라 **stereo-inertial은 공식 지원·검증 대상이고 RGB-D-Inertial은 아니라는 구현 성숙도 차이**로 설명하는 것이 훨씬 설득력이 있다. 이 재해석은 D1-5의 진단 우선순위에도 반영되어, `rs-imu-calibration`보다 **stereo-inertial 재검토**가 더 우선순위 높은 다음 단계로 조정됐다.
 
 **이 프로젝트에서 관찰된 리셋 유형과 알고리즘 단계 대응**
 
@@ -251,7 +262,7 @@ grep -i "gate\|excitation\|gravity\|scale.*error" vi_init.log
 1. Visual-Inertial 초기화는 스케일·중력 방향·초기 속도·센서 바이어스를 짧은 시간 안에 추정하는 준비 단계다.
 2. ORB-SLAM3는 이를 Vision-only → Inertial-only → Visual-Inertial 3단계 MAP 추정으로 나눠, 몇 초 안에 끝내도록 설계했다.
 3. 이 초기화는 D1-1의 Local Mapping Thread에서 실행되며, 실패하면 1단계부터 다시 시작한다.
-4. RGB-D-Inertial 모드는 스케일이 이미 알려져 있지만, 중력·바이어스·속도 추정(2단계)은 모노큘러와 동일하게 필요하다.
+4. RGB-D-Inertial 모드는 스케일이 이미 알려져 있지만, **ORB-SLAM3 공식 저장소가 지원을 명시하는 조합이 아니라 커뮤니티가 얹은 비공식 확장**이라 이 이론적 장점이 실제 구현에서 그대로 활용된다는 보장이 없다 — 이것이 "stereo가 RGB-D보다 리셋이 적다"는 실측 경향의 더 설득력 있는 원인으로 재해석된다.
 5. "게이팅(자극)을 통과했는데도 리셋이 남는다"는 관찰은 원인이 "충분히 움직이지 않아서"가 아니라 "1단계 입력 품질 또는 2·3단계 수렴 기준"에 있음을 시사한다.
 
 ---
@@ -264,24 +275,20 @@ grep -i "gate\|excitation\|gravity\|scale.*error" vi_init.log
 4. "가속도 게이트와 이동거리 게이트를 모두 통과했는데도 리셋이 반복된다"는 관찰이 배제하는 가설은 무엇인가?
 5. 초기화가 실패로 판정되면 Local Mapping Thread는 몇 단계부터 다시 시작하는가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. 1단계(Vision-only MAP Estimation)에서 스케일 미정 지도가 먼저 만들어지고, 그 스케일 값 자체는 2단계(Inertial-only MAP Estimation)에서 추정된다.
-2. 자이로 바이어스, 중력 방향(SO(3)), (모노큘러의 경우) 스케일, 가속도계 바이어스, 각 키프레임 시점의 속도다.
-3. 스케일이 depth 정보로부터 이미 metric 단위로 확보된다 — 즉 1단계 결과가 처음부터 실제 크기 단위의 지도다.
-4. "IMU 자극(움직임)이 부족해서 초기화가 실패한다"는 가설을 배제한다 — 자극 조건을 다 만족해도 실패가 남기 때문이다.
-5. 1단계(Vision-only MAP Estimation)부터 다시 시작한다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. 1단계(Vision-only MAP Estimation)에서 스케일 미정 지도가 먼저 만들어지고, 그 스케일 값 자체는 2단계(Inertial-only MAP Estimation)에서 추정된다.
+> 2. 자이로 바이어스, 중력 방향(SO(3)), (모노큘러의 경우) 스케일, 가속도계 바이어스, 각 키프레임 시점의 속도다.
+> 3. 스케일이 depth 정보로부터 이미 metric 단위로 확보된다 — 즉 1단계 결과가 처음부터 실제 크기 단위의 지도다.
+> 4. "IMU 자극(움직임)이 부족해서 초기화가 실패한다"는 가설을 배제한다 — 자극 조건을 다 만족해도 실패가 남기 때문이다.
+> 5. 1단계(Vision-only MAP Estimation)부터 다시 시작한다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합` — 이 문서에서 다룬 초기화가 반복 실패할 때, Atlas가 실제로 어떻게 새 지도를 만들고 나중에 병합하는지 다룬다.
-2. **함께 보면 좋은 주제**: `SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요` — 이 초기화가 어느 스레드에서 실행되는지 복습하면 이 문서를 다시 읽을 때 더 명확해진다.
-3. **나중에 학습할 심화 주제**: `SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석` — 이 문서의 3단계 알고리즘을 근거로 이 프로젝트의 실제 진단 이력을 재해석한다.
+1. **바로 다음**: [[D1-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합]] — 이 문서에서 다룬 초기화가 반복 실패할 때, Atlas가 실제로 어떻게 새 지도를 만들고 나중에 병합하는지 다룬다.
+2. **함께 보면 좋은 주제**: [[D1-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요]] — 이 초기화가 어느 스레드에서 실행되는지 복습하면 이 문서를 다시 읽을 때 더 명확해진다.
+3. **나중에 학습할 심화 주제**: [[D1-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석]] — 이 문서의 3단계 알고리즘을 근거로 이 프로젝트의 실제 진단 이력을 재해석한다.
 
 ---
 
@@ -289,6 +296,8 @@ grep -i "gate\|excitation\|gravity\|scale.*error" vi_init.log
 
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
-| 논문 | Campos, Montiel, Tardós, "Inertial-Only Optimization for Visual-Inertial Initialization," ICRA 2020 (arXiv:2003.05766) | 2단계(Inertial-only MAP Estimation)의 수학적 정식화와 novelty 근거 |
+| 논문 | Campos, Montiel, Tardós, "Inertial-Only Optimization for Visual-Inertial Initialization," ICRA 2020 ([arXiv:2003.05766](https://arxiv.org/abs/2003.05766)) | 2단계(Inertial-only MAP Estimation)의 수학적 정식화와 novelty 근거 |
 | 논문 | ORB-SLAM3 논문(Campos et al., 2021) 4장 "IMU Initialization" | 3단계 전체 알고리즘과 성능 수치(초기화 시간, 스케일 오차) |
-| 프로젝트 진단 노트 | `[[ros2-nav-yahboom]]` | `IMU.fastInit` 진단, 게이팅 격리 테스트 이력 |
+| 프로젝트 진단 노트 | `[[ros2-nav-yahboom]]` | `IMU.fastInit` 진단, 게이팅 격리 테스트 이력, stereo-inertial 대비 RGB-D-Inertial 실측 비교 |
+| 공식 저장소 | [GitHub UZ-SLAMLab/ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3) README | 공식 지원 조합 목록(RGB-D-Inertial 미포함) 확인 |
+| 커뮤니티 포크 | `xiefei2929/ORB_SLAM3-RGBD-Inertial`, `flymu/ORB_SLAM3-RGBD-Inertial` | RGB-D-Inertial이 비공식 커뮤니티 확장임을 보여주는 근거 |

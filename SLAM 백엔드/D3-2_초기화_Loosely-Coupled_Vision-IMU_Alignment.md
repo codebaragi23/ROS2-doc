@@ -1,6 +1,6 @@
 # D3-2. 초기화 — Loosely-Coupled Vision-IMU Alignment
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 (SLAM 백엔드 평가)
+> SLAM 백엔드 평가 시리즈
 > 이전 문서: D3-1. VINS-Fusion 개요와 최적화 기반 알고리즘 원리
 > 참고: Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018, IV장(Estimator Initialization)
 > ⚠️ 문헌 기반 문서 — 프로젝트 실측 없음(D3-1 안내 참고)

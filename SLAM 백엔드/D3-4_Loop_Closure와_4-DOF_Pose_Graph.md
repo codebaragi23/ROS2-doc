@@ -1,6 +1,6 @@
 # D3-4. Loop Closure와 4-DOF Pose Graph
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 (SLAM 백엔드 평가)
+> SLAM 백엔드 평가 시리즈
 > 이전 문서: D3-3. Sliding Window 최적화와 Marginalization
 > ⚠️ 문헌 기반 문서 — 프로젝트 실측 없음(D3-1 안내 참고)
 
@@ -59,5 +59,5 @@ D3-1에서 언급했듯 VINS-Fusion은 맵 병합과 pose graph 저장·재사�
 ## 9. 참고자료
 
 - Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018 — 4-DOF pose graph 최적화 설계 근거
-- GitHub HKUST-Aerial-Robotics/VINS-Fusion — `loop_fusion_node` 실행 구조
+- [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) — `loop_fusion_node` 실행 구조
 - D1-4(이 시리즈) — ORB-SLAM3의 통합형 Place Recognition과의 대비

@@ -1,6 +1,6 @@
 # D2-2. OpenVINS의 핵심 설계 — FEJ, 온라인 캘리브레이션, Feature 표현
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 (SLAM 백엔드 평가)
+> SLAM 백엔드 평가 시리즈
 > 이전 문서: D2-1. OpenVINS 개요와 MSCKF 알고리즘 원리
 > 참고 논문: Geneva et al., "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
 
@@ -48,7 +48,7 @@ D2-1에서 "MSCKF feature는 상태에 안 들어간다"고 했지만, OpenVINS�
 ## 6. 진단 관점
 
 - FEJ가 제대로 동작하지 않으면(구현 버그 또는 잘못된 설정), 필터가 장시간 동작 후 실제보다 훨씬 확신에 찬(공분산이 비정상적으로 작은) 상태가 되면서 갑작스러운 큰 오차에 취약해질 수 있다 — 이런 증상이 보이면 FEJ 관련 설정이나 구현을 의심해볼 수 있다.
-- SLAM landmark 표현 방식은 보통 기본값을 그대로 쓰는 경우가 많지만, 저텍스처 환경(D2-5, 냉장고 근접 사례)에서 특징점 깊이 불확실성이 크다면 inverse depth 계열 표현이 이론적으로 더 안정적일 수 있다.
+- SLAM landmark 표현 방식은 보통 기본값을 그대로 쓰는 경우가 많지만, 저텍스처 환경(D2-8, 냉장고 근접 사례)에서 특징점 깊이 불확실성이 크다면 inverse depth 계열 표현이 이론적으로 더 안정적일 수 있다.
 
 ## 7. 다음 문서와의 연결
 

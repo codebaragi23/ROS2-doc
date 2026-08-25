@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 3 — 시스템 구성 |
-| 예상 선행 지식 | `ROS2 기초 - 노드란 무엇인가`, `ROS2 기초 - Parameter와 실행 설정` |
+| 예상 선행 지식 | [[02_노드란_무엇인가|ROS2 기초 - 노드란 무엇인가]], [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] |
 | 학습 목표 | Launch 파일이 왜 필요한지 설명할 수 있다 / 여러 노드를 하나의 Launch 파일로 동시에 실행할 수 있다 / YAML 파라미터 파일을 Launch 파일과 연결할 수 있다 |
 | 기준 환경 | Ubuntu 22.04, ROS2 Humble |
-| 관련 문서 | 이전: `ROS2 기초 - Parameter와 실행 설정` / 다음: `ROS2 좌표계 - TF2 기초` |
+| 관련 문서 | 이전: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] / 다음: [[07_TF2_기초|ROS2 좌표계 - TF2 기초]] |
 
 ---
 
@@ -363,24 +363,20 @@ lidar_launch = IncludeLaunchDescription(
 4. `parameters=[{'key': value}]`와 `parameters=[config_path]`는 각각 어떤 상황에 사용하는가?
 5. 실제 X3 로봇의 LiDAR와 카메라 드라이버를 하나의 시스템으로 묶을 때 어떤 Launch 기능을 활용할 수 있는가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. 노드 개수만큼 터미널을 열어 하나씩 `ros2 run`을 입력하고 파라미터도 매번 나열해야 하는 매우 번거롭고 실수하기 쉬운 상황이 발생한다.
-2. `ros2 run <package> <executable> --ros-args -p ...` 명령을 코드로 표현한 것이다.
-3. `setup.py`의 `data_files`에 launch 폴더가 등록되어 있는지, 등록 후 재빌드와 재source를 했는지 확인해야 한다.
-4. 파라미터 개수가 적을 때는 딕셔너리로 직접 지정하고, 파라미터가 많거나 재사용이 필요할 때는 YAML 파일 경로를 지정한다.
-5. 각 드라이버 패키지가 제공하는 기존 Launch 파일을 `IncludeLaunchDescription`으로 불러와 하나의 상위 Launch 파일에 조합할 수 있다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. 노드 개수만큼 터미널을 열어 하나씩 `ros2 run`을 입력하고 파라미터도 매번 나열해야 하는 매우 번거롭고 실수하기 쉬운 상황이 발생한다.
+> 2. `ros2 run <package> <executable> --ros-args -p ...` 명령을 코드로 표현한 것이다.
+> 3. `setup.py`의 `data_files`에 launch 폴더가 등록되어 있는지, 등록 후 재빌드와 재source를 했는지 확인해야 한다.
+> 4. 파라미터 개수가 적을 때는 딕셔너리로 직접 지정하고, 파라미터가 많거나 재사용이 필요할 때는 YAML 파일 경로를 지정한다.
+> 5. 각 드라이버 패키지가 제공하는 기존 Launch 파일을 `IncludeLaunchDescription`으로 불러와 하나의 상위 Launch 파일에 조합할 수 있다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `ROS2 좌표계 - TF2 기초` — 여러 노드(센서, 로봇 본체)를 동시에 실행할 수 있게 되었으니, 이제 이 노드들이 서로 다른 위치/방향(좌표계)을 어떻게 일관되게 표현하는지 배운다.
-2. **함께 보면 좋은 주제**: `ROS2 기초 - Parameter와 실행 설정` (작성 완료) — YAML 파라미터 파일이 Launch 파일과 어떻게 연결되는지 복습하며 읽으면 좋다.
-3. **나중에 학습할 심화 주제**: `문제 해결 - Launch 시스템 디버깅` — 노드가 여러 개로 늘어난 실제 로봇 환경에서 특정 노드만 실행이 안 되는 문제를 진단하는 방법을 다룬다.
+1. **바로 다음**: [[07_TF2_기초|ROS2 좌표계 - TF2 기초]] — 여러 노드(센서, 로봇 본체)를 동시에 실행할 수 있게 되었으니, 이제 이 노드들이 서로 다른 위치/방향(좌표계)을 어떻게 일관되게 표현하는지 배운다.
+2. **함께 보면 좋은 주제**: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] (작성 완료) — YAML 파라미터 파일이 Launch 파일과 어떻게 연결되는지 복습하며 읽으면 좋다.
+3. **나중에 학습할 심화 주제**: [[04_Launch_시스템_디버깅|문제 해결 - Launch 시스템 디버깅]] — 노드가 여러 개로 늘어난 실제 로봇 환경에서 특정 노드만 실행이 안 되는 문제를 진단하는 방법을 다룬다.
 
 ---
 
@@ -388,6 +384,6 @@ lidar_launch = IncludeLaunchDescription(
 
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
-| 공식 문서 | ROS2 Documentation (Humble) – Creating a launch file | `LaunchDescription`, `Node` 액션의 기본 작성법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Using substitutions | `get_package_share_directory`, 경로 관련 substitution 사용법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Integrating launch files into ROS 2 packages | `setup.py`의 `data_files`에 launch 폴더를 등록하는 정확한 절차 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Creating a launch file](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html) | `LaunchDescription`, `Node` 액션의 기본 작성법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Using substitutions](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html) | `get_package_share_directory`, 경로 관련 substitution 사용법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Integrating launch files into ROS 2 packages](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Launch-system.html) | `setup.py`의 `data_files`에 launch 폴더를 등록하는 정확한 절차 확인 |

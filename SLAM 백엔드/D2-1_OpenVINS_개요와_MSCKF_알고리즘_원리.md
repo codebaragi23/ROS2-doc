@@ -1,6 +1,6 @@
 # D2-1. OpenVINS 개요와 MSCKF 알고리즘 원리
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 (SLAM 백엔드 평가)
+> SLAM 백엔드 평가 시리즈
 > 참고 논문: Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020 / Mourikis, Roumeliotis, "A Multi-State Constraint Kalman Filter for Vision-Aided Inertial Navigation," ICRA 2007
 > 선행 학습: D1-1(ORB-SLAM3 시스템 개요) — 같은 문제(카메라+IMU로 위치 추정)를 완전히 다른 방식으로 푸는 두 시스템을 대비해서 읽으면 이해가 빠르다.
 
@@ -46,7 +46,7 @@ flowchart LR
 | 계산량 성장 | 장면이 넓어질수록 맵/키프레임 증가 | 슬라이딩 윈도우 크기로 고정 — 장면 크기와 무관 |
 | Loop Closure | 있음(D1-3, D1-4) | 기본적으로 없음(순수 odometry, drift 누적) |
 
-이 표의 마지막 두 행이 실제로 관찰되는 현상을 설명한다: OpenVINS는 "맵을 버리고 새로 만든다"는 개념 자체가 없어서 D1-3에서 다룬 것과 같은 리셋 이벤트가 구조적으로 발생하지 않는다. 다만 이것이 "더 안전하다"는 뜻은 아니다 — 위치가 실제로 틀렸을 때도 시스템이 "실패했다"고 명시적으로 알려주지 않고 낮은 신뢰도로 조용히 계속 돌 수 있다는 뜻이기도 하다(D2-5에서 다룰 ZUPT 이슈와 연결).
+이 표의 마지막 두 행이 실제로 관찰되는 현상을 설명한다: OpenVINS는 "맵을 버리고 새로 만든다"는 개념 자체가 없어서 D1-3에서 다룬 것과 같은 리셋 이벤트가 구조적으로 발생하지 않는다. 다만 이것이 "더 안전하다"는 뜻은 아니다 — 위치가 실제로 틀렸을 때도 시스템이 "실패했다"고 명시적으로 알려주지 않고 낮은 신뢰도로 조용히 계속 돌 수 있다는 뜻이기도 하다(D2-5·D2-8에서 다룰 ZUPT 이슈와 연결).
 
 ## 5. 이 프로젝트에서의 적용 (Yahboom X3)
 
@@ -65,4 +65,4 @@ flowchart LR
 
 - Mourikis, Roumeliotis, "A Multi-State Constraint Kalman Filter for Vision-Aided Inertial Navigation," ICRA 2007
 - Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
-- GitHub rpng/open_vins — 공식 저장소
+- [GitHub rpng/open_vins](https://github.com/rpng/open_vins) — 공식 저장소

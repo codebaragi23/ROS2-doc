@@ -1,4 +1,4 @@
-# B8. 이 프로젝트에서 Relocalization이 일어나는 위치
+# B8. Relocalization은 Nav2 파이프라인의 어디에 위치하는가
 
 > RTAB-Map & Nav2 심화 시리즈 · Part B. Nav2 내비게이션 (마지막 문서)
 > 이전 문서: B7. Waypoint Follower & Velocity Smoother
@@ -25,7 +25,7 @@ flowchart TB
 
 Nav2 서버들은 이 그림에서 `TF` 박스가 어떻게 만들어지는지 전혀 모른다. `bt_navigator`도, `planner_server`도, `controller_server`도 그냥 "지금 map 기준으로 로봇이 어디 있는지"만 TF에서 읽어갈 뿐이다. **relocalization은 Nav2 파이프라인 "안"이 아니라 "옆"에서 독립적으로 일어나는 일**이다.
 
-B6에서 다룬 표준 Recovery(Spin/Wait/BackUp/Costmap Clear)는 이 왼쪽 Nav2 박스 안의 실패에 대한 대응이지, 오른쪽 Loc 박스의 문제(위치가 실제로 틀렸다는 것)를 고치는 동작이 아니다. 다만 이 프로젝트는 Spin 같은 Nav2 표준 동작을 **의도적으로 재활용해서** RTAB-Map이 재매칭할 시간을 벌어주는 전략을 쓴다 — 이것이 Part C에서 다루는 "긴급 재위치인정"의 실체다.
+B6에서 다룬 표준 Recovery(Spin/Wait/BackUp/Costmap Clear)는 이 왼쪽 Nav2 박스 안의 실패에 대한 대응이지, 오른쪽 Loc 박스의 문제(위치가 실제로 틀렸다는 것)를 고치는 동작이 아니다. 다만 이 프로젝트는 Spin 같은 Nav2 표준 동작을 **의도적으로 재활용해서** RTAB-Map이 재매칭할 시간을 벌어주는 전략을 쓴다 — 이것이 Part C에서 다루는 "긴급 relocalization"의 실체다.
 
 ## 3. 이 프로젝트에서의 적용 (Yahboom X3)
 
@@ -41,7 +41,7 @@ B6에서 다룬 표준 Recovery(Spin/Wait/BackUp/Costmap Clear)는 이 왼쪽 Na
 | 파라미터 | 소속 | Part C에서 다룰 역할 |
 |---|---|---|
 | `Mem/IncrementalMemory` | RTAB-Map | 매핑/로컬라이제이션 모드 스위치 |
-| `RGBD/SavedLocalizationIgnored` | RTAB-Map | 강제 재위치인정 트리거 |
+| `RGBD/SavedLocalizationIgnored` | RTAB-Map | 강제 relocalization 트리거 |
 | `RGBD/OptimizeMaxError` | RTAB-Map | 잘못된(false positive) loop closure 거부 임계값 |
 | `RGBD/OptimizeFromGraphEnd` | RTAB-Map | Pose Jump를 로봇이 아닌 지도 쪽으로 흡수시키는 대안 |
 | `progress_checker.movement_time_allowance` | Nav2 | localization 흔들림으로 인한 recovery 남발을 줄이는 여유 |
@@ -62,4 +62,4 @@ B6에서 다룬 표준 Recovery(Spin/Wait/BackUp/Costmap Clear)는 이 왼쪽 Na
 ## 7. 참고자료
 
 - Nav2 공식 문서 — Nav2 시스템 아키텍처(각 서버가 TF만 참조하고 독립적으로 동작하는 구조)
-- REP105 — `map`/`odom` 좌표계 규약과 relocalization 시 발생하는 discontinuity(불연속) 정의
+- [REP105](https://www.ros.org/reps/rep-0105.html) — `map`/`odom` 좌표계 규약과 relocalization 시 발생하는 discontinuity(불연속) 정의

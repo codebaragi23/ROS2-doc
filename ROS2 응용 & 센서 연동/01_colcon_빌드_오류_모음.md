@@ -65,5 +65,5 @@ CMake Error: The current CMakeCache.txt directory ... is different from the dire
 
 ## 7. 참고자료
 
-- colcon 공식 문서 — 빌드 옵션 전체 목록
-- rosdep 공식 문서 — 의존성 해석 방식
+- [colcon 공식 문서](https://colcon.readthedocs.io/) — 빌드 옵션 전체 목록
+- [rosdep 공식 문서](https://docs.ros.org/en/independent/api/rosdep/html/) — 의존성 해석 방식

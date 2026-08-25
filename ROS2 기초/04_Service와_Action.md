@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 2 — 기초 실습 |
-| 예상 선행 지식 | `ROS2 통신 - Topic과 Message`, `ROS2 기초 - 개발 환경과 워크스페이스 구조` |
+| 예상 선행 지식 | [[03_Topic과_Message|ROS2 통신 - Topic과 Message]], [[01_개발_환경과_워크스페이스_구조|ROS2 기초 - 개발 환경과 워크스페이스 구조]] |
 | 학습 목표 | Service와 Action의 개념과 차이를 설명할 수 있다 / 언제 Topic 대신 Service나 Action을 써야 하는지 판단할 수 있다 / `ros2 service`, `ros2 action` 명령으로 상태를 확인할 수 있다 |
 | 기준 환경 | Ubuntu 22.04, ROS2 Humble |
-| 관련 문서 | 이전: `ROS2 통신 - Topic과 Message` / 다음: `ROS2 기초 - Parameter와 실행 설정` |
+| 관련 문서 | 이전: [[03_Topic과_Message|ROS2 통신 - Topic과 Message]] / 다음: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] |
 
 ---
 
@@ -336,24 +336,20 @@ Action Server가 여전히 정상적으로 등록되어 있는지 확인한다.
 4. Nav2의 "특정 좌표로 이동" 기능이 Service가 아니라 Action으로 구현된 이유는 무엇인가?
 5. Action이 Topic, Service와 완전히 별개의 새로운 기술이 아니라고 할 수 있는 이유는 무엇인가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. Topic은 발행자가 계속 데이터를 흘려보내는 비동기·반복 구조이고, Service는 요청 한 번에 응답 한 번이 오는 왕복 구조다.
-2. 이동, 회전처럼 시간이 오래 걸리는 작업의 진행 상태(예: 남은 거리)를 작업이 끝나기 전에 계속 확인할 수 있어야 하기 때문이다.
-3. 해당 이름의 Service를 제공하는 서버 노드가 실제로 실행 중인지, 이름에 오타가 없는지 `ros2 service list`로 확인해야 한다.
-4. 목표 좌표까지 이동하는 데 시간이 오래 걸리고, 이동 중 진행 상황을 계속 알아야 하며, 도중에 취소가 가능해야 하기 때문이다.
-5. Action은 내부적으로 Goal 요청/취소 처리에는 Service와 유사한 요청-응답 구조를, Feedback 전달에는 Topic과 유사한 반복 전송 구조를 조합해서 구현되어 있기 때문이다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. Topic은 발행자가 계속 데이터를 흘려보내는 비동기·반복 구조이고, Service는 요청 한 번에 응답 한 번이 오는 왕복 구조다.
+> 2. 이동, 회전처럼 시간이 오래 걸리는 작업의 진행 상태(예: 남은 거리)를 작업이 끝나기 전에 계속 확인할 수 있어야 하기 때문이다.
+> 3. 해당 이름의 Service를 제공하는 서버 노드가 실제로 실행 중인지, 이름에 오타가 없는지 `ros2 service list`로 확인해야 한다.
+> 4. 목표 좌표까지 이동하는 데 시간이 오래 걸리고, 이동 중 진행 상황을 계속 알아야 하며, 도중에 취소가 가능해야 하기 때문이다.
+> 5. Action은 내부적으로 Goal 요청/취소 처리에는 Service와 유사한 요청-응답 구조를, Feedback 전달에는 Topic과 유사한 반복 전송 구조를 조합해서 구현되어 있기 때문이다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `ROS2 기초 - Parameter와 실행 설정` — 이 문서에서 배운 Service 구조가 실제로 파라미터 조회/설정에 어떻게 쓰이는지 배운다.
-2. **함께 보면 좋은 주제**: `ROS2 기초 - Launch 파일 작성법` — Action 서버/클라이언트처럼 여러 노드가 함께 실행되어야 하는 시스템을 한 번에 띄우는 방법이 필요해진다.
-3. **나중에 학습할 심화 주제**: `Nav2 - Action 기반 경로 이동 구조 이해하기` — 이 문서의 Action 개념이 Nav2의 실제 동작 구조(BT Navigator, Action Server)로 어떻게 확장되는지 다룬다.
+1. **바로 다음**: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] — 이 문서에서 배운 Service 구조가 실제로 파라미터 조회/설정에 어떻게 쓰이는지 배운다.
+2. **함께 보면 좋은 주제**: [[06_Launch_파일_작성법|ROS2 기초 - Launch 파일 작성법]] — Action 서버/클라이언트처럼 여러 노드가 함께 실행되어야 하는 시스템을 한 번에 띄우는 방법이 필요해진다.
+3. **나중에 학습할 심화 주제**: [[B6-1_Nav2_Action_기반_경로_이동_구조|Nav2 - Action 기반 경로 이동 구조 이해하기]] — 이 문서의 Action 개념이 Nav2의 실제 동작 구조(BT Navigator, Action Server)로 어떻게 확장되는지 다룬다.
 
 ---
 
@@ -361,6 +357,6 @@ Action Server가 여전히 정상적으로 등록되어 있는지 확인한다.
 
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
-| 공식 문서 | ROS2 Documentation (Humble) – Understanding services | Service의 요청-응답 구조, `ros2 service` CLI 사용법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Understanding actions | Action의 Goal/Feedback/Result 구조와 Service·Topic 대비 사용 시점 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Writing an action server and client (Python) | `ActionClient`, `feedback_callback`, `get_result_async` 구조 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Understanding services](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html) | Service의 요청-응답 구조, `ros2 service` CLI 사용법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Understanding actions](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html) | Action의 Goal/Feedback/Result 구조와 Service·Topic 대비 사용 시점 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Writing an action server and client (Python)](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html) | `ActionClient`, `feedback_callback`, `get_result_async` 구조 확인 |

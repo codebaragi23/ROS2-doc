@@ -2,19 +2,19 @@
 
 > RTAB-Map & Nav2 심화 시리즈 · Part C. Relocalization 심화
 > 이전 문서: C3. RTAB-Map 핵심 파라미터 대응표
-> 이 문서는 업로드된 원문의 "3. 재위치인정 시 주의사항 및 안정화 방안"을 공식 근거로 보강한 버전이다.
+> 이 문서는 업로드된 원문의 "3. relocalization 시 주의사항 및 안정화 방안"을 공식 근거로 보강한 버전이다.
 
 ## 1. 개요
 
 Relocalization이 정확하게 일어나더라도, 그 순간 `map→odom` TF가 갑자기 크게 바뀌는 "Pose Jump" 현상 자체는 구조적으로 피할 수 없다. 이 문서는 왜 이런 점프가 생기는지, 그리고 이를 완화하는 공식적으로 확인된 방법들을 정리한다.
 
-## 2. 핵심 개념: 왜 점프가 생기는가 (REP105)
+## 2. 핵심 개념: 왜 점프가 생기는가 ([REP105](https://www.ros.org/reps/rep-0105.html))
 
-ROS 좌표계 표준 REP105는 `map` 프레임을 "불연속적으로 점프할 수 있는(discontinuous) 전역 기준", `odom` 프레임을 "항상 연속적인(continuous) 로컬 기준"으로 정의한다. RTAB-Map 개발자도 공식적으로 이렇게 설명한다.
+ROS 좌표계 표준 [REP105](https://www.ros.org/reps/rep-0105.html)는 `map` 프레임을 "불연속적으로 점프할 수 있는(discontinuous) 전역 기준", `odom` 프레임을 "항상 연속적인(continuous) 로컬 기준"으로 정의한다. RTAB-Map 개발자도 공식적으로 이렇게 설명한다.
 
-> "RTAB-Map follows REP105 for map frame, thus will produce discrete jumps when a loop closure or relocalization happens."
+> "RTAB-Map follows [REP105](https://www.ros.org/reps/rep-0105.html) for map frame, thus will produce discrete jumps when a loop closure or relocalization happens."
 
-즉 **점프 자체는 버그가 아니라 REP105 표준을 따르는 정상 동작**이다. 문제는 이 점프가 로봇 제어(Nav2 controller, costmap)에 그대로 전달되면 급제동이나 경로 이탈을 유발한다는 점이다.
+즉 **점프 자체는 버그가 아니라 [REP105](https://www.ros.org/reps/rep-0105.html) 표준을 따르는 정상 동작**이다. 문제는 이 점프가 로봇 제어(Nav2 controller, costmap)에 그대로 전달되면 급제동이나 경로 이탈을 유발한다는 점이다.
 
 ## 3. 이 프로젝트에서의 적용: 두 가지 공식 대응 방향
 
@@ -40,14 +40,14 @@ RGBD/OptimizeFromGraphEnd: true
 | 파라미터/설정 | 역할 | 트레이드오프 |
 |---|---|---|
 | `RGBD/OptimizeFromGraphEnd` | true 시 지도가 점프, false 시 로봇이 점프 | 지도 안정성 vs 로봇 pose 연속성 |
-| Nav2 `speed_limit` (Costmap Filter) | relocalization 중 속도 제한 강화 | 원문에서 언급한 "재위치인정 중 속도 제한" 실현 수단 |
+| Nav2 `speed_limit` (Costmap Filter) | relocalization 중 속도 제한 강화 | 원문에서 언급한 "relocalization 중 속도 제한" 실현 수단 |
 | 가속도 기반 게이팅 (프로젝트 커스텀) | 모션 속도가 일정 수준 이하일 때만 relocalization 승인 | False Loop Closure(모션 블러로 인한 오매칭) 방지 |
 
 ## 5. 진단 관점
 
-- 재위치인정 직후 로봇이 급정지하거나 튄다면: `RGBD/OptimizeFromGraphEnd` 설정을 먼저 확인한다. false(기본값) 상태라면 A 방법 적용을 검토한다.
-- 재위치인정 직후 costmap의 장애물이 잘못된 위치에 남아있다면: 점프 직후 costmap을 클리어하는 로직(B6의 `ClearEntireCostmap` recovery 액션)을 재위치인정 이벤트와 연동할 수 있는지 검토한다.
-- 흔들리는 상태에서 자주 재위치인정이 발동해 로봇이 계속 덜컥거린다면: C3에서 다룬 "가속도 기반 게이팅"처럼, 로봇이 정지/저속 상태일 때만 재위치인정을 승인하는 조건을 추가하는 것이 원인 완화에 직접적이다.
+- relocalization 직후 로봇이 급정지하거나 튄다면: `RGBD/OptimizeFromGraphEnd` 설정을 먼저 확인한다. false(기본값) 상태라면 A 방법 적용을 검토한다.
+- relocalization 직후 costmap의 장애물이 잘못된 위치에 남아있다면: 점프 직후 costmap을 클리어하는 로직(B6의 `ClearEntireCostmap` recovery 액션)을 relocalization 이벤트와 연동할 수 있는지 검토한다.
+- 흔들리는 상태에서 자주 relocalization이 발동해 로봇이 계속 덜컥거린다면: C3에서 다룬 "가속도 기반 게이팅"처럼, 로봇이 정지/저속 상태일 때만 relocalization을 승인하는 조건을 추가하는 것이 원인 완화에 직접적이다.
 
 ## 6. 다음 문서와의 연결
 
@@ -55,6 +55,6 @@ RGBD/OptimizeFromGraphEnd: true
 
 ## 7. 참고자료
 
-- REP105 — ROS 좌표계 표준, `map` 프레임의 불연속성(discontinuity) 정의
+- [REP105](https://www.ros.org/reps/rep-0105.html) — ROS 좌표계 표준, `map` 프레임의 불연속성(discontinuity) 정의
 - RTAB-Map 공식 Q&A(answers.ros.org) — `OptimizeFromGraphEnd` 대안과 `robot_localization` 필터링 제안 원문
 - Nav2 공식 문서 — Costmap Filters의 speed_limit 레이어

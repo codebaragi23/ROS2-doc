@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 2 — 도구 활용 |
-| 예상 선행 지식 | `ROS2 통신 - Topic과 Message`, `ROS2 좌표계 - TF2 기초` |
+| 예상 선행 지식 | [[03_Topic과_Message|ROS2 통신 - Topic과 Message]], [[07_TF2_기초|ROS2 좌표계 - TF2 기초]] |
 | 학습 목표 | rqt의 주요 플러그인을 활용할 수 있다 / RViz2에서 센서 데이터와 TF를 시각화할 수 있다 / 상황에 맞게 CLI와 GUI 도구를 선택할 수 있다 |
 | 기준 환경 | Ubuntu 22.04, ROS2 Humble |
-| 관련 문서 | 이전: `ROS2 좌표계 - TF2 기초` / 다음: `센서 연동 - RealSense D435i` (예정) |
+| 관련 문서 | 이전: [[07_TF2_기초|ROS2 좌표계 - TF2 기초]] / 다음: [[05_센서_연동_RealSense_D435i|센서 연동 - RealSense D435i]] (예정) |
 
 ---
 
@@ -292,7 +292,7 @@ Display를 추가만 하고 `Topic` 필드를 비워두거나 잘못 입력해�
 * rqt와 RViz2가 보여주는 모든 정보는 근본적으로 이전 문서들에서 배운 **Topic**(3편), **TF**(7편) 데이터다. 이 문서는 새로운 통신 개념이 아니라, 지금까지 CLI로 확인해온 것을 시각적으로 보는 방법을 다룬다.
 * `rqt_reconfigure`는 5편에서 배운 **Parameter**의 `ros2 param set`을 GUI로 감싼 도구이며, 내부 동작 방식(Service 호출)은 동일하다.
 * RViz2 설정을 Launch 파일에 포함시키는 방식은 6편에서 배운 **Launch 파일**의 `Node` 액션 구조를 그대로 재사용한다.
-* 앞으로 다룰 `센서 연동 - RealSense D435i`, `센서 연동 - LiDAR C1` 문서의 "확인" 단계는 대부분 이 문서에서 배운 RViz2 Display(Image, PointCloud2, LaserScan)를 활용한다.
+* 앞으로 다룰 [[05_센서_연동_RealSense_D435i|센서 연동 - RealSense D435i]], [[06_센서_연동_LiDAR_C1|센서 연동 - LiDAR C1]] 문서의 "확인" 단계는 대부분 이 문서에서 배운 RViz2 Display(Image, PointCloud2, LaserScan)를 활용한다.
 
 ---
 
@@ -337,24 +337,20 @@ Display를 추가만 하고 `Topic` 필드를 비워두거나 잘못 입력해�
 4. `rqt_reconfigure`는 어떤 이전 개념의 GUI 버전인가?
 5. 실제 로봇에서 LiDAR와 카메라 데이터가 RViz2 화면에서 서로 어긋나 보인다면 어떤 문서에서 배운 개념을 점검해야 하는가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. rqt는 노드/Topic 관계나 수치 데이터를 확인할 때, RViz2는 3차원 공간 정보(센서 데이터, TF, 지도)를 확인할 때 적합하다.
-2. 현재 실행 중인 노드들이 어떤 Topic으로 서로 연결되어 있는지 전체 구조를 그림으로 확인할 때 사용한다.
-3. `Fixed Frame`에 지정한 좌표계 이름이 실제 TF 트리에 존재하는지부터 확인해야 한다.
-4. 5편에서 배운 Parameter의 `ros2 param set` 기능을 GUI로 감싼 도구다.
-5. 7편에서 배운 TF2 설정(각 센서의 `frame_id`와 TF 트리 상의 위치값)을 점검해야 한다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. rqt는 노드/Topic 관계나 수치 데이터를 확인할 때, RViz2는 3차원 공간 정보(센서 데이터, TF, 지도)를 확인할 때 적합하다.
+> 2. 현재 실행 중인 노드들이 어떤 Topic으로 서로 연결되어 있는지 전체 구조를 그림으로 확인할 때 사용한다.
+> 3. `Fixed Frame`에 지정한 좌표계 이름이 실제 TF 트리에 존재하는지부터 확인해야 한다.
+> 4. 5편에서 배운 Parameter의 `ros2 param set` 기능을 GUI로 감싼 도구다.
+> 5. 7편에서 배운 TF2 설정(각 센서의 `frame_id`와 TF 트리 상의 위치값)을 점검해야 한다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `센서 연동 - RealSense D435i` — 이 문서에서 배운 `Image`, `PointCloud2` Display를 실제 카메라 데이터로 채워보는 첫 센서 연동 실습이다.
-2. **함께 보면 좋은 주제**: `센서 연동 - LiDAR C1` — `LaserScan` Display를 활용해 실제 LiDAR 데이터를 시각적으로 검증하게 된다.
-3. **나중에 학습할 심화 주제**: `문제 해결 - ROS2 자주 발생하는 오류 모음` — 이 문서에서 다룬 GUI 진단 도구들이 실전 트러블슈팅에서 어떻게 조합되어 쓰이는지 다룬다.
+1. **바로 다음**: [[05_센서_연동_RealSense_D435i|센서 연동 - RealSense D435i]] — 이 문서에서 배운 `Image`, `PointCloud2` Display를 실제 카메라 데이터로 채워보는 첫 센서 연동 실습이다.
+2. **함께 보면 좋은 주제**: [[06_센서_연동_LiDAR_C1|센서 연동 - LiDAR C1]] — `LaserScan` Display를 활용해 실제 LiDAR 데이터를 시각적으로 검증하게 된다.
+3. **나중에 학습할 심화 주제**: [[09_문제_해결_자주_발생하는_오류_모음|문제 해결 - ROS2 자주 발생하는 오류 모음]] — 이 문서에서 다룬 GUI 진단 도구들이 실전 트러블슈팅에서 어떻게 조합되어 쓰이는지 다룬다.
 
 ---
 
@@ -362,6 +358,6 @@ Display를 추가만 하고 `Topic` 필드를 비워두거나 잘못 입력해�
 
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
-| 공식 문서 | ROS2 Documentation (Humble) – Introducing turtlesim and rqt | rqt의 개념과 `rqt_graph` 기본 사용법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – RViz2 user guide | RViz2의 Display 종류와 Fixed Frame 설정 방법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – rqt_console and roslaunch | `rqt_console`을 이용한 로그 필터링 방법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Introducing turtlesim and rqt](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html) | rqt의 개념과 `rqt_graph` 기본 사용법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – RViz2 user guide](https://docs.ros.org/en/humble/Tutorials/Intermediate/RViz/RViz-Main.html) | RViz2의 Display 종류와 Fixed Frame 설정 방법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – rqt_console and roslaunch](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Using-Rqt-Console/Using-Rqt-Console.html) | `rqt_console`을 이용한 로그 필터링 방법 확인 |

@@ -67,5 +67,5 @@ Global의 robot_radius가 Local보다 약간 크게 잡혀 있는 것은, 전역
 
 ## 7. 참고자료
 
-- Nav2 공식 문서(docs.nav2.org) — Costmap 2D 레이어 구조, obstacle/inflation layer 파라미터
+- Nav2 공식 문서([docs.nav2.org](https://docs.nav2.org/)) — Costmap 2D 레이어 구조, obstacle/inflation layer 파라미터
 - `rtabmap_nav_params_tuning_guide.md` (프로젝트 내부 자료) — 이 프로젝트의 실제 costmap 설정값과 튜닝 우선순위

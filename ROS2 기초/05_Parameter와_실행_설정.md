@@ -7,10 +7,10 @@
 | 항목       | 내용                                                                                                 |
 | -------- | -------------------------------------------------------------------------------------------------- |
 | 학습 단계    | Level 2 ~ Level 3                                                                                  |
-| 예상 선행 지식 | `ROS2 통신 - Topic과 Message`, `ROS2 통신 - Service와 Action`                                            |
+| 예상 선행 지식 | [[03_Topic과_Message|ROS2 통신 - Topic과 Message]], [[04_Service와_Action|ROS2 통신 - Service와 Action]]                                            |
 | 학습 목표    | Parameter가 왜 필요한지 설명할 수 있다 / 노드에 Parameter를 선언하고 실행 시 값을 바꿀 수 있다 / YAML 파일로 여러 파라미터를 한 번에 관리할 수 있다 |
 | 기준 환경    | Ubuntu 22.04, ROS2 Humble                                                                          |
-| 관련 문서    | 이전: `ROS2 통신 - Service와 Action` / 다음: `ROS2 기초 - Launch 파일 작성법`                                    |
+| 관련 문서    | 이전: [[04_Service와_Action|ROS2 통신 - Service와 Action]] / 다음: [[06_Launch_파일_작성법|ROS2 기초 - Launch 파일 작성법]]                                    |
 
 ---
 
@@ -54,7 +54,7 @@ Parameter는 **노드가 실행될 때 함께 전달되는 설정값**이며, �
 **실제 로봇 관점 (ROSMASTER X3 기준)**
 
 - LiDAR C1 드라이버는 `frame_id`, `scan_frequency`, `range_min`/`range_max` 같은 파라미터를 가진다. 실제 주행 환경에 따라 최소/최대 감지 거리를 조정해야 할 때 코드를 건드리지 않고 파라미터만 바꾼다.
-- Nav2는 로봇의 반경(`robot_radius`), 최대 속도(`max_vel_x`) 등을 파라미터로 관리한다. X3의 실제 크기와 모터 성능에 맞게 이 값들을 조정하는 것이 Nav2 설정 작업의 핵심이며, 이는 이후 `Nav2 - Costmap의 구조와 설정` 문서에서 자세히 다룬다.
+- Nav2는 로봇의 반경(`robot_radius`), 최대 속도(`max_vel_x`) 등을 파라미터로 관리한다. X3의 실제 크기와 모터 성능에 맞게 이 값들을 조정하는 것이 Nav2 설정 작업의 핵심이며, 이는 이후 [[B3_Costmap|Nav2 - Costmap의 구조와 설정]] 문서에서 자세히 다룬다.
 - ORB-SLAM3는 카메라의 내부 파라미터(초점 거리, 왜곡 계수 등)를 설정 파일로 입력받는데, 이 값이 틀리면 SLAM 성능이 크게 떨어진다. 이 프로젝트의 센서 연동 문서들에서 이 개념이 반복적으로 등장한다.
 
 ---
@@ -356,24 +356,20 @@ def parameter_callback(self, params):
 4. `ros2 param set`으로 값을 바꿔도 노드 동작에 즉시 반영되지 않을 수 있는 이유는 무엇인가?
 5. 실제 LiDAR C1이나 RealSense D435i 드라이버에서 파라미터가 어떻게 활용될 것으로 예상되는가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. 값이 바뀔 때마다 코드를 수정하고 재빌드할 필요 없이, 실행 시점에 값만 바꿔서 다양한 환경/로봇에 재사용할 수 있기 때문이다.
-2. 실행 시 해당 이름으로 값을 전달해도 "Parameter not declared" 오류가 발생하며 값이 적용되지 않는다.
-3. YAML 설정 파일을 만들어 `--params-file` 옵션으로 한 번에 불러오는 것이 좋다.
-4. 파라미터 값 자체는 바뀌지만, 그 값을 사용하는 로직(예: 타이머 재생성)이 별도의 콜백으로 구현되어 있지 않으면 기존 로직에 자동으로 반영되지 않기 때문이다.
-5. 최대/최소 감지 거리, 해상도, 프레임 레이트, 프레임 ID(좌표계 이름) 등의 설정을 코드 수정 없이 YAML 파일로 조정하는 데 사용될 것으로 예상된다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. 값이 바뀔 때마다 코드를 수정하고 재빌드할 필요 없이, 실행 시점에 값만 바꿔서 다양한 환경/로봇에 재사용할 수 있기 때문이다.
+> 2. 실행 시 해당 이름으로 값을 전달해도 "Parameter not declared" 오류가 발생하며 값이 적용되지 않는다.
+> 3. YAML 설정 파일을 만들어 `--params-file` 옵션으로 한 번에 불러오는 것이 좋다.
+> 4. 파라미터 값 자체는 바뀌지만, 그 값을 사용하는 로직(예: 타이머 재생성)이 별도의 콜백으로 구현되어 있지 않으면 기존 로직에 자동으로 반영되지 않기 때문이다.
+> 5. 최대/최소 감지 거리, 해상도, 프레임 레이트, 프레임 ID(좌표계 이름) 등의 설정을 코드 수정 없이 YAML 파일로 조정하는 데 사용될 것으로 예상된다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `ROS2 기초 - Launch 파일 작성법` — 지금까지 배운 노드 실행, Topic 연결, 파라미터 YAML 로딩을 명령어 하나로 한 번에 처리하는 방법을 배운다.
-2. **함께 보면 좋은 주제**: `ROS2 통신 - Service와 Action` (작성 완료) — 파라미터 조회/변경이 실제로 Service 위에서 동작한다는 점을 복습하며 연결해서 읽으면 좋다.
-3. **나중에 학습할 심화 주제**: `Nav2 - Costmap의 구조와 설정` — 이 문서에서 배운 파라미터 개념이 Nav2의 수십 개 설정값을 다루는 실전 사례로 확장된다.
+1. **바로 다음**: [[06_Launch_파일_작성법|ROS2 기초 - Launch 파일 작성법]] — 지금까지 배운 노드 실행, Topic 연결, 파라미터 YAML 로딩을 명령어 하나로 한 번에 처리하는 방법을 배운다.
+2. **함께 보면 좋은 주제**: [[04_Service와_Action|ROS2 통신 - Service와 Action]] (작성 완료) — 파라미터 조회/변경이 실제로 Service 위에서 동작한다는 점을 복습하며 연결해서 읽으면 좋다.
+3. **나중에 학습할 심화 주제**: [[B3_Costmap|Nav2 - Costmap의 구조와 설정]] — 이 문서에서 배운 파라미터 개념이 Nav2의 수십 개 설정값을 다루는 실전 사례로 확장된다.
 
 ---
 
@@ -381,6 +377,6 @@ def parameter_callback(self, params):
 
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
-| 공식 문서 | ROS2 Documentation (Humble) – Understanding parameters | Parameter의 정의, `declare_parameter`/`get_parameter` 사용법 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Using parameters in a class (C++/Python) | 파라미터 선언과 노드 클래스 내 활용 패턴 확인 |
-| 공식 문서 | ROS2 Documentation (Humble) – Monitoring for parameter changes | `add_on_set_parameters_callback`을 통한 동적 파라미터 반영 방법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Understanding parameters](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html) | Parameter의 정의, `declare_parameter`/`get_parameter` 사용법 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Using parameters in a class (C++/Python)](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html) | 파라미터 선언과 노드 클래스 내 활용 패턴 확인 |
+| 공식 문서 | [ROS2 Documentation (Humble) – Monitoring for parameter changes](https://docs.ros.org/en/humble/Tutorials/Intermediate/Monitoring-For-Parameter-Changes-CPP.html) | `add_on_set_parameters_callback`을 통한 동적 파라미터 반영 방법 확인 |

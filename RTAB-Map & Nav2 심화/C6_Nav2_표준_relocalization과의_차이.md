@@ -14,7 +14,7 @@
 | relocalization 트리거 방식 | `reinitialize_global_localization` 서비스, BT 액션 `ReinitializeGlobalLocalization`으로 **공식 지원** | 공식 서비스 없음 — 프로젝트가 직접 감시 로직을 만들어 판단(C2) |
 | Kidnapped robot 대응 | 파티클을 지도 전체에 다시 흩뿌려 전역 재탐색(파티클 필터 고유 메커니즘) | Spin Recovery(Nav2 표준 기능을 재활용) + RTAB-Map 자체 loop closure 재탐색에 의존 |
 | 초기 위치 지정 | `/initialpose` 토픽, `set_initial_pose` 서비스 | `/rtabmap/initialpose` 토픽 (별도 메커니즘) |
-| Pose Jump 특성 | 파티클 필터는 점진적으로 수렴하는 경향이 있어 상대적으로 완만 | REP105에 따라 loop closure/relocalization 시 이산적 점프 발생 (C4) |
+| Pose Jump 특성 | 파티클 필터는 점진적으로 수렴하는 경향이 있어 상대적으로 완만 | [REP105](https://www.ros.org/reps/rep-0105.html)에 따라 loop closure/relocalization 시 이산적 점프 발생 (C4) |
 | 지도 요구사항 | 2D occupancy grid만 있으면 됨 | RTAB-Map DB(그래프+시각적 특징) 필요 — 지도 제작 단계(Part A)의 품질이 그대로 relocalization 품질에 영향 |
 | 계산 자원 | 상대적으로 가벼움 (2D 파티클 필터) | 시각적 특징 매칭이 포함되어 상대적으로 무거움 — Yahboom X3의 Jetson 자원 제약과 직결([[ros2-nav-yahboom]] CPU 병목 이력 참고) |
 

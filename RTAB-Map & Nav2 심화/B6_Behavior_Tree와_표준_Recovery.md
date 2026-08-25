@@ -32,7 +32,7 @@ Nav2 공식 `nav_to_pose_recovery` Behavior Tree는 실패 시 두 단계로 회
 
 이 구분이 이 시리즈에서 반복해서 강조하는 핵심이다.
 
-- Nav2 공식 문서는 **`ReinitializeGlobalLocalization`이라는 별도의 BT 액션**을 제공하며, "심각한 delocalization이나 kidnapped robot 문제 시 AMCL을 이용한 전역 재위치인정을 트리거한다"고 명시한다. 즉 Nav2 생태계에는 relocalization 전용 BT 노드가 이미 존재한다.
+- Nav2 공식 문서는 **`ReinitializeGlobalLocalization`이라는 별도의 BT 액션**을 제공하며, "심각한 위치 추정 실패(delocalization)나 kidnapped robot 문제 시 AMCL을 이용한 전역 relocalization을 트리거한다"고 명시한다. 즉 Nav2 생태계에는 relocalization 전용 BT 노드가 이미 존재한다.
 - 하지만 이 노드는 **AMCL 전용**이다. 내부적으로 `reinitialize_global_localization`이라는 AMCL 서비스를 호출한다.
 - 이 프로젝트는 AMCL이 아니라 RTAB-Map localization을 쓰므로, `ReinitializeGlobalLocalization` BT 노드를 기본 트리에 넣어도 대응하는 서버가 없어 아무 효과가 없다.
 - 그래서 이 프로젝트의 relocalization 대응(Part C)은 Nav2 BT 표준 기능이 아니라, **RTAB-Map 레이어에서 별도로 설계한 프로젝트 자체 전략**이다. 예를 들어 "Kidnapped 상황에서 Spin Recovery로 재매칭을 유도"하는 것은 Nav2의 `Spin` 액션(위 표준 recovery 목록에 이미 있는 것)을 **relocalization 목적으로 재해석해서 사용하는 것**이지, Nav2가 그렇게 하라고 설계해준 것이 아니다.

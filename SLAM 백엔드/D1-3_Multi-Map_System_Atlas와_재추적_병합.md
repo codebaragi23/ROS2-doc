@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | `SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요`(Atlas, 세 스레드), `SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘`(초기화 실패 개념) |
-| 학습 목표 | Tracking 유실 이후 시스템이 거치는 세 단계(재위치인정 시도 → 실패 시 새 지도 생성 → 재방문 시 병합)를 설명할 수 있다 / Loop Closing과 Map Merging이 같은 메커니즘의 두 결과임을 설명할 수 있다 / Welding Window의 역할을 설명할 수 있다 |
+| 예상 선행 지식 | [[D1-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 - D1-1. ORB-SLAM3 시스템 개요]](Atlas, 세 스레드), [[D1-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘]](초기화 실패 개념) |
+| 학습 목표 | Tracking 유실 이후 시스템이 거치는 세 단계(relocalization 시도 → 실패 시 새 지도 생성 → 재방문 시 병합)를 설명할 수 있다 / Loop Closing과 Map Merging이 같은 메커니즘의 두 결과임을 설명할 수 있다 / Welding Window의 역할을 설명할 수 있다 |
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 |
-| 관련 문서 | 이전: `SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘` / 다음: `SLAM 백엔드 - D1-4. Loop Closing과 Place Recognition` |
+| 관련 문서 | 이전: [[D1-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘]] / 다음: [[D1-4_Loop_Closing과_Place_Recognition|SLAM 백엔드 - D1-4. Loop Closing과 Place Recognition]] |
 
 > 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장(Map Merging and Loop Closing), Elvira et al., "ORBSLAM-Atlas: a robust and accurate multi-map system," IROS 2019
 
@@ -19,8 +19,8 @@
 ## 1. 먼저 알아야 할 핵심
 
 1. D1-2에서 IMU 초기화가 반복 실패할 수 있다는 것을 배웠다. 이 문서는 "초기화가 실패해서 tracking을 완전히 잃으면 그다음 무슨 일이 일어나는가"를 다룬다.
-2. Tracking을 유실하면 시스템은 곧바로 Atlas의 **모든 지도**를 대상으로 재위치인정(relocalization)을 시도한다.
-3. 재위치인정이 일정 시간 계속 실패하면, 기존 Active Map은 **Non-Active로 보존**되고 완전히 **새로운 Active Map이 처음부터 초기화**된다 — 지도를 버리는 것이 아니라 "잠시 접어두고 새 노트를 편다."
+2. Tracking을 유실하면 시스템은 곧바로 Atlas의 **모든 지도**를 대상으로 relocalization을 시도한다.
+3. relocalization이 일정 시간 계속 실패하면, 기존 Active Map은 **Non-Active로 보존**되고 완전히 **새로운 Active Map이 처음부터 초기화**된다 — 지도를 버리는 것이 아니라 "잠시 접어두고 새 노트를 편다."
 4. **Loop Closing**과 **Map Merging**은 서로 다른 두 기능이 아니라, **같은 place recognition 절차의 결과가 어디서 매칭됐는지에 따라 갈리는 하나의 메커니즘**이다 — 같은 지도 안이면 Loop Closing, 다른 지도면 Map Merging이다.
 5. 이 프로젝트에서 반복 관찰된 "active-map IMU reset"은, 곧 **Atlas가 지도를 만들었다 접었다 하는 상황**과 같다 — 매번 새 Active Map이 만들어지면, 그 지도가 이전 지도와 병합되기 전까지는 누적된 위치 정보가 끊긴 채로 남는다.
 
@@ -35,7 +35,7 @@ Multi-Map System(Atlas)은 "위치를 완전히 잃어버려도 시스템이 멈
 여행 중 일기를 쓰는 사람을 떠올려보자.
 
 - 이 사람은 여행하는 동안 계속 일기(지도)를 쓴다. 그런데 갑자기 일기장을 통째로 잃어버렸다(tracking 유실)고 해보자.
-- 처음에는 "혹시 방금 있던 장소 근처에 떨어뜨렸나?" 하고 주변을 둘러본다(재위치인정 시도). 찾으면 원래 쓰던 일기장을 이어서 쓴다.
+- 처음에는 "혹시 방금 있던 장소 근처에 떨어뜨렸나?" 하고 주변을 둘러본다(relocalization 시도). 찾으면 원래 쓰던 일기장을 이어서 쓴다.
 - 끝내 못 찾으면, 포기하고 **새 일기장을 사서 처음부터 다시 쓰기 시작**한다(새 Active Map 생성). 예전 일기장은 버린 게 아니라 가방 어딘가에 그대로 들어있다(Non-Active Map).
 - 여행을 계속하다가 우연히 예전에 갔던 장소를 다시 지나가게 됐다. 그 순간 "어? 여기 예전 일기장에 적어놨던 곳이잖아!"라고 알아채고, **가방에서 예전 일기장을 꺼내 지금 쓰던 새 일기장과 내용을 이어 붙인다**(Map Merging).
 - 만약 잃어버렸던 게 아니라 그냥 하루 전에 지나간 곳을 오늘 다시 지나간 것이라면(같은 일기장을 계속 쓰고 있었다면), 그건 "아, 여기 어제도 왔었지" 하고 **같은 일기장 안에서** 기록을 이어 붙이는 것과 같다(Loop Closing).
@@ -58,7 +58,7 @@ Multi-Map System(Atlas)은 "위치를 완전히 잃어버려도 시스템이 멈
 **실제 로봇 관점 (Yahboom X3 기준)**
 
 - X3가 실내에서 사람이나 가구에 가려 tracking을 완전히 잃어도, Atlas 구조 덕분에 로봇은 "새 지도"로 매핑을 계속하며 완전히 멈추지 않는다.
-- 다만 실제 배포 환경에서 이 리셋이 너무 자주 발생한다면, `RTAB-Map & Nav2 심화 - B8. Relocalization이 일어나는 위치`에서 다룬 Nav2 관점의 relocalization과는 다른, **훨씬 심각한 상황**으로 이어질 수 있다 — `C1. 개요와 학술적 정의`에서 구분한 "Global Relocalization vs Pose Tracking" 중 전자(전역 재탐색)가 계속 반복되는 셈이기 때문이다.
+- 다만 실제 배포 환경에서 이 리셋이 너무 자주 발생한다면, [[B8_Relocalization이_일어나는_위치|RTAB-Map & Nav2 심화 - B8. Relocalization은 Nav2 파이프라인의 어디에 위치하는가]]에서 다룬 Nav2 관점의 relocalization과는 다른, **훨씬 심각한 상황**으로 이어질 수 있다 — [[C1_개요와_학술적_정의|C1. 개요와 학술적 정의]]에서 구분한 "Global Relocalization vs Pose Tracking" 중 전자(전역 재탐색)가 계속 반복되는 셈이기 때문이다.
 
 ---
 
@@ -83,7 +83,7 @@ relocalization 시도}
 **그림 읽는 방법**
 
 - 위쪽 흐름은 "정상적으로 매핑 중일 때" 매 키프레임마다 반복되는 place recognition 절차이고, 아래쪽 흐름은 "tracking을 완전히 잃었을 때"의 복구 절차다 — 이 둘은 서로 다른 상황에서 작동하는 별개의 흐름이지만, **둘 다 같은 place recognition/DBoW2 메커니즘을 공유**한다.
-- 위쪽 흐름의 결과(Loop Closure 또는 Map Merging)는 이 ROS2 노드 외부에는 직접 드러나지 않지만, 결과적으로 로봇의 pose(TF) 추정이 갑자기 보정되는 형태(pose jump)로 나타날 수 있다 — 이는 `RTAB-Map & Nav2 심화 - C4. Pose Jump 제어와 안정화`에서 다룬 개념과 같은 계열의 현상이다.
+- 위쪽 흐름의 결과(Loop Closure 또는 Map Merging)는 이 ROS2 노드 외부에는 직접 드러나지 않지만, 결과적으로 로봇의 pose(TF) 추정이 갑자기 보정되는 형태(pose jump)로 나타날 수 있다 — 이는 [[C4_Pose_Jump_제어와_안정화|RTAB-Map & Nav2 심화 - C4. Pose Jump 제어와 안정화]]에서 다룬 개념과 같은 계열의 현상이다.
 - 아래쪽 흐름에서 "새 Active Map 초기화"에 도달하면, D1-2에서 다룬 IMU 초기화(3단계 MAP 추정)가 그 새 지도에 대해 처음부터 다시 실행된다.
 
 ---
@@ -214,8 +214,8 @@ grep -in "candidate\|reject\|geometric" revisit.log
 ## 11. 개념 간 연결
 
 * 이 문서의 relocalization/새 지도 생성 흐름은 D1-1에서 배운 Atlas 구조를 실제로 "언제, 왜" 쓰는지 보여주는 구체적 사례다.
-* Loop Closure에서 일어나는 그래프 최적화는 `RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리`에서 배운 "Loop Closure가 그래프 최적화로 드리프트를 전체적으로 편다"는 개념과 원리상 동일하다.
-* Map Merging 이후 로봇 pose가 갑자기 보정되는 현상은 `RTAB-Map & Nav2 심화 - C4. Pose Jump 제어와 안정화`에서 다룬 pose jump 문제와 같은 계열이며, Nav2 쪽에서 이를 다루는 방식은 `B8. Relocalization이 일어나는 위치`를 참고한다.
+* Loop Closure에서 일어나는 그래프 최적화는 [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리]]에서 배운 "Loop Closure가 그래프 최적화로 드리프트를 전체적으로 편다"는 개념과 원리상 동일하다.
+* Map Merging 이후 로봇 pose가 갑자기 보정되는 현상은 [[C4_Pose_Jump_제어와_안정화|RTAB-Map & Nav2 심화 - C4. Pose Jump 제어와 안정화]]에서 다룬 pose jump 문제와 같은 계열이며, Nav2 쪽에서 이를 다루는 방식은 [[B8_Relocalization이_일어나는_위치|B8. Relocalization은 Nav2 파이프라인의 어디에 위치하는가]]를 참고한다.
 * 매칭을 정확히 어떤 알고리즘으로 찾는지는 다음 문서 D1-4의 주제다.
 
 ---
@@ -254,24 +254,20 @@ grep -in "candidate\|reject\|geometric" revisit.log
 4. 새 지도가 계속 생성되기만 하고 병합되지 않는 상황이 문제가 되는 이유는 무엇인가?
 5. "지도가 여러 개로 나뉘는 것"과 "재방문해도 병합되지 않는 것" 중 어느 쪽이 진짜 문제로 봐야 하는가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. 먼저 Atlas 전체에서 relocalization을 시도하고, 일정 시간 계속 실패하면 기존 Active Map을 Non-Active로 저장한 뒤 새 Active Map을 처음부터 초기화한다.
-2. Place recognition으로 찾은 매칭 후보가 Active Map(같은 지도) 안에 있으면 Loop Closing, 다른(Non-Active) 지도에 있으면 Map Merging이다.
-3. 매칭된 키프레임과 covisibility graph 상의 이웃들로 구성된 국소 영역에서 중기 데이터 연관을 집중적으로 탐색해, 정합의 정확도를 높이기 위해 정의된다.
-4. 매번 새 Active Map이 생성되면 그 지도가 이전 지도와 병합되기 전까지는 누적된 위치 정보가 끊긴 상태로 남아, 로봇의 전역 위치 추정이 불안정해지기 때문이다.
-5. 지도가 여러 개로 나뉘는 것 자체는 설계된 복구 메커니즘의 정상 동작이다. 진짜 문제는 재방문해도 병합되지 않는 경우다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. 먼저 Atlas 전체에서 relocalization을 시도하고, 일정 시간 계속 실패하면 기존 Active Map을 Non-Active로 저장한 뒤 새 Active Map을 처음부터 초기화한다.
+> 2. Place recognition으로 찾은 매칭 후보가 Active Map(같은 지도) 안에 있으면 Loop Closing, 다른(Non-Active) 지도에 있으면 Map Merging이다.
+> 3. 매칭된 키프레임과 covisibility graph 상의 이웃들로 구성된 국소 영역에서 중기 데이터 연관을 집중적으로 탐색해, 정합의 정확도를 높이기 위해 정의된다.
+> 4. 매번 새 Active Map이 생성되면 그 지도가 이전 지도와 병합되기 전까지는 누적된 위치 정보가 끊긴 상태로 남아, 로봇의 전역 위치 추정이 불안정해지기 때문이다.
+> 5. 지도가 여러 개로 나뉘는 것 자체는 설계된 복구 메커니즘의 정상 동작이다. 진짜 문제는 재방문해도 병합되지 않는 경우다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `SLAM 백엔드 - D1-4. Loop Closing과 Place Recognition` — 이 문서에서 "매칭을 어떻게 찾는가"로 넘어간 부분, 즉 DBoW2 기반 검색과 기하학적 검증 과정을 자세히 다룬다.
-2. **함께 보면 좋은 주제**: `RTAB-Map & Nav2 심화 - C1. 개요와 학술적 정의` — Global Relocalization과 Pose Tracking의 구분을 복습하면 이 문서 3장의 "심각한 상황" 설명을 더 명확히 이해할 수 있다.
-3. **나중에 학습할 심화 주제**: `SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석` — 이 문서와 D1-2에서 다룬 개념을 근거로 이 프로젝트의 실제 리셋 진단 이력을 종합한다.
+1. **바로 다음**: [[D1-4_Loop_Closing과_Place_Recognition|SLAM 백엔드 - D1-4. Loop Closing과 Place Recognition]] — 이 문서에서 "매칭을 어떻게 찾는가"로 넘어간 부분, 즉 DBoW2 기반 검색과 기하학적 검증 과정을 자세히 다룬다.
+2. **함께 보면 좋은 주제**: [[C1_개요와_학술적_정의|RTAB-Map & Nav2 심화 - C1. 개요와 학술적 정의]] — Global Relocalization과 Pose Tracking의 구분을 복습하면 이 문서 3장의 "심각한 상황" 설명을 더 명확히 이해할 수 있다.
+3. **나중에 학습할 심화 주제**: [[D1-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석]] — 이 문서와 D1-2에서 다룬 개념을 근거로 이 프로젝트의 실제 리셋 진단 이력을 종합한다.
 
 ---
 

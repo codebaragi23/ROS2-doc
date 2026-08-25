@@ -57,5 +57,5 @@ RViz2에서 `LaserScan` Display를 추가하고 `Topic: /scan`을 지정한다(R
 
 ## 7. 참고자료
 
-- sllidar_ros2 공식 GitHub — launch 인자와 파라미터 목록
+- [sllidar_ros2 공식 GitHub](https://github.com/Slamtec/sllidar_ros2) — launch 인자와 파라미터 목록
 - [[ros2-nav-yahboom]] — LiDAR 후방 사각지대 진단 및 해결 이력

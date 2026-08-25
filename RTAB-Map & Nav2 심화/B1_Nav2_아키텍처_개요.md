@@ -73,5 +73,5 @@ Nav2가 "unknown" 또는 무반응일 때 확인 순서:
 
 ## 7. 참고자료
 
-- Nav2 공식 문서(docs.nav2.org) — Nav2 시스템 아키텍처, 각 서버의 역할 정의
+- Nav2 공식 문서([docs.nav2.org](https://docs.nav2.org/)) — Nav2 시스템 아키텍처, 각 서버의 역할 정의
 - `rtabmap_nav_params_tuning_guide.md` (프로젝트 내부 자료) — 이 프로젝트의 실제 파라미터 값과 튜닝 관점

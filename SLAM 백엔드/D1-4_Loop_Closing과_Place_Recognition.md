@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | `SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합`(place recognition이 Loop Closing/Map Merging을 가르는 기준) |
+| 예상 선행 지식 | [[D1-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합]](place recognition이 Loop Closing/Map Merging을 가르는 기준) |
 | 학습 목표 | DBoW2 기반 place recognition의 동작 원리와 기존 방식의 한계를 설명할 수 있다 / ORB-SLAM3가 recall과 지연 문제를 각각 어떻게 개선했는지 설명할 수 있다 / RTAB-Map의 loop closure 방식과 비교할 수 있다 |
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 |
-| 관련 문서 | 이전: `SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합` / 다음: `SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석` |
+| 관련 문서 | 이전: [[D1-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합]] / 다음: [[D1-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석]] |
 
 > 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장 A절(Place Recognition), Gálvez-López & Tardós, "Bags of Binary Words for Fast Place Recognition in Image Sequences" (DBoW2 원 논문)
 
@@ -22,7 +22,7 @@
 2. 이 알고리즘의 뿌리는 **DBoW2(Bag-of-Words 기반 이미지 검색 라이브러리)**이며, ORB-SLAM3는 이를 그대로 쓰지 않고 두 가지 지점을 개선했다.
 3. 기존 DBoW2 방식은 **정밀도(precision)를 높이려 하면 재현율(recall)이 떨어지고, 재현율을 높이려 하면 정밀도가 떨어지는** 트레이드오프에 갇혀 있었다.
 4. ORB-SLAM3는 "후보를 1개가 아니라 여러 개 보는 방식"으로 recall을, "연속 키프레임 합의 요구를 없앤 즉시 기하학적 정합"으로 지연 문제를 각각 해결했다.
-5. 이 방식은 `RTAB-Map & Nav2 심화 - A1`에서 배운 RTAB-Map의 appearance-based loop closure와 원리(이미지 유사도로 재방문 판단)는 유사하지만, 구체적인 구현(자체 bag-of-words vs DBoW2, 검증 방식)이 다르다.
+5. 이 방식은 [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1]]에서 배운 RTAB-Map의 appearance-based loop closure와 원리(이미지 유사도로 재방문 판단)는 유사하지만, 구체적인 구현(자체 bag-of-words vs DBoW2, 검증 방식)이 다르다.
 
 ---
 
@@ -36,7 +36,7 @@ Place Recognition은 "지금 카메라가 보고 있는 장면이, 예전에 이
 
 - 사서(place recognition)는 새 책이 들어올 때마다, 책의 특징적인 단어들(목차, 핵심 키워드 — ORB 특징점)을 뽑아 **색인 카드**(bag-of-words)를 만든다.
 - 기존의 단순한 사서(기존 DBoW2 방식)는 "가장 비슷해 보이는 책 딱 1권"만 후보로 꺼내서 비교한다. 겉모습만 보고 판단하면 오판(false positive)이 많으니, 표지 디자인이 며칠 연속 비슷하게 나온 책들만 진짜로 인정하는(temporal consistency) 엄격한 규칙을 추가로 둔다 — 하지만 이러면 실제로 맞는 책도 자주 놓치고(recall 저하), 확인하는 데 며칠씩 걸린다(지연).
-- ORB-SLAM3식 사서는 다르게 일한다. **후보를 1권이 아니라 여러 권 동시에** 꺼내 놓고, 각 후보를 책 내용의 세부 문장까지(Hamming distance 기반 descriptor 매칭) 꼼꼼히 대조한다. 후보가 여럿이라 헷갈릴 수 있으니, "가장 비슷한 후보와 그다음으로 비슷한 후보의 차이가 충분히 큰가"(distance ratio)도 함께 확인해 헷갈림을 줄인다. 그리고 며칠씩 기다리지 않고 **그 자리에서 바로** 실제로 같은 책인지 정밀 대조(Sim(3)/SE(3) 정합)를 시도한다.
+- ORB-SLAM3식 사서는 다르게 일한다. **후보를 1권이 아니라 여러 권 동시에** 꺼내 놓고, 각 후보를 책 내용의 세부 문장까지(Hamming distance 기반 descriptor 매칭) 꼼꼼히 대조한다. 후보가 여럿이라 헷갈릴 수 있으니, "가장 비슷한 후보와 그다음으로 비슷한 후보의 차이가 충분히 큰가"(distance ratio)도 함께 확인해 헷갈림을 줄인다. 그리고 며칠씩 기다리지 않고 **그 자리에서 바로** 실제로 같은 책인지 정밀 대조(**Sim(3)/SE(3)** 정합 — 두 시점의 3D 좌표를 겹쳐보는 수학적 변환. `Sim(3)`은 크기(스케일)까지 함께 맞추고, `SE(3)`은 크기가 이미 같다고 보고 위치·회전만 맞춘다)를 시도한다.
 
 **비유가 실제와 다른 부분**
 
@@ -225,8 +225,8 @@ grep -i "nfeatures\|extracted" pr_debug.log
 ## 11. 개념 간 연결
 
 * 이 문서는 D1-3에서 "매칭을 탐색한다"고만 언급했던 부분을 알고리즘 수준으로 확장한 것이다 — D1-3을 먼저 읽지 않으면 이 문서의 결과가 어디로 이어지는지(Loop Closing vs Map Merging) 알기 어렵다.
-* `RTAB-Map & Nav2 심화 - A1`에서 다룬 RTAB-Map의 appearance-based loop closure(`Rtabmap/LoopThr`, `Vis/MinInliers`)와 이 문서의 DBoW2 기반 방식은 "이미지 유사도로 재방문을 판단한다"는 목표는 같지만, 검색 방식(자체 bag-of-words vs DBoW2)과 검증 방식(단일 임계값 vs Hamming distance + ratio)이 다르다 — 파라미터명이 비슷해 보여도 직접 대응시키면 안 된다.
-* `RTAB-Map & Nav2 심화 - C3. RTAB-Map 핵심 파라미터 대응표`에서 다룬 `RGBD/OptimizeMaxError`(오탐 거부)도 이 문서와 같은 precision-recall 긴장 관계를 RTAB-Map식으로 다루는 해법이다.
+* [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1]]에서 다룬 RTAB-Map의 appearance-based loop closure(`Rtabmap/LoopThr`, `Vis/MinInliers`)와 이 문서의 DBoW2 기반 방식은 "이미지 유사도로 재방문을 판단한다"는 목표는 같지만, 검색 방식(자체 bag-of-words vs DBoW2)과 검증 방식(단일 임계값 vs Hamming distance + ratio)이 다르다 — 파라미터명이 비슷해 보여도 직접 대응시키면 안 된다.
+* [[C3_RTAB-Map_핵심_파라미터_대응표|RTAB-Map & Nav2 심화 - C3. RTAB-Map 핵심 파라미터 대응표]]에서 다룬 `RGBD/OptimizeMaxError`(오탐 거부)도 이 문서와 같은 precision-recall 긴장 관계를 RTAB-Map식으로 다루는 해법이다.
 
 ---
 
@@ -274,24 +274,20 @@ grep -i "nfeatures\|extracted" pr_debug.log
 4. 모노큘러와 스테레오/RGB-D는 각각 어떤 정합 방식(Sim(3)/SE(3))을 쓰며, 그 차이는 무엇에서 비롯되는가?
 5. RTAB-Map과 ORB-SLAM3의 place recognition 방식을 비교할 때, 파라미터명이 비슷해도 직접 대응시키면 안 되는 이유는 무엇인가?
 
-<details>
-<summary>정답 및 해설 보기</summary>
-
-1. Recall이 30~40% 수준으로 떨어진다 — precision과 recall이 트레이드오프 관계이기 때문이다.
-2. 기하학적 검증에 연속된 키프레임 간 합의를 요구하지 않고, 매칭 후보가 나오면 곧바로 Sim(3) 또는 SE(3) 직접 정합을 시도하는 방식으로 지연을 제거했다.
-3. Hamming distance는 개별 ORB descriptor(특징점) 간의 유사도를 검증하고, distance ratio는 1순위 후보와 2순위 후보의 거리 차이를 비교해 모호한 매칭을 걸러낸다.
-4. 모노큘러는 스케일을 알 수 없으므로 스케일까지 함께 추정하는 Sim(3)을 쓰고, 스테레오/RGB-D는 깊이 정보로 스케일이 이미 알려져 있으므로 SE(3)만으로 충분하다.
-5. 두 시스템은 검색 기반(자체 bag-of-words vs DBoW2)과 검증 방식(단일 임계값 vs Hamming distance+ratio 다단계)이 근본적으로 다른 구현이라, 같은 이름의 파라미터라도 내부 동작 기준이 다르기 때문이다.
-
-</details>
+> [!info]- 정답 및 해설 보기
+> 1. Recall이 30~40% 수준으로 떨어진다 — precision과 recall이 트레이드오프 관계이기 때문이다.
+> 2. 기하학적 검증에 연속된 키프레임 간 합의를 요구하지 않고, 매칭 후보가 나오면 곧바로 Sim(3) 또는 SE(3) 직접 정합을 시도하는 방식으로 지연을 제거했다.
+> 3. Hamming distance는 개별 ORB descriptor(특징점) 간의 유사도를 검증하고, distance ratio는 1순위 후보와 2순위 후보의 거리 차이를 비교해 모호한 매칭을 걸러낸다.
+> 4. 모노큘러는 스케일을 알 수 없으므로 스케일까지 함께 추정하는 Sim(3)을 쓰고, 스테레오/RGB-D는 깊이 정보로 스케일이 이미 알려져 있으므로 SE(3)만으로 충분하다.
+> 5. 두 시스템은 검색 기반(자체 bag-of-words vs DBoW2)과 검증 방식(단일 임계값 vs Hamming distance+ratio 다단계)이 근본적으로 다른 구현이라, 같은 이름의 파라미터라도 내부 동작 기준이 다르기 때문이다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: `SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석` — D1-1~D1-4에서 정리한 논문 근거를 이 프로젝트의 실제 진단 이력과 종합해, 현재 상태를 다시 정리한다.
-2. **함께 보면 좋은 주제**: `RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리` — 같은 목표(재방문 탐지)를 다르게 구현한 대안 백엔드를 다시 한번 비교해보면 이해가 깊어진다.
-3. **나중에 학습할 심화 주제**: `RTAB-Map & Nav2 심화 - C3. RTAB-Map 핵심 파라미터 대응표` — RTAB-Map 쪽에서 이 문서와 같은 precision-recall 긴장 관계를 어떤 파라미터로 다루는지 확인한다.
+1. **바로 다음**: [[D1-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석]] — D1-1~D1-4에서 정리한 논문 근거를 이 프로젝트의 실제 진단 이력과 종합해, 현재 상태를 다시 정리한다.
+2. **함께 보면 좋은 주제**: [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리]] — 같은 목표(재방문 탐지)를 다르게 구현한 대안 백엔드를 다시 한번 비교해보면 이해가 깊어진다.
+3. **나중에 학습할 심화 주제**: [[C3_RTAB-Map_핵심_파라미터_대응표|RTAB-Map & Nav2 심화 - C3. RTAB-Map 핵심 파라미터 대응표]] — RTAB-Map 쪽에서 이 문서와 같은 precision-recall 긴장 관계를 어떤 파라미터로 다루는지 확인한다.
 
 ---
 

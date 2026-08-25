@@ -1,6 +1,6 @@
 # D4. ORB-SLAM3 vs OpenVINS vs VINS-Fusion 종합 비교
 
-> RTAB-Map & Nav2 심화 시리즈 · Part D. 대안 SLAM 백엔드 (SLAM 백엔드 평가, D 전체 시리즈 마지막)
+> SLAM 백엔드 평가 시리즈 (D 전체 시리즈 마지막)
 > 이전 문서: D3-5. 이 프로젝트에 적용한다면
 > 이 문서는 D1(ORB-SLAM3, 프로젝트 실측+논문), D2(OpenVINS, 프로젝트 실측+논문), D3(VINS-Fusion, 문헌만)의 내용을 종합한다. **출처의 성격이 서로 다르다는 점**을 표마다 명시한다.
 
@@ -58,30 +58,32 @@ VINS-Fusion의 처리 시간 수치는 이 프로젝트가 아닌 **다른 연�
 | coverage(공통 bag) | 99.82% | 99.93% |
 | 냉장고 근접 bag1 | fail_track 85회 | init_reset 0회 |
 | 냉장고 근접 bag_b | fail_track 2회 | init_reset 0회 |
-| 냉장고 근접 bag_c | fail_track 76회 | init_reset 0회(단 D2-5의 ZUPT 오발동 가설 주의) |
+| 냉장고 근접 bag_c | fail_track 76회 | init_reset 0회(단 D2-8의 ZUPT 오발동 가설 주의) |
 
-**중요한 해석 주의점(D2-5, D2-7에서 반복 강조)**: coverage/reset 지표만 보면 OpenVINS가 압도적으로 안정적으로 보이지만, 이는 **"조용히 멈춰있어도 실패로 집계되지 않는" 설계 특성** 때문일 수 있다. 실제 이동 거리(`step_translation_m`) 같은 지표를 함께 봐야 진짜 견고함인지 판단할 수 있다 — 이 표만 보고 OpenVINS가 "더 낫다"고 단순 결론 내리는 것은 D2-5의 경고를 무시하는 것이다.
+**중요한 해석 주의점(D2-7, D2-8에서 반복 강조)**: coverage/reset 지표만 보면 OpenVINS가 압도적으로 안정적으로 보이지만, 이는 **"조용히 멈춰있어도 실패로 집계되지 않는" 설계 특성** 때문일 수 있다. 실제 이동 거리(`step_translation_m`) 같은 지표를 함께 봐야 진짜 견고함인지 판단할 수 있다 — 이 표만 보고 OpenVINS가 "더 낫다"고 단순 결론 내리는 것은 D2-8의 경고를 무시하는 것이다.
 
 ## 7. 이 프로젝트 맥락에서의 요약 판단
 
 | 기준 | 판단 |
 |---|---|
 | 현재 채택 상태 | RTAB-Map이 loop closure/지도 관리를 전담하고, odometry 소스로 OpenVINS를 통합해 사용 중(D2-6). ORB-SLAM3 VIO는 미채택 결정(D1-5). VINS-Fusion은 미도입. |
-| ORB-SLAM3를 안 쓰는 이유 | CPU 부하가 가장 높고(96%), RGB-D-Inertial 초기화가 반복 실패(active-map IMU reset, D1-5) — 특히 이 하드웨어(D435i, 공장 미보정 IMU)에서 알려진 문제와 일치 |
-| OpenVINS를 임시로 쓰는 이유 | CPU 부하가 가장 낮고(38%) 리셋이 없어 안정적으로 보이지만, ZUPT 오발동 가설(D2-5)이 아직 미검증이라 "조용한 실패"의 가능성이 열려 있음 |
+| ORB-SLAM3를 안 쓰는 이유 | CPU 부하가 가장 높고(96%), RGB-D-Inertial 초기화가 반복 실패(active-map IMU reset, D1-5). **[정정]** 초기 가설과 달리 원인은 "RGB-D가 스케일을 몰라서"가 아니다 — RGB-D는 depth로 스케일을 이미 안다. 실제로는 **ORB-SLAM3 공식 저장소가 지원을 명시하는 조합이 monocular/monocular-inertial/stereo/stereo-inertial/RGB-D뿐이고 RGB-D-Inertial은 원저자 미검증 커뮤니티 비공식 확장**이라는 점이 밝혀졌다(D1-2 12장, D1-5 8.4절). D435i를 RGB-D+IMU로 쓴 제3자 보고도 같은 성능 저하를 관찰해 이 프로젝트의 경험과 일치한다. |
+| OpenVINS를 임시로 쓰는 이유 | CPU 부하가 가장 낮고(38%) 리셋이 없어 안정적으로 보이지만, ZUPT 오발동 가설(D2-8)이 아직 미검증이라 "조용한 실패"의 가능성이 열려 있음 |
 | VINS-Fusion을 아직 안 쓰는 이유 | 문헌상 이론적 장점(loop closure 통합, 움직임 기반 초기화)이 있지만, RTAB-Map과의 통합 방식(D3-5)과 D435i RGB-D 활용 가능 여부가 확인되지 않음 |
 
-## 8. 다음 단계 제안 (우선순위)
+## 8. 다음 단계 제안 (우선순위, D1-5 8.4절 정정 반영)
 
-1. **D2-5/D2-7의 ZUPT 오발동 가설 검증** — 현재 채택된 OpenVINS의 신뢰성을 좌우하는 가장 시급한 항목.
-2. **D435i IMU 캘리브레이션(`rs-imu-calibration`)** — D1-5, D2-2, D2-7에서 세 문서 모두 공통으로 지목한 근본 원인 후보. 이것이 개선되면 ORB-SLAM3와 OpenVINS 둘 다 좋아질 가능성이 있다.
-3. **VINS-Fusion의 RTAB-Map 통합 가능 여부 확인** — D3-5의 1번 질문. 이것이 확인돼야 D3 시리즈도 D1·D2와 같은 수준의 실측 근거를 가질 수 있다.
+1. **D2-7/D2-8의 ZUPT 오발동 가설 검증** — 현재 채택된 OpenVINS의 신뢰성을 좌우하는 가장 시급한 항목.
+2. **[정정] ORB-SLAM3 stereo-inertial 재검토** — D1-5 8.4절에서 확인했듯, RGB-D-Inertial은 원저자 미검증 비공식 확장인 반면 stereo-inertial은 공식 지원·검증 조합이며 과거 실측에서도 리셋 문제가 더 적었다. ORB-SLAM3를 계속 후보에 둔다면 RGB-D-Inertial보다 이 방향이 우선한다.
+3. **D435i IMU 캘리브레이션(`rs-imu-calibration`)** — D1-5, D2-2, D2-7에서 세 문서 모두 공통으로 지목한 근본 원인 후보. 다만 RGB-D-Inertial 조합 자체의 미검증 상태는 해결해주지 못하므로 2번보다 우선순위를 낮춘다.
+4. **VINS-Fusion의 RTAB-Map 통합 가능 여부 확인** — D3-5의 1번 질문. 이것이 확인돼야 D3 시리즈도 D1·D2와 같은 수준의 실측 근거를 가질 수 있다.
 
 ## 9. 참고자료
 
 - D1-1~D1-5, D2-1~D2-7, D3-1~D3-5 (이 시리즈 전체) 및 그 안의 1차 출처
-- "Comparison of modern open-source visual SLAM approaches" (Skoltech/Sberbank Robotics Lab, arXiv:2108.01654)
-- "Benchmarking SLAM Algorithms in the Cloud: The SLAM Hive Benchmarking Suite" (arXiv:2406.17586)
+- [GitHub UZ-SLAMLab/ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3) README — 공식 지원 조합에 RGB-D-Inertial이 없다는 근거(D1-2 12장, D1-5 8.4절)
+- "Comparison of modern open-source visual SLAM approaches" (Skoltech/Sberbank Robotics Lab, [arXiv:2108.01654](https://arxiv.org/abs/2108.01654))
+- "Benchmarking SLAM Algorithms in the Cloud: The SLAM Hive Benchmarking Suite" ([arXiv:2406.17586](https://arxiv.org/abs/2406.17586))
 - "Visual-Inertial SLAM for Unstructured Outdoor Environments" (Schmidt et al., Journal of Field Robotics, 2025)
 - "FAR-AVIO: Fast and Robust Schur-Complement Based Acoustic-Visual-Inertial Fusion Odometry" — Jetson 임베디드 플랫폼에서의 VINS-Fusion 런타임 비교 수치
 - 프로젝트 내부 자료 — [[ros2-nav-yahboom]], 2026-08-21 OpenVINS 코드 분석 문서
