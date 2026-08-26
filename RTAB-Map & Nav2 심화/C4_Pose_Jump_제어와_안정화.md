@@ -47,7 +47,7 @@ RGBD/OptimizeFromGraphEnd: true
 
 - relocalization 직후 로봇이 급정지하거나 튄다면: `RGBD/OptimizeFromGraphEnd` 설정을 먼저 확인한다. false(기본값) 상태라면 A 방법 적용을 검토한다.
 - relocalization 직후 costmap의 장애물이 잘못된 위치에 남아있다면: 점프 직후 costmap을 클리어하는 로직(B6의 `ClearEntireCostmap` recovery 액션)을 relocalization 이벤트와 연동할 수 있는지 검토한다.
-- 흔들리는 상태에서 자주 relocalization이 발동해 로봇이 계속 덜컥거린다면: C3에서 다룬 "가속도 기반 게이팅"처럼, 로봇이 정지/저속 상태일 때만 relocalization을 승인하는 조건을 추가하는 것이 원인 완화에 직접적이다.
+- 흔들리는 상태에서 자주 relocalization이 발동해 로봇이 계속 덜컥거린다면: 4장에서 언급한 "가속도 기반 게이팅"처럼, 로봇이 정지/저속 상태일 때만 relocalization을 승인하는 조건을 추가하는 것이 원인 완화에 직접적이다.
 
 ## 6. 다음 문서와의 연결
 

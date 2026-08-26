@@ -1,7 +1,7 @@
 # D4. ORB-SLAM3 vs OpenVINS vs VINS-Fusion 종합 비교
 
 > SLAM 백엔드 평가 시리즈 (D 전체 시리즈 마지막)
-> 이전 문서: [[D3-6_특징점_검출_기술자_매칭_비교|D3-6. 특징점 검출·기술자·매칭 비교]]
+> 이전 문서: D3-5. 이 프로젝트에 적용한다면
 > 이 문서는 D1(ORB-SLAM3, 프로젝트 실측+논문), D2(OpenVINS, 프로젝트 실측+논문), D3(VINS-Fusion, 문헌만)의 내용을 종합한다. **출처의 성격이 서로 다르다는 점**을 표마다 명시한다.
 
 ## 1. 개요
@@ -13,7 +13,7 @@ D1~D3 시리즈 전체를 관통하는 질문 — "이 세 SLAM 백엔드는 근
 | 항목 | ORB-SLAM3 | OpenVINS | VINS-Fusion |
 |---|---|---|---|
 | 알고리즘 부류 | 키프레임 기반 SLAM(Bundle Adjustment) | MSCKF 기반 EKF(필터링) | 최적화 기반 슬라이딩 윈도우 |
-| 대표 문서 | D1-1~D1-5 | D2-1~D2-7 | D3-1~D3-5 |
+| 대표 문서 | D1-1~D1-5 | D2-1~D2-8 | D3-1~D3-5 |
 | 특징점 상태 포함 | 명시적으로 포함, 계속 최적화 | 대부분 제외(null-space projection) | 윈도우 안에서만 포함, 밖은 marginalize |
 | 지도 성장 | Atlas로 계속 누적(D1-1, D1-3) | 고정 크기 윈도우(`MaxClones`, D2-4) | 고정 크기 윈도우 + marginalization(D3-3) |
 | 추적 실패 시 | 명시적 lost → 새 지도 생성(D1-3) | 명시적 lost 없음, 조용히 저신뢰 지속(D2-1) | 문헌상 failure detection/recovery 기능 존재(D3-1, 미검증) |
@@ -80,7 +80,7 @@ VINS-Fusion의 처리 시간 수치는 이 프로젝트가 아닌 **다른 연�
 
 ## 9. 참고자료
 
-- D1-1~D1-5, D2-1~D2-7, D3-1~D3-5 (이 시리즈 전체) 및 그 안의 1차 출처
+- D0-1~D0-2(공통 기초), D1-1~D1-5, D2-1~D2-8, D3-1~D3-5 (이 시리즈 전체) 및 그 안의 1차 출처
 - [GitHub UZ-SLAMLab/ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3) README — 공식 지원 조합에 RGB-D-Inertial이 없다는 근거(D1-2 12장, D1-5 8.4절)
 - "Comparison of modern open-source visual SLAM approaches" (Skoltech/Sberbank Robotics Lab, [arXiv:2108.01654](https://arxiv.org/abs/2108.01654))
 - "Benchmarking SLAM Algorithms in the Cloud: The SLAM Hive Benchmarking Suite" ([arXiv:2406.17586](https://arxiv.org/abs/2406.17586))

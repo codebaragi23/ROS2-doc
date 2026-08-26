@@ -288,7 +288,8 @@ D1-2, D1-3 진단 실습에서 익힌 대로, 로그에서 `track lost`(D1-3 원
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: [[C7_Relocalization_감시_로직_구현|RTAB-Map & Nav2 심화 - C7. Relocalization 감시 로직 구현]] — 이 문서의 결론(ORB-SLAM3 VIO 미채택)에 따라, 현재 RTAB-Map 기준으로 유지되는 감시 로직 구현을 다룬다.
+1. **바로 다음**: `SLAM 백엔드 - D2-1. OpenVINS 개요와 MSCKF 알고리즘 원리` — 같은 문제(카메라+IMU로 위치 추정)를 필터라는 완전히 다른 방식으로 푸는 계열로 넘어간다.
+2. **함께 보면 좋은 주제**: [[C7_Relocalization_감시_로직_구현|RTAB-Map & Nav2 심화 - C7. Relocalization 감시 로직 구현]] — 이 문서의 결론(ORB-SLAM3 VIO 미채택)에 따라, 현재 RTAB-Map 기준으로 유지되는 감시 로직 구현을 다룬다.
 2. **함께 보면 좋은 주제**: [[D1-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘]] — 이 문서의 8장에서 반복 인용한 3단계 알고리즘을 다시 복습하면 진단 근거가 더 명확해진다.
 3. **나중에 학습할 심화 주제**: `rs-imu-calibration` 실행 결과가 나오면, 이 문서를 갱신하거나 후속 문서(D1-6 등)로 이어서 정리하는 것을 검토한다.
 

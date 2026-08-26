@@ -24,7 +24,7 @@ flowchart TB
 - `bt_navigator`는 목표를 받으면, **자기 자신이 다시 Action Client가 되어** Behavior Tree 안에서 `ComputePathToPose`(planner_server가 서버), `FollowPath`(controller_server가 서버)를 순서대로 호출한다.
 - B6에서 다룬 Spin/Wait/BackUp도 마찬가지로 각각 독립된 Action이며, `behavior_server`가 이들의 서버 역할을 한다.
 
-즉 ROS2 기초 4편에서 배운 "하나의 Action Client-Server 쌍"이 Nav2에서는 **여러 겹으로 중첩되어, 상위 계층의 Client가 곧 하위 계층에서는 Client이자 다른 무언가의 결과를 기다리는 중간자**로 동작한다.
+즉 ROS2 기초 4편에서 배운 "하나의 Action Client-Server 쌍"이 Nav2에서는 **여러 겹으로 중첩되어, 하나의 노드가 상위 계층에 대해서는 Server이면서 동시에 하위 계층에 대해서는 Client인 중간자**로 동작한다. 예를 들어 `bt_navigator`는 사용자의 목표 요청에 대해서는 Server이지만, `planner_server`·`controller_server`에 대해서는 Client다.
 
 ## 3. 이 프로젝트에서의 적용 (Yahboom X3)
 

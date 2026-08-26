@@ -17,7 +17,7 @@ RPLiDAR C1은 2D 스캔 데이터를 `sensor_msgs/LaserScan` 타입으로 발행
 
 | TF 좌표계 | 의미 |
 |---|---|
-| `laser_link`(또는 `laser_frame`) | LiDAR 기준 좌표계 — `base_link → laser_link` Static Transform으로 로봇 몸체 기준 장착 위치를 표현 (ROS2 기초 7편 실습과 동일 패턴) |
+| `laser_link` | LiDAR 기준 좌표계 — `base_link → laser_link` Static Transform으로 로봇 몸체 기준 장착 위치를 표현 (ROS2 기초 7편 실습과 동일 패턴). 드라이버가 발행하는 실제 이름은 `frame_id` 파라미터로 정해지므로, TF에서 쓰는 이름과 반드시 일치시켜야 한다 |
 
 ## 3. 이 프로젝트에서의 적용 (Yahboom X3)
 

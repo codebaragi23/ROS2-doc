@@ -7,7 +7,51 @@
 
 `bt_navigator`는 목표 지점까지의 전체 행동 흐름(경로 계획 → 추종 → 도착 판정 → 실패 시 recovery)을 관리한다. 이 문서에서는 Nav2가 기본 제공하는 recovery 동작을 정리하고, **이것이 relocalization과는 다른 개념**이라는 점을 명확히 한다.
 
-## 2. 핵심 개념: 표준 Behavior Tree 구조
+## 2. 핵심 개념: Behavior Tree 읽는 법
+
+아래 XML을 읽으려면 Behavior Tree(BT)의 기본 규칙 세 가지만 알면 된다.
+
+**규칙 1 — 모든 노드는 세 가지 중 하나를 반환한다**
+
+| 반환값 | 의미 |
+|---|---|
+| `SUCCESS` | 이 동작이 성공했다 |
+| `FAILURE` | 이 동작이 실패했다 |
+| `RUNNING` | 아직 진행 중이다 (다음 tick에 다시 물어봐 달라) |
+
+**규칙 2 — 루트에서 tick(신호)이 주기적으로 흘러내린다**
+
+BT는 한 번 실행하고 끝나는 순서도가 아니라, **초당 수십 번씩 루트부터 아래로 신호를 흘려보내며 매번 "지금 어떤 상태냐"를 묻는 구조**다. 그래서 `RUNNING`이라는 반환값이 존재한다 — 상태 기계(FSM)와 달리 "현재 상태"를 따로 저장하지 않고, 매 tick마다 트리를 다시 훑어 판단한다는 점이 핵심 차이다.
+
+**규칙 3 — 제어 노드가 자식들을 어떤 순서/조건으로 실행할지 정한다**
+
+| 제어 노드 | 동작 |
+|---|---|
+| `Sequence` | 자식을 왼쪽부터 차례로 실행. **하나라도 실패하면 즉시 전체 실패.** (= 논리 AND) |
+| `Fallback` | 자식을 왼쪽부터 차례로 시도. **하나라도 성공하면 즉시 전체 성공.** (= 논리 OR, "이게 안 되면 저거") |
+| `RoundRobin` | 호출될 때마다 **다음 자식으로 넘어가며** 하나씩 시도. 실패하면 다음 차례 자식으로. |
+| `RecoveryNode` | 첫 번째 자식(본 작업)이 실패하면 두 번째 자식(복구)을 실행한 뒤 본 작업을 재시도. |
+
+이 네 가지만 알면 Nav2의 기본 트리가 읽힌다.
+
+### 전체 트리 구조
+
+```mermaid
+flowchart TD
+    R[RecoveryNode: 루트] --> N[NavigateWithReplanning
+본 작업: 경로 계획 + 추종]
+    R --> RA[RoundRobin: RecoveryActions
+본 작업이 실패했을 때만 실행]
+    RA --> C[Sequence: ClearingActions
+costmap 비우기]
+    RA --> S[Spin: 제자리 회전]
+    RA --> W[Wait: 대기]
+    RA --> B[BackUp: 후진]
+```
+
+**그림 읽는 방법**: 평소에는 왼쪽 `NavigateWithReplanning`만 돌아간다. 그것이 `FAILURE`를 반환하면 그때 오른쪽 `RecoveryActions`로 넘어가고, `RoundRobin`이므로 **첫 실패에는 costmap 클리어, 그다음 실패에는 Spin, 또 실패하면 Wait…** 순으로 매번 다른 복구를 시도한다. 복구가 끝나면 다시 본 작업으로 돌아가 재시도한다.
+
+## 2-1. 표준 Recovery 동작
 
 Nav2 공식 `nav_to_pose_recovery` Behavior Tree는 실패 시 두 단계로 회복을 시도한다.
 
