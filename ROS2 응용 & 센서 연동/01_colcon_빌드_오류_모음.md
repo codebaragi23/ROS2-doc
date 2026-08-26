@@ -16,7 +16,7 @@ colcon 빌드 실패는 크게 **의존성 문제**, **빌드 타입 혼용 문�
 ### 유형 A-1: 의존성 패키지가 시스템에 없음
 
 ```
-CMake Error: Could not find a package configuration file provided by "realsense2"
+CMake Error: Could not find a package configuration file provided by "<dep_pkg>"
 ```
 
 `package.xml`에 선언된 의존 패키지가 실제로 설치되지 않은 경우다. `rosdep check --from-paths src --ignore-src`로 확인하고, `rosdep install --from-paths src --ignore-src -r -y`로 워크스페이스가 필요로 하는 시스템 패키지를 한 번에 설치한다.
@@ -45,7 +45,17 @@ CMake Error: The current CMakeCache.txt directory ... is different from the dire
 
 여러 패키지 중 하나가 실패하면 나머지도 `Skipped`로 표시되는 것이 colcon의 기본 동작(실패한 패키지에 의존하는 패키지들의 빌드를 건너뜀)이다. 의존 관계가 없는 패키지는 `--packages-skip-build-finished`나 `--continue-on-error` 옵션으로 나머지를 계속 빌드하게 할 수 있다.
 
-## 4. 관련 명령어
+## 4. 이 프로젝트에서의 적용 (Yahboom X3)
+
+이 프로젝트에서 유형 A-1(의존성 패키지 없음)이 실제로 발생한 대표 사례는 RealSense 드라이버 소스 빌드였다.
+
+```
+CMake Error: Could not find a package configuration file provided by "realsense2"
+```
+
+`realsense2` SDK가 시스템에 먼저 설치되어 있어야 `realsense2_camera` 패키지가 빌드된다 — `rosdep install`로 잡히지 않는 경우 [센서 연동 - RealSense D435i](05_센서_연동_RealSense_D435i.md) 문서의 설치 절차를 먼저 따른다. RTAB-Map, LiDAR C1 드라이버 소스 빌드에서도 유형 B(빌드 타입 혼용)와 유형 C(캐시 오염)가 실제로 여러 차례 발생했다([[ros2-nav-yahboom]] 참고).
+
+## 5. 관련 명령어
 
 | 목적 | 명령어 |
 |---|---|
@@ -55,15 +65,15 @@ CMake Error: The current CMakeCache.txt directory ... is different from the dire
 | 상세 오류 로그 그대로 출력 | `colcon build --event-handlers console_direct+` |
 | 완전 초기화 후 재빌드 | `rm -rf build install log && colcon build` |
 
-## 5. 진단 관점
+## 6. 진단 관점
 
 빌드 실패 로그를 마지막 줄(`Failed`)만 보지 말고, `--event-handlers console_direct+`로 중간의 `error:`나 `ModuleNotFoundError` 부분을 직접 확인하는 습관이 중요하다. 캐시 오염이 의심되면 부분 삭제보다 `rm -rf build install log` 완전 초기화가 가장 확실하다.
 
-## 6. 다음 문서와의 연결
+## 7. 다음 문서와의 연결
 
 - 다음: **Composable Node와 Executor 구조** — 빌드가 끝난 뒤, 그 노드들을 어떻게 더 효율적으로 실행할지 다룬다.
 
-## 7. 참고자료
+## 8. 참고자료
 
 - [colcon 공식 문서](https://colcon.readthedocs.io/) — 빌드 옵션 전체 목록
 - [rosdep 공식 문서](https://docs.ros.org/en/independent/api/rosdep/html/) — 의존성 해석 방식

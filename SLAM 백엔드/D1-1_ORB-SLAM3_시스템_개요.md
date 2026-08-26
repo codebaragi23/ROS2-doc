@@ -7,7 +7,7 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리]](그래프 기반 SLAM, Loop Closure 개념), [[07_TF2_기초|ROS2 기초 - 07. TF2 기초]](좌표계 개념) |
+| 예상 선행 지식 | [[A0_SLAM이란_무엇이고_왜_쓰는가|RTAB-Map & Nav2 심화 - A0. SLAM이란 무엇이고 왜 쓰는가]](SLAM 일반 개념, 프론트엔드/백엔드 구분), [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리]](그래프 기반 SLAM, Loop Closure 개념), [[07_TF2_기초|ROS2 기초 - 07. TF2 기초]](좌표계 개념) |
 | 학습 목표 | ORB-SLAM3의 세 가지 병렬 스레드(Tracking/Local Mapping/Loop&Map Merging)의 역할을 설명할 수 있다 / Atlas가 무엇이고 왜 필요한지 설명할 수 있다 / RTAB-Map과 ORB-SLAM3의 구조적 차이를 비교할 수 있다 |
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 (RealSense D435i) |
 | 관련 문서 | 이전: [[A1_RTAB-Map_매핑_원리|RTAB-Map & Nav2 심화 - A1. RTAB-Map 매핑 원리]] / 다음: [[D1-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘]] |

@@ -11,7 +11,7 @@
 
 | 항목 | Nav2 표준 (AMCL 기준) | 이 프로젝트 (RTAB-Map localization) |
 |---|---|---|
-| relocalization 트리거 방식 | `reinitialize_global_localization` 서비스, BT 액션 `ReinitializeGlobalLocalization`으로 **공식 지원** | 공식 서비스 없음 — 프로젝트가 직접 감시 로직을 만들어 판단(C2) |
+| relocalization 트리거 방식 | `reinitialize_global_localization` 서비스, BT 액션 `ReinitializeGlobalLocalization`으로 **공식 지원** | 공식 서비스 없음 — 프로젝트가 직접 감시 로직을 만들어 판단(C2-1) |
 | Kidnapped robot 대응 | 파티클을 지도 전체에 다시 흩뿌려 전역 재탐색(파티클 필터 고유 메커니즘) | Spin Recovery(Nav2 표준 기능을 재활용) + RTAB-Map 자체 loop closure 재탐색에 의존 |
 | 초기 위치 지정 | `/initialpose` 토픽, `set_initial_pose` 서비스 | `/rtabmap/initialpose` 토픽 (별도 메커니즘) |
 | Pose Jump 특성 | 파티클 필터는 점진적으로 수렴하는 경향이 있어 상대적으로 완만 | [REP105](https://www.ros.org/reps/rep-0105.html)에 따라 loop closure/relocalization 시 이산적 점프 발생 (C4) |

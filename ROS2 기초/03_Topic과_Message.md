@@ -66,19 +66,16 @@ Topic은 **이름이 붙은 데이터 통로**이고, 그 통로를 통해 흐�
 
 ```mermaid
 flowchart LR
-    P[Publisher 노드
-LiDAR 드라이버] -->|Topic: /scan
-Message: LaserScan| S1[Subscriber 노드
-Nav2]
-    P -->|같은 Topic| S2[Subscriber 노드
-RViz2]
+    P[Publisher 노드] -->|Topic: /topic_x
+Message: MessageType| S1[Subscriber 노드 1]
+    P -->|같은 Topic| S2[Subscriber 노드 2]
 ```
 
 **그림 읽는 방법**
 
-- 왼쪽 Publisher 노드(LiDAR 드라이버)는 `/scan`이라는 이름의 Topic에 `LaserScan`이라는 형식(Message 타입)의 데이터를 계속 내보낸다.
-- 오른쪽의 두 Subscriber 노드(Nav2, RViz2)는 서로 다른 목적을 가진 완전히 다른 노드지만, 같은 Topic을 구독하기만 하면 동일한 데이터를 각자 받아서 쓸 수 있다.
-- 화살표 방향은 데이터가 흐르는 방향이지, 노드 간에 직접 연결이 있다는 뜻이 아니다. 실제로는 둘 다 `/scan`이라는 이름만 바라보고 있을 뿐, 서로의 존재를 모른다.
+- 왼쪽 Publisher 노드는 `/topic_x`라는 이름의 Topic에 정해진 형식(Message 타입)의 데이터를 계속 내보낸다.
+- 오른쪽의 두 Subscriber 노드는 서로 다른 목적을 가진 완전히 다른 노드일 수 있지만, 같은 Topic을 구독하기만 하면 동일한 데이터를 각자 받아서 쓸 수 있다.
+- 화살표 방향은 데이터가 흐르는 방향이지, 노드 간에 직접 연결이 있다는 뜻이 아니다. 실제로는 둘 다 `/topic_x`라는 이름만 바라보고 있을 뿐, 서로의 존재를 모른다. 실제 X3 로봇에서 이 구조가 `/scan`(LiDAR 드라이버 → Nav2, RViz2)으로 구체화되는 예시는 3장의 "실제 로봇 관점"을 참고한다.
 
 ---
 

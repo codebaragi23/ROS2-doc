@@ -1,11 +1,11 @@
 # C3. RTAB-Map 핵심 파라미터 대응표
 
 > RTAB-Map & Nav2 심화 시리즈 · Part C. Relocalization 심화
-> 이전 문서: C2. 트리거 시점 5분류
+> 이전 문서: [[C2-1_이_프로젝트의_트리거_구현|C2-1. 이 프로젝트의 트리거 구현]]
 
 ## 1. 개요
 
-C2에서 트리거별로 흩어져 언급한 RTAB-Map 파라미터들을 relocalization 관점에서 한곳에 모아 정리한다. A2(매핑 파라미터)와 겹치는 이름이 있지만, 여기서는 **로컬라이제이션 모드에서의 역할**에 집중한다.
+[[C2-1_이_프로젝트의_트리거_구현|C2-1]]에서 트리거별로 흩어져 언급한 RTAB-Map 파라미터들을 relocalization 관점에서 한곳에 모아 정리한다. A2(매핑 파라미터)와 겹치는 이름이 있지만, 여기서는 **로컬라이제이션 모드에서의 역할**에 집중한다.
 
 ## 2. 핵심 개념: 모드 전환이 모든 것의 시작점
 
@@ -17,7 +17,7 @@ Mem/IncrementalMemory: false   # 로컬라이제이션 모드 진입
 
 ## 3. 이 프로젝트에서의 적용: 파라미터 대응표
 
-| 파라미터 | 기본값/예시 | 역할 | C2의 어느 트리거와 관련되나 |
+| 파라미터 | 기본값/예시 | 역할 | C2-1의 어느 트리거와 관련되나 |
 |---|---|---|---|
 | `Mem/IncrementalMemory` | `false` (로컬라이제이션 모드) | 매핑 확장을 멈추고 기존 지도 안에서만 위치를 찾도록 전환 | 전체의 전제 조건 |
 | `RGBD/SavedLocalizationIgnored` | `false`(기본) / `true`(강제 relocalization 시) | true로 설정 시, loop closure가 감지되면 이전에 저장된 localization 값을 무시하고 새로 강하게 relocalization | ④ 랜드마크 보정 |
@@ -29,7 +29,7 @@ Mem/IncrementalMemory: false   # 로컬라이제이션 모드 진입
 ## 4. 파라미터 간 상충 관계 (튜닝 시 주의)
 
 - `Vis/MinInliers`를 낮춰서 재매칭이 잘 되게 하면, 동시에 `RGBD/OptimizeMaxError`가 걸러내야 할 오탐 후보도 늘어난다. 두 파라미터는 **항상 짝으로 튜닝**해야 하며, 하나만 완화하면 "재매칭은 잘 되는데 가끔 엉뚱한 곳으로 튄다"는 증상이 나타날 수 있다.
-- `RGBD/SavedLocalizationIgnored: true`는 랜드마크 재진입 시 강한 보정을 만들지만, 저장된 localization을 매번 무시하므로 **평소 안정적인 추적 상태에서도 불필요하게 자주 relocalization이 발동**할 수 있다. 이 값은 상시 true로 두기보다, C2 ④번 트리거 조건(랜드마크 진입)이 성립할 때만 일시적으로 적용하는 방식이 더 안전하다.
+- `RGBD/SavedLocalizationIgnored: true`는 랜드마크 재진입 시 강한 보정을 만들지만, 저장된 localization을 매번 무시하므로 **평소 안정적인 추적 상태에서도 불필요하게 자주 relocalization이 발동**할 수 있다. 이 값은 상시 true로 두기보다, C2-1 ④번 트리거 조건(랜드마크 진입)이 성립할 때만 일시적으로 적용하는 방식이 더 안전하다.
 
 ## 5. 진단 관점
 

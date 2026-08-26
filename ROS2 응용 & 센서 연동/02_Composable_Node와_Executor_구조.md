@@ -24,12 +24,12 @@ ROS2 기초 2편에서 "노드 하나 = 프로세스 하나"가 기본이라고 
 ```mermaid
 flowchart TB
     subgraph 일반노드["일반 노드 방식 (별도 프로세스)"]
-        N1[카메라 드라이버] -->|직렬화+IPC| N2[rgbd_sync]
-        N2 -->|직렬화+IPC| N3[rtabmap]
+        N1[노드 A] -->|직렬화+IPC| N2[노드 B]
+        N2 -->|직렬화+IPC| N3[노드 C]
     end
     subgraph 컴포저블["Composable Node 방식 (같은 컨테이너)"]
-        C1[카메라 드라이버] -->|메모리 참조| C2[rgbd_sync]
-        C2 -->|메모리 참조| C3[rtabmap]
+        C1[노드 A] -->|메모리 참조| C2[노드 B]
+        C2 -->|메모리 참조| C3[노드 C]
     end
 ```
 

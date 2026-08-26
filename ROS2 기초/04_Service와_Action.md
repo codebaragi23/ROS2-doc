@@ -66,9 +66,7 @@ flowchart LR
         S1 -->|Response| C1
     end
     subgraph Action["Action 통신"]
-        C2[Action Client
-Nav2 BT] -->|Goal| S2[Action Server
-Controller]
+        C2[Action Client] -->|Goal| S2[Action Server]
         S2 -->|Feedback 반복| C2
         S2 -->|Result 1회| C2
     end
