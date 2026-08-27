@@ -23,9 +23,9 @@ Yahboom ROSMASTER X3(Jetson + RealSense D435i + RPLiDAR C1) 프로젝트를 진�
 
 | 인용 내용 | 인용하는 문서 |
 |---|---|
-| RealSense 드라이버 CPU 47% 점유 → 1280x720x30에서 640x480x15로 하향 해결 | [[A2_매핑_실행_파이프라인과_핵심_파라미터\|A2]], [[02_Composable_Node와_Executor_구조\|응용 02]], [[05_센서_연동_RealSense_D435i\|응용 05]] |
-| LiDAR 후방 사각지대 진단 → 파라미터 해제 + 마운트 높이 조정으로 360도 확보 | [[06_센서_연동_LiDAR_C1\|응용 06]], [[C5_실전_진단_체크리스트\|C5]] |
-| Nav2 패널이 `unknown` → `navigation_rtabmap_launch.py`에서 `rtabmap_nav_launch`가 주석 처리되어 있었음 | [[B1_Nav2_아키텍처_개요\|B1]], [[04_Launch_시스템_디버깅\|응용 04]] |
+| RealSense 드라이버 CPU 47% 점유 → 1280x720x30에서 640x480x15로 하향 해결 | [[A2_매핑_실행_파이프라인과_핵심_파라미터\|A2]], [[06_Composable_Node와_Executor_구조\|응용 06]], [[02_센서_연동_RealSense_D435i\|응용 02]] |
+| LiDAR 후방 사각지대 진단 → 파라미터 해제 + 마운트 높이 조정으로 360도 확보 | [[03_센서_연동_LiDAR_C1\|응용 03]], [[C5_실전_진단_체크리스트\|C5]] |
+| Nav2 패널이 `unknown` → `navigation_rtabmap_launch.py`에서 `rtabmap_nav_launch`가 주석 처리되어 있었음 | [[B1_Nav2_아키텍처_개요\|B1]], [[05_Launch_시스템_디버깅\|응용 05]] |
 | Jetson 하드웨어 자원 제약 일반 | [[C6_Nav2_표준_relocalization과의_차이\|C6]] |
 
 ### ORB-SLAM3 (D1 시리즈)
