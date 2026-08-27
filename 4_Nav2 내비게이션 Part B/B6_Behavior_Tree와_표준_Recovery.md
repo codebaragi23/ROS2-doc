@@ -1,7 +1,7 @@
 # B6. Behavior Tree와 표준 Recovery
 
 > Nav2 내비게이션 (Part B) 시리즈
-> 이전 문서: B5. Local Controller (MPPI)
+> 이전 문서: B5. Controller — 경로 추종
 
 ## 1. 개요
 
@@ -71,6 +71,21 @@ Nav2 공식 `nav_to_pose_recovery` Behavior Tree는 실패 시 두 단계로 회
 ```
 
 이 네 가지(Costmap Clear, Spin, Wait, BackUp)는 모두 **"로봇이 물리적으로 막혔거나 경로를 못 찾는" 상황에 대한 범용 복구 동작**이지, 위치 추정 자체를 다시 계산하는 relocalization이 아니다.
+
+### behavior_server가 제공하는 동작 전체
+
+기본 트리에 네 가지만 들어 있을 뿐, `behavior_server`는 더 많은 동작을 제공한다. 필요하면 BT XML에 추가해 쓸 수 있다.
+
+| 동작 | 하는 일 | 언제 유용한가 |
+|---|---|---|
+| **Spin** | 지정 각도만큼 제자리 회전 | 센서가 주변을 다시 훑게 해 costmap을 갱신. 이 프로젝트는 이것을 relocalization 유도에도 재활용한다(C2-1) |
+| **BackUp** | 지정 거리만큼 후진 | 장애물에 너무 가까이 붙어 전진 궤적이 전부 막혔을 때 |
+| **Wait** | 지정 시간 대기 | 사람이나 다른 로봇처럼 **스스로 비켜줄 장애물**이 앞을 막았을 때 |
+| **DriveOnHeading** | 지정한 방향으로 지정 거리 직진 | 좁은 통로 진입처럼 정해진 방향으로 밀어붙여야 할 때 |
+| **AssistedTeleop** | 사람이 조종하되 충돌은 시스템이 막아줌 | 자율 복구가 실패해 **사람이 개입**해야 할 때 |
+| **ClearEntireCostmap** / **ClearCostmapExceptRegion** / **ClearCostmapAroundRobot** | costmap을 통째로 또는 부분적으로 비움 | 유령 장애물(사라진 물체가 남아 있는 것)이 경로를 막을 때 |
+
+> **주의 — Spin과 BackUp은 실제로 로봇을 움직인다.** 주변에 사람이나 낭떠러지가 있는 환경이라면 recovery 목록에서 제외하거나 거리·각도를 보수적으로 잡아야 한다. Wait와 Costmap Clear는 로봇을 움직이지 않으므로 상대적으로 안전하다.
 
 ## 3. 이 프로젝트에서의 적용: "표준 Recovery ≠ Relocalization"
 

@@ -43,7 +43,7 @@ flowchart TB
 ## 5. 진단 관점
 
 - 목표를 보냈는데 반응이 없다면, ROS2 기초 4편에서 배운 것처럼 `ros2 action list`로 `/navigate_to_pose` 서버(`bt_navigator`)가 실제로 떠 있는지부터 확인한다 — B1에서 다룬 "핵심 서버 노드 존재 확인"과 같은 진단이지만, 이번엔 노드가 아니라 Action 관점에서 접근하는 것이다.
-- 경로 계획만 실패하는지, 경로 추종만 실패하는지 구분하려면 `/compute_path_to_pose`와 `/follow_path`를 각각 개별 Action으로 테스트해볼 수 있다 — 이는 B4(Global Planner)와 B5(Local Controller)의 문제를 구분하는 실전 진단 수단이다.
+- 경로 계획만 실패하는지, 경로 추종만 실패하는지 구분하려면 `/compute_path_to_pose`와 `/follow_path`를 각각 개별 Action으로 테스트해볼 수 있다 — 이는 B4(Global Planner)와 B5(Controller)의 문제를 구분하는 실전 진단 수단이다.
 
 ## 6. 다음 문서와의 연결
 

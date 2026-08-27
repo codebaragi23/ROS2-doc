@@ -1,13 +1,53 @@
-# B5. Local Controller (MPPI)
+# B5. Controller — 경로 추종 (ROS1의 Local Planner)
 
 > Nav2 내비게이션 (Part B) 시리즈
 > 이전 문서: B4. Global Planner
 
+## 0. 용어 정리 — Controller인가 Local Planner인가
+
+**둘 다 같은 것을 가리키지만, ROS2 Nav2의 공식 용어는 "Controller"다.**
+
+| | ROS1 (navigation stack) | ROS2 (Nav2) |
+|---|---|---|
+| 이름 | **Local Planner** | **Controller** |
+| 서버/패키지 | `base_local_planner`, `dwa_local_planner` | `controller_server` |
+| 대표 구현 | `base_local_planner`(Trajectory Rollout), DWA | DWB, MPPI, RPP 등 |
+
+Nav2 공식 문서도 "Controllers, also known as **local planners** in ROS 1"이라고 명시한다. 즉 **`local planner`는 틀린 말이 아니라 ROS1 시절의 이름**이며, 지금도 커뮤니티에서 널리 통용된다. 다만 Nav2 설정 파일과 문서에서는 `controller_server`, `controller_plugins`로 나오므로, **설정을 만질 때는 "controller"로 찾아야 한다.**
+
+> ROS1의 DWA를 계승한 것이 Nav2의 **DWB** 컨트롤러다 — 이름이 바뀐 이유 중 하나가 이 계보를 정리하기 위해서였다.
+
 ## 1. 개요
 
-`controller_server`는 Global Planner가 만든 경로를 따라 실제 `cmd_vel`(속도 명령)을 만든다. 이 프로젝트는 MPPI(Model Predictive Path Integral) 컨트롤러를 사용한다.
+`controller_server`는 Global Planner가 만든 경로를 따라 실제 `cmd_vel`(속도 명령)을 만든다. Planner가 "어디로 갈지"를 정한다면, **Controller는 "지금 이 순간 바퀴를 얼마나 돌릴지"를 정한다.**
 
-## 2. 핵심 개념: MPPI의 동작 방식
+Nav2는 여러 controller를 **플러그인**으로 제공한다. 이 문서는 선택지 전체를 먼저 정리하고, 그중 이 프로젝트가 MPPI를 쓰는 이유를 3장에서 다룬다.
+
+## 2. 핵심 개념
+
+### 2.1 Controller 플러그인 전체 선택지
+
+| 플러그인 | 방식 | 강점 | 유의점 |
+|---|---|---|---|
+| **DWB** (Dynamic Window Approach B) | 여러 속도 후보를 시뮬레이션해 critic으로 채점, **최고 점수 하나를 선택** | ROS1 DWA의 계승자라 자료가 많고 검증됨. 구조가 단순해 이해·디버깅이 쉬움 | 동적 장애물 대응이 MPPI보다 덜 매끄러움. 좁은 공간에서 후보가 모두 막히면 멈춤 |
+| **MPPI** (Model Predictive Path Integral) | 제어 입력에 노이즈를 뿌려 수천 개 후보를 만들고, **비용에 따라 가중 평균** | 부드럽고 예측적인 주행. 동적 장애물 회피가 우수. critic 조합이 유연 | **연산 부하가 가장 큼**(수천 개 궤적을 매 주기 시뮬레이션) |
+| **RPP** (Regulated Pure Pursuit) | 경로 위 전방의 목표점(lookahead)을 향해 조향, 곡률·장애물에 따라 속도 조절 | **경로를 정확히 따라간다.** 매우 가볍고 동작이 예측 가능 | 경로 자체를 벗어나 회피하지는 않음 — 운동학적으로 타당한 경로를 만드는 planner와 짝지어야 함 |
+| **Rotation Shim** | 컨트롤러가 아니라 **래퍼(wrapper)**. 새 경로의 방향으로 **제자리 회전을 먼저** 시킨 뒤, 내부에 지정한 실제 컨트롤러에 넘김 | DWB·MPPI·RPP 등을 내부 플러그인으로 감쌀 수 있음. 경로 시작 방향과 로봇 방향이 크게 다를 때 유용 | 단독으로는 쓸 수 없음 |
+
+> **버전 유의**: Humble 기준으로 위 네 가지가 기본 제공된다. 이후 배포판(Iron/Jazzy 등)에서 Graceful Controller, Vector Pursuit 등이 추가됐으므로, 다른 배포판을 쓴다면 해당 버전 문서를 확인해야 한다.
+
+**고르는 기준**
+
+| 상황 | 권장 |
+|---|---|
+| 계산 자원이 넉넉하고 동적 장애물이 많음 | **MPPI** |
+| 자원이 빠듯하거나 단순·안정 우선 | **DWB** 또는 **RPP** |
+| 정해진 경로를 정확히 따라가는 것이 최우선(순찰, 라인 추종 성격) | **RPP** |
+| 경로 시작 시 제자리 회전이 필요 | **Rotation Shim** + 위 중 하나 |
+
+### 2.2 MPPI의 동작 방식
+
+이 프로젝트가 쓰는 MPPI를 자세히 본다.
 
 ```yaml
 controller_plugins: ["FollowPath"]
@@ -31,12 +71,29 @@ MPPI는 매 제어 주기마다 다음 과정을 반복한다.
 
 ## 3. 이 프로젝트에서의 적용 (Yahboom X3)
 
+### 3.1 왜 MPPI인가
+
+2.1절의 선택 기준을 X3에 대입하면 이렇게 된다.
+
+| 판단 항목 | X3의 경우 | 결론 |
+|---|---|---|
+| 동적 장애물(사람 등)이 있는가 | 실내 사무실 — **있음** | 예측적 회피가 강한 MPPI 유리 |
+| 계산 자원이 충분한가 | Jetson — 여유롭지 않음 | MPPI가 부담이지만 현재는 감당 중 |
+| 정해진 경로를 정확히 따라가야 하는가 | 아니오(회피가 더 중요) | RPP는 부적합 |
+| 선택 | **MPPI** | 부드러운 주행과 동적 회피를 우선 |
+
+**바꿔 쓴다면**: Jetson의 CPU가 빠듯해지면 **DWB**가 현실적인 대안이다(더 가볍고 자료도 많다). 반대로 순찰처럼 정해진 경로를 정확히 따라가는 용도라면 **RPP**가 더 적합하다. 세 컨트롤러 모두 X3의 운동학에 문제없이 맞는다.
+
+> **참고**: 이 프로젝트는 `Rotation Shim`을 쓰지 않는다. MPPI는 자체적으로 회전을 포함한 궤적을 생성하므로 별도 선회 래퍼가 없어도 대체로 동작한다. 다만 "경로 시작 시 엉뚱한 방향으로 먼저 움직인다"는 증상이 반복된다면 Rotation Shim 도입을 검토할 수 있다.
+
+### 3.2 파라미터 설정
+
 - 예측 호라이즌: `time_steps: 56`, `model_dt: 0.05` → 총 `56 × 0.05 = 2.8초`를 앞서 내다보고 궤적을 평가한다. 샘플링은 `batch_size: 2000`개의 후보 궤적을 한 주기에 평가한다.
 - `motion_model: "DiffDrive"` — 현재 X3는 메카넘 휠 기반이지만, Nav2 controller는 DiffDrive(횡이동 없음) 모델을 사용한다. 과거 Omni(전방위) 모델을 시도했을 때 `base_node_X3`의 odom과 불일치해 localization jump가 발생한 이력이 있어, 실제 메카넘 odom이 정확히 나오기 전까지는 DiffDrive를 유지하는 것으로 결정되어 있다.
 - `vy_max: 0.0` — 위와 같은 이유로 횡이동 속도를 0으로 제한한다.
 - `vx_max: 0.34`, `wz_max: 1.0` — 전진/회전 최대 속도. 실내 사무실 환경 안전성을 고려한 값이다.
 
-### MPPI Critics (궤적 평가 함수)
+### 3.3 MPPI Critics (궤적 평가 함수)
 
 | Critic | 역할 | 튜닝 관점 |
 |---|---|---|
@@ -76,5 +133,8 @@ MPPI는 매 제어 주기마다 다음 과정을 반복한다.
 
 ## 7. 참고자료
 
+- [Nav2 — Controller Server](https://docs.nav2.org/configuration/packages/configuring-controller-server.html) — controller 플러그인 목록과 공통 설정
+- [Nav2 — Navigation Concepts](https://docs.nav2.org/concepts/index.html) — "Controllers, also known as local planners in ROS 1" (0장 용어 근거)
+- [Nav2 — Rotation Shim Controller](https://docs.nav2.org/configuration/packages/configuring-rotation-shim-controller.html) — 선회 래퍼 사용법
 - Nav2 공식 문서 — MPPI Controller 설정 가이드, Critic 목록과 파라미터
 - `rtabmap_nav_params_tuning_guide.md` (프로젝트 내부 자료) — 이 프로젝트의 실제 MPPI 설정값
