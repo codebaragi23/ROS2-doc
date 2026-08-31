@@ -83,5 +83,5 @@ container = ComposableNodeContainer(
 
 ## 7. 참고자료
 
-- ROS2 공식 문서 — Composable Node 개념과 Intra-process Communication
-- ROS2 공식 문서 — Executor 종류와 콜백 그룹(MutuallyExclusive/Reentrant)
+- [ROS2 — About Composition](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Composition.html) — Composable Node와 intra-process 통신
+- [ROS2 — About Executors](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Executors.html) — Executor 종류와 콜백 그룹

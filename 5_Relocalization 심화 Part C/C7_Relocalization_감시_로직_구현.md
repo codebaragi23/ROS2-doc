@@ -125,6 +125,6 @@ if __name__ == '__main__':
 
 ## 7. 참고자료
 
-- rtabmap_msgs 공식 정의 — `Info` 메시지 필드 (실제 필드명은 빌드 시점 버전 확인 필요)
-- Nav2 공식 문서 — `Spin` Action 클라이언트 사용법(B1-1 참고)
-- C2, C2-1, C3, B8 (이 시리즈 내부 문서) — 이 구현의 이론적 근거
+- [`rtabmap_msgs/msg/Info.msg`(GitHub)](https://github.com/introlab/rtabmap_ros/blob/master/rtabmap_msgs/msg/Info.msg) — 실제 필드명은 빌드 시점 버전 확인 필요
+- [[B1-1_Nav2_Action_기반_경로_이동_구조|B1-1. Nav2 Action 기반 경로 이동 구조]] — `Spin` Action 클라이언트 사용법
+- [[C2_트리거_시점_5분류|C2]], [[C2-1_이_프로젝트의_트리거_구현|C2-1]], [[C3_RTAB-Map_핵심_파라미터_대응표|C3]], [[B8_Relocalization이_일어나는_위치|B8]] — 이 구현의 이론적 근거

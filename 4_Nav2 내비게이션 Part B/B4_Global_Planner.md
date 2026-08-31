@@ -109,6 +109,10 @@ GridBased:
 
 ## 7. 참고자료
 
-- [Nav2 — Planner Server](https://docs.nav2.org/configuration/packages/configuring-planner-server.html) — planner 플러그인 목록과 공통 설정
-- [Nav2 — Smac Planner](https://docs.nav2.org/configuration/packages/configuring-smac-planner.html) — SmacPlanner2D/Hybrid/Lattice 상세 및 선택 기준
+- [Nav2 — Planner Server](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/core_servers/configuring_planner_server/) — planner 플러그인 목록과 공통 설정
+- [Nav2 — Smac Planner 2D](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/planners_plugins/smac/smac_2d/configuring_smac_2d/) — 이 프로젝트가 쓰는 플러그인의 파라미터 전체
+- [Nav2 — Smac Hybrid-A\*](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/planners_plugins/smac/smac_hybrid/configuring_smac_hybrid/) / [Smac Lattice](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/planners_plugins/smac/smac_lattice/configuring_smac_lattice/) — 차량형·비원형 로봇용
+- [Nav2 — NavFn](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/planners_plugins/configuring_navfn/) / [Theta\*](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/planners_plugins/thetastar/configuring_thetastar/) — 2.1절의 나머지 후보
 - `rtabmap_nav_params_tuning_guide.md` (프로젝트 내부 자료) — 이 프로젝트의 실제 planner 설정값과 튜닝 우선순위
+
+> **문서 버전 주의**: `docs.nav2.org`는 Humble 버전 문서를 더 이상 호스팅하지 않아 위 링크는 Jazzy 기준이다. 개념과 대부분의 파라미터는 동일하지만, 플러그인 목록과 일부 기본값은 Humble과 다를 수 있으므로 실제 설정 시 `ros2 param list`로 대조한다.

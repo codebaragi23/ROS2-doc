@@ -119,6 +119,8 @@ Nav2 공식 `nav_to_pose_recovery` Behavior Tree는 실패 시 두 단계로 회
 
 ## 7. 참고자료
 
-- Nav2 공식 문서 — `nav_to_pose_recovery` Behavior Tree 상세 설명, RoundRobin 기반 recovery 순서
-- Nav2 공식 문서 — `ReinitializeGlobalLocalization` BT 액션(AMCL 전용, kidnapped robot 대응 명시)
-- Nav2 공식 문서 — Behavior Server 설정 가이드(spin/backup/wait/drive_on_heading/assisted_teleop)
+- [Nav2 — `nav_to_pose_recovery` 트리](https://docs.nav2.org/jazzy/getting_started/nav2_behavior_trees/trees/nav_to_pose_recovery/) — RoundRobin 기반 recovery 순서
+- [Nav2 — `ReinitializeGlobalLocalization`](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/core_servers/bt_plugins/actions/ReinitializeGlobalLocalization/) — AMCL 전용, kidnapped robot 대응
+- [Nav2 — Behavior Server 설정](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/core_servers/configuring_behavior_server/) — spin/backup/wait/drive_on_heading/assisted_teleop
+
+> **문서 버전 주의**: `docs.nav2.org`는 Humble 버전 문서를 더 이상 호스팅하지 않아 위 링크는 Jazzy 기준이다. 개념과 대부분의 파라미터는 동일하지만, 플러그인 목록과 일부 기본값은 Humble과 다를 수 있으므로 실제 설정 시 `ros2 param list`로 대조한다.

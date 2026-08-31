@@ -51,5 +51,5 @@ event_handler = RegisterEventHandler(
 
 ## 7. 참고자료
 
-- ROS2 공식 문서 — Launch 시스템의 이벤트 핸들러(`OnProcessStart`, `OnProcessExit`)
-- ROS2 공식 문서 — 조건부 실행(`IfCondition`, `UnlessCondition`)
+- [ROS2 — Using event handlers](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Event-Handlers.html) — `OnProcessStart`, `OnProcessExit`
+- [ROS2 — Using substitutions](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html) — `IfCondition`, `UnlessCondition` 조건부 실행

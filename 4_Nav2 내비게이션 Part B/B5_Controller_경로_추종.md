@@ -133,8 +133,11 @@ MPPI는 매 제어 주기마다 다음 과정을 반복한다.
 
 ## 7. 참고자료
 
-- [Nav2 — Controller Server](https://docs.nav2.org/configuration/packages/configuring-controller-server.html) — controller 플러그인 목록과 공통 설정
-- [Nav2 — Navigation Concepts](https://docs.nav2.org/concepts/index.html) — "Controllers, also known as local planners in ROS 1" (0장 용어 근거)
-- [Nav2 — Rotation Shim Controller](https://docs.nav2.org/configuration/packages/configuring-rotation-shim-controller.html) — 선회 래퍼 사용법
-- Nav2 공식 문서 — MPPI Controller 설정 가이드, Critic 목록과 파라미터
+- [Nav2 — Controller Server](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/core_servers/controller_server/) — controller 플러그인 목록과 공통 설정
+- [Nav2 — Navigation Servers](https://docs.nav2.org/jazzy/getting_started/navigation_concepts/navigation_servers/) — "Controllers, also known as local planners in ROS 1" (0장 용어 근거)
+- [Nav2 — Rotation Shim Controller](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/controller_plugins/configuring_rotation_shim_controller/) — 선회 래퍼 사용법
+- [Nav2 — MPPI Controller](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/controller_plugins/mppi_controller/configuring_mppic/) — Critic 목록과 파라미터 전체
+- [Nav2 — DWB Controller](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/controller_plugins/dwb_controller/) / [Regulated Pure Pursuit](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/controller_plugins/configuring_regulated_pp/) — 2.1절의 나머지 후보
 - `rtabmap_nav_params_tuning_guide.md` (프로젝트 내부 자료) — 이 프로젝트의 실제 MPPI 설정값
+
+> **문서 버전 주의**: `docs.nav2.org`는 Humble 버전 문서를 더 이상 호스팅하지 않아 위 링크는 Jazzy 기준이다. 개념과 대부분의 파라미터는 동일하지만, 플러그인 목록과 일부 기본값은 Humble과 다를 수 있으므로 실제 설정 시 `ros2 param list`로 대조한다.

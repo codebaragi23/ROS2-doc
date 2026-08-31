@@ -47,6 +47,8 @@ B6·C1에서 반복해온 "Nav2 표준 relocalization(AMCL 전용) vs 이 프로
 
 ## 7. 참고자료
 
-- Nav2 공식 문서 — AMCL과 `ReinitializeGlobalLocalization`
-- RTAB-Map 공식 문서 — localization mode 및 관련 파라미터
+- [Nav2 — AMCL 설정](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/others/configuring_amcl/) / [`ReinitializeGlobalLocalization`](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/core_servers/bt_plugins/actions/ReinitializeGlobalLocalization/)
+- [RTAB-Map FAQ(공식 Wiki)](https://github.com/introlab/rtabmap/wiki/FAQ) — localization mode와 `Mem/IncrementalMemory`
 - [[ros2-nav-yahboom]] — 이 프로젝트의 하드웨어 제약(Jetson) 및 과거 진단 이력
+
+> **문서 버전 주의**: `docs.nav2.org`는 Humble 버전 문서를 더 이상 호스팅하지 않아 위 링크는 Jazzy 기준이다. 개념과 대부분의 파라미터는 동일하지만, 플러그인 목록과 일부 기본값은 Humble과 다를 수 있으므로 실제 설정 시 `ros2 param list`로 대조한다.

@@ -83,6 +83,6 @@ D4 8장의 우선순위를 드론 관점으로 다시 쓰면 다음과 같다.
 
 ## 8. 참고자료
 
-- D1-5, D2-7, D2-8, D3-5, D4 — 이 문서가 재평가하는 원 결론들
+- [[D1-5_이_프로젝트의_VIO_이슈_재해석|D1-5]] · [[D2-7_이_프로젝트에서의_실측_비교와_튜닝_계획|D2-7]] · [[D2-8_이_프로젝트의_ZUPT_오발동_가설과_검증_계획|D2-8]] · [[D3-5_이_프로젝트에_적용한다면|D3-5]] · [[D4_ORB-SLAM3_vs_OpenVINS_vs_VINS-Fusion_종합_비교|D4]] — 이 문서가 재평가하는 원 결론들
 - [PX4 — Visual Inertial Odometry (VIO)](https://docs.px4.io/main/en/computer_vision/visual_inertial_odometry) — 드론 VIO의 요구 조건
 - [VINS-Fusion (HKUST-Aerial-Robotics)](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) — 드론 대상으로 개발된 배경

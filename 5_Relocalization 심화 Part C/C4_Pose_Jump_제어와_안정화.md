@@ -57,4 +57,6 @@ RGBD/OptimizeFromGraphEnd: true
 
 - [REP105](https://www.ros.org/reps/rep-0105.html) — ROS 좌표계 표준, `map` 프레임의 불연속성(discontinuity) 정의
 - RTAB-Map 공식 Q&A(answers.ros.org) — `OptimizeFromGraphEnd` 대안과 `robot_localization` 필터링 제안 원문
-- Nav2 공식 문서 — Costmap Filters의 speed_limit 레이어
+- [Nav2 — Speed Filter](https://docs.nav2.org/jazzy/configuration_and_development/configuration_guide/core_servers/costmap_2d/costmap_filters/speed_filter/) — 속도 제한 필터 설정
+
+> **문서 버전 주의**: `docs.nav2.org`는 Humble 버전 문서를 더 이상 호스팅하지 않아 위 링크는 Jazzy 기준이다. 개념과 대부분의 파라미터는 동일하지만, 플러그인 목록과 일부 기본값은 Humble과 다를 수 있으므로 실제 설정 시 `ros2 param list`로 대조한다.

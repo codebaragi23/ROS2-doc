@@ -56,5 +56,5 @@ ros2 topic info /scan --verbose
 
 ## 7. 참고자료
 
-- ROS2 공식 문서 — About Quality of Service settings, QoS 호환성 규칙
-- ROS2 공식 문서 — DDS Implementations, ROS_DOMAIN_ID
+- [ROS2 — About Quality of Service settings](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Quality-of-Service-Settings.html) — QoS 프로파일과 호환성 규칙
+- [ROS2 — About the Domain ID](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html) — `ROS_DOMAIN_ID`로 네트워크를 분리하는 방식

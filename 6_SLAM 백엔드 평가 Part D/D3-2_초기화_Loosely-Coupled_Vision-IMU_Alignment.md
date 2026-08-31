@@ -62,4 +62,4 @@ D1-2에서 언급했듯, ORB-SLAM3 논문 저자들은 VINS-Mono류의 "분리�
 ## 7. 참고자료
 
 - Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018, IV장
-- D1-2(이 시리즈) — ORB-SLAM3 논문의 "loosely-coupled 방식 비판" 원문 맥락
+- [[D1-2_Visual-Inertial_초기화_알고리즘|D1-2. Visual-Inertial 초기화 알고리즘]] — ORB-SLAM3 논문의 "loosely-coupled 방식 비판" 원문 맥락

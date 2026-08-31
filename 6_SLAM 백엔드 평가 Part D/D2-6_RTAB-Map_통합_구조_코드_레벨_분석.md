@@ -70,4 +70,4 @@ void OdometryOpenVINS::reset(const Transform & initialPose) {
 ## 8. 참고자료
 
 - 프로젝트 내부 자료 — `/workspace/ROS/rtabmap_openvins_ws/src/rtabmap/corelib/src/odometry/OdometryOpenVINS.cpp` 실제 소스 분석
-- A2(이 시리즈) — RTAB-Map 매핑 파이프라인에서 Odometry 단계의 역할
+- [[A2_매핑_실행_파이프라인과_핵심_파라미터|A2. 매핑 실행 파이프라인과 핵심 파라미터]] — RTAB-Map 매핑 파이프라인에서 Odometry 단계의 역할

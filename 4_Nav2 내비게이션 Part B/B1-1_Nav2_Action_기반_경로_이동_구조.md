@@ -51,5 +51,5 @@ flowchart TB
 
 ## 7. 참고자료
 
-- ROS2 기초 4편 — Action의 Goal/Feedback/Result 기본 구조
-- Nav2 공식 문서 — `nav2_msgs` Action 정의(`NavigateToPose`, `ComputePathToPose`, `FollowPath`, `Spin`, `BackUp`, `Wait`)
+- [[04_Service와_Action|ROS2 기초 04. Service와 Action]] — Goal/Feedback/Result 기본 구조
+- [`nav2_msgs/action` 정의(GitHub)](https://github.com/ros-navigation/navigation2/tree/main/nav2_msgs/action) — Action 정의(`NavigateToPose`, `ComputePathToPose`, `FollowPath`, `Spin`, `BackUp`, `Wait`)
