@@ -59,7 +59,7 @@ GitHub 공식 저장소는 VINS-Fusion을 "최적화 기반 멀티센서 상태 
 
 ## 7. 참고자료
 
-- Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018
+- Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018 ([arXiv:1708.03852](https://arxiv.org/abs/1708.03852))
 - Qin, Cao, Pan, Shen, "A General Optimization-based Framework for Local Odometry Estimation with Multiple Sensors," [arXiv:1901.03638](https://arxiv.org/abs/1901.03638) (VINS-Fusion의 이론적 기반)
 - [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) 공식 저장소
 - [[ros2-nav-yahboom]] — 다음 SLAM 백엔드 후보로 언급된 이력

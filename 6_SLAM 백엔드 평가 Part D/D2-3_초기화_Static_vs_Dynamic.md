@@ -57,6 +57,6 @@ OdomOpenVINS/InitDynUse:       false  # 동적(모션 기반) 초기화 사용 �
 
 ## 8. 참고자료
 
-- Geneva et al., "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
+- Geneva et al., "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020 ([DOI: 10.1109/ICRA40945.2020.9196524](https://doi.org/10.1109/ICRA40945.2020.9196524))
 - 프로젝트 내부 자료 — RTAB-Map `OdomOpenVINS` 파라미터 정의(`Parameters.h`) 및 코드 분석
 - [[D1-2_Visual-Inertial_초기화_알고리즘|D1-2. Visual-Inertial 초기화 알고리즘]] — ORB-SLAM3의 대조되는 초기화 철학

@@ -58,6 +58,6 @@ D3-1에서 언급했듯 VINS-Fusion은 맵 병합과 pose graph 저장·재사�
 
 ## 9. 참고자료
 
-- Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018 — 4-DOF pose graph 최적화 설계 근거
+- Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018 ([arXiv:1708.03852](https://arxiv.org/abs/1708.03852)) — 4-DOF pose graph 최적화 설계 근거
 - [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) — `loop_fusion_node` 실행 구조
 - [[D1-4_Loop_Closing과_Place_Recognition|D1-4. Loop Closing과 Place Recognition]] — ORB-SLAM3의 통합형 Place Recognition과의 대비

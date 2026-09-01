@@ -84,6 +84,6 @@ VINS-Fusion의 처리 시간 수치는 이 프로젝트가 아닌 **다른 연�
 - [GitHub UZ-SLAMLab/ORB_SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3) README — 공식 지원 조합에 RGB-D-Inertial이 없다는 근거(D1-2 12장, D1-5 8.4절)
 - "Comparison of modern open-source visual SLAM approaches" (Skoltech/Sberbank Robotics Lab, [arXiv:2108.01654](https://arxiv.org/abs/2108.01654))
 - "Benchmarking SLAM Algorithms in the Cloud: The SLAM Hive Benchmarking Suite" ([arXiv:2406.17586](https://arxiv.org/abs/2406.17586))
-- "Visual-Inertial SLAM for Unstructured Outdoor Environments" (Schmidt et al., Journal of Field Robotics, 2025)
-- "FAR-AVIO: Fast and Robust Schur-Complement Based Acoustic-Visual-Inertial Fusion Odometry" — Jetson 임베디드 플랫폼에서의 VINS-Fusion 런타임 비교 수치
+- "Visual-Inertial SLAM for Unstructured Outdoor Environments: Benchmarking the Benefits and Computational Costs of Loop Closing" (Schmidt et al., Journal of Field Robotics, 2025, [arXiv:2408.01716](https://arxiv.org/abs/2408.01716))
+- "FAR-AVIO: Fast and Robust Schur-Complement Based Acoustic-Visual-Inertial Fusion Odometry with Sensor Calibration" ([arXiv:2512.20355](https://arxiv.org/abs/2512.20355)) — Jetson 임베디드 플랫폼에서의 VINS-Fusion 런타임 비교 수치
 - 프로젝트 내부 자료 — [[ros2-nav-yahboom]], 2026-08-21 OpenVINS 코드 분석 문서

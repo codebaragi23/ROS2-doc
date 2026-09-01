@@ -71,5 +71,5 @@ VINS-Fusion은 모든 프레임을 슬라이딩 윈도우에 넣지 않고, 다�
 
 ## 8. 참고자료
 
-- Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018 — Marginalization, 키프레임 선택 기준
+- Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018 ([arXiv:1708.03852](https://arxiv.org/abs/1708.03852)) — Marginalization, 키프레임 선택 기준
 - Towards autonomous photogrammetric forest inventory 논문(2025) — VINS-Fusion의 Shi-Tomasi+KLT 프론트엔드 및 슬라이딩 윈도우 운영 방식 요약

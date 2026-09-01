@@ -12,7 +12,7 @@
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 |
 | 관련 문서 | 이전: [[D1-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 - D1-2. Visual-Inertial 초기화 알고리즘]] / 다음: [[D1-4_Loop_Closing과_Place_Recognition|SLAM 백엔드 - D1-4. Loop Closing과 Place Recognition]] |
 
-> 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장(Map Merging and Loop Closing), Elvira et al., "ORBSLAM-Atlas: a robust and accurate multi-map system," IROS 2019
+> 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장(Map Merging and Loop Closing), Elvira et al., "ORBSLAM-Atlas: a robust and accurate multi-map system," IROS 2019 ([arXiv:1908.11585](https://arxiv.org/abs/1908.11585))
 
 ---
 
@@ -276,5 +276,5 @@ grep -in "candidate\|reject\|geometric" revisit.log
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
 | 논문 | ORB-SLAM3 논문(Campos et al., 2021) 6장 "Map Merging and Loop Closing" | Place recognition, Loop Closing/Map Merging 분기 로직, Welding Window |
-| 논문 | Elvira, Montiel, Tardós, "ORBSLAM-Atlas: a robust and accurate multi-map system," IROS 2019 | Atlas 구조의 원 설계와 다중 지도 관리 근거 |
+| 논문 | Elvira, Montiel, Tardós, "ORBSLAM-Atlas: a robust and accurate multi-map system," IROS 2019 ([arXiv:1908.11585](https://arxiv.org/abs/1908.11585)) | Atlas 구조의 원 설계와 다중 지도 관리 근거 |
 | 프로젝트 진단 노트 | `[[ros2-nav-yahboom]]` | active-map IMU reset 관찰 이력 |

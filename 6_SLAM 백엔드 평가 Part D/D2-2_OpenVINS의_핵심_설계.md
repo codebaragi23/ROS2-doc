@@ -58,6 +58,6 @@ D2-1에서 "MSCKF feature는 상태에 안 들어간다"고 했지만, OpenVINS�
 
 ## 8. 참고자료
 
-- Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
-- Huang, Mourikis, Roumeliotis, "A First-Estimates Jacobian EKF for Improving SLAM Consistency," ISER 2008
+- Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020 ([DOI: 10.1109/ICRA40945.2020.9196524](https://doi.org/10.1109/ICRA40945.2020.9196524))
+- Huang, Mourikis, Roumeliotis, "A First-Estimates Jacobian EKF for Improving SLAM Consistency," ISER 2008 ([PDF](https://people.csail.mit.edu/ghuang/paper/Huang2008ISER.pdf))
 - [[ros2-nav-yahboom]] — 이 프로젝트의 OpenVINS 통합 및 파라미터 사용 이력

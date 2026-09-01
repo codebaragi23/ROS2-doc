@@ -12,7 +12,7 @@
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 |
 | 관련 문서 | 이전: [[D1-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 - D1-3. Multi-Map System(Atlas)과 재추적·병합]] / 다음: [[D1-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 - D1-5. 이 프로젝트의 VIO 이슈 재해석]] |
 
-> 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장 A절(Place Recognition), Gálvez-López & Tardós, "Bags of Binary Words for Fast Place Recognition in Image Sequences" (DBoW2 원 논문)
+> 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장 A절(Place Recognition), Gálvez-López & Tardós, "Bags of Binary Words for Fast Place Recognition in Image Sequences," IEEE T-RO 2012 ([DOI: 10.1109/TRO.2012.2197158](https://doi.org/10.1109/TRO.2012.2197158)) (DBoW2 원 논문)
 
 ---
 
@@ -296,5 +296,5 @@ grep -i "nfeatures\|extracted" pr_debug.log
 | 구분 | 자료 | 핵심 내용 |
 |---|---|---|
 | 논문 | ORB-SLAM3 논문(Campos et al., 2021) 6장 A절 "Place Recognition" | 기존 DBoW2 한계 수치, 다중 후보 조회, Hamming/ratio 검증, Sim(3)/SE(3) 정합 |
-| 논문 | Gálvez-López, Tardós, "Bags of Binary Words for Fast Place Recognition in Image Sequences" | DBoW2 원 논문, bag-of-words 검색의 기본 원리 |
+| 논문 | Gálvez-López, Tardós, "Bags of Binary Words for Fast Place Recognition in Image Sequences," IEEE T-RO 2012 ([DOI: 10.1109/TRO.2012.2197158](https://doi.org/10.1109/TRO.2012.2197158)) | DBoW2 원 논문, bag-of-words 검색의 기본 원리 |
 | 프로젝트 진단 노트 | `[[ros2-nav-yahboom]]` | 재방문 시 병합 재현 여부 관련 실험 이력 |

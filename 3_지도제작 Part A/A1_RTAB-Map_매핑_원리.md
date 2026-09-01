@@ -110,5 +110,5 @@ RTAB-Map의 지도는 결국 **노드(로봇이 지나간 위치들)와 엣지(�
 ## 7. 참고자료
 
 - RTAB-Map 공식 사이트: [introlab.github.io/rtabmap](https://introlab.github.io/rtabmap/) — appearance-based loop closure, 메모리 관리 개념 설명
-- M. Labbé and F. Michaud, "Appearance-Based Loop Closure Detection for Online Large-Scale and Long-Term Operation" — WM/STM/LTM 구조와 실시간 성능 근거
+- M. Labbé and F. Michaud, "Appearance-Based Loop Closure Detection for Online Large-Scale and Long-Term Operation," IEEE T-RO 2013 ([arXiv:2407.15304](https://arxiv.org/abs/2407.15304)) — WM/STM/LTM 구조와 실시간 성능 근거
 - [rtabmap_ros GitHub 이슈 아카이브](https://github.com/introlab/rtabmap_ros/issues) — 실전 파라미터 동작 확인 (`Rtabmap/LoopThr`, `Vis/MinInliers` 등)

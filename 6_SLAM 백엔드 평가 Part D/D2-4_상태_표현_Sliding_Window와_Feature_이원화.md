@@ -55,5 +55,5 @@ D1-1에서 ORB-SLAM3는 Atlas 전체에 걸쳐 지도가 계속 커진다고 배
 
 ## 8. 참고자료
 
-- Geneva et al., "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
+- Geneva et al., "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020 ([DOI: 10.1109/ICRA40945.2020.9196524](https://doi.org/10.1109/ICRA40945.2020.9196524))
 - 프로젝트 내부 자료 — RTAB-Map `OdomOpenVINS` 파라미터 정의 및 코드 분석

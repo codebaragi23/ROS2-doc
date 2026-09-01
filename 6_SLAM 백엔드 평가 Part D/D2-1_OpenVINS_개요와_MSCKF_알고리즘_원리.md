@@ -67,6 +67,6 @@ flowchart LR
 
 ## 8. 참고자료
 
-- Mourikis, Roumeliotis, "A Multi-State Constraint Kalman Filter for Vision-Aided Inertial Navigation," ICRA 2007
-- Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
+- Mourikis, Roumeliotis, "A Multi-State Constraint Kalman Filter for Vision-Aided Inertial Navigation," ICRA 2007 ([PDF](https://www-users.cse.umn.edu/~stergios/papers/ICRA07-MSCKF.pdf))
+- Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020 ([DOI: 10.1109/ICRA40945.2020.9196524](https://doi.org/10.1109/ICRA40945.2020.9196524))
 - [GitHub rpng/open_vins](https://github.com/rpng/open_vins) — 공식 저장소
