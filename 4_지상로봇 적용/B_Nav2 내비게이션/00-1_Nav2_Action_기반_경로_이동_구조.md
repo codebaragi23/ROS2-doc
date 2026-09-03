@@ -4,6 +4,15 @@
 > 이전 문서: [[05_Behavior_Tree와_표준_Recovery|05. Behavior Tree와 표준 Recovery]]
 > 선행 학습: ROS2 기초 04(Service와 Action)
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 적용 (보충) |
+| 예상 선행 지식 | [[04_Service와_Action\|ROS2 기초 04]], [[00_Nav2_아키텍처_개요\|Nav2 내비게이션 00]] |
+| 학습 목표 | Nav2의 Action 서버/클라이언트 계층 구조를 설명할 수 있다 / 하나의 노드가 Server이자 Client인 중첩 구조를 이해한다 / CLI로 직접 목표를 보내 Feedback을 관찰할 수 있다 |
+| 기준 환경 | Yahboom ROSMASTER X3, Nav2 |
+
 ## 1. 개요
 
 ROS2 기초 04에서 Action을 "목표 전달 → Feedback 반복 → Result 1회"의 통신 방식으로 배웠다. 이 문서는 그 개념이 Nav2 내부에서 `ComputePathToPose`, `FollowPath`, `NavigateToPose` 같은 **실제 Action 서버/클라이언트 쌍**으로 어떻게 구현되어 있는지 정리한다.

@@ -3,6 +3,15 @@
 > 지상로봇 적용 — Nav2 내비게이션 시리즈
 > 이전 문서: [[05_Behavior_Tree와_표준_Recovery|05. Behavior Tree와 표준 Recovery]]
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 적용 |
+| 예상 선행 지식 | [[05_Behavior_Tree와_표준_Recovery\|Nav2 내비게이션 05]] |
+| 학습 목표 | 여러 목표를 순차 이동시키는 방법을 안다 / velocity smoother의 역할과 controller 속도 한계와의 관계를 설명할 수 있다 / 덜컥거림·반응 지연을 어느 파라미터로 조정할지 안다 |
+| 기준 환경 | Yahboom ROSMASTER X3, Nav2 |
+
 ## 1. 개요
 
 이 문서는 Nav2 파이프라인의 마지막 두 구성요소를 다룬다. `waypoint_follower`는 여러 목표점을 순차 이동할 때, `velocity_smoother`는 controller가 만든 속도 명령을 로봇에 전달하기 직전 마지막으로 다듬는 역할을 한다.

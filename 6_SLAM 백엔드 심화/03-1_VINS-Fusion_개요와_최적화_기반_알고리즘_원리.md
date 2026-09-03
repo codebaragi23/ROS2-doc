@@ -5,6 +5,15 @@
 > 참고: Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018 / [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion)
 > ⚠️ **이 03 시리즈 전체는 이 프로젝트에서 아직 코드 통합·실측이 이루어지지 않은 상태로, 공개 문헌(논문·GitHub)만을 근거로 작성됐다.** 01(ORB-SLAM3), 02(OpenVINS)처럼 프로젝트 실측 데이터를 포함하지 않는다는 점을 유의해야 한다.
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 4 — 심화 (VINS-Fusion 시작점, 문헌 기반) |
+| 예상 선행 지식 | [[00-1_심화_시리즈를_위한_최소_수학\|심화 00-1]], [[02-1_OpenVINS_개요와_MSCKF_알고리즘_원리\|심화 02-1]](대조군) |
+| 학습 목표 | 최적화 기반 VIO가 필터 기반과 무엇이 다른지 설명할 수 있다 / Ceres 기반 비선형 최적화의 구조를 안다 / 이 시리즈가 실측 없이 문헌만으로 작성됐음을 인지한다 |
+| 기준 환경 | 문헌 기반 (프로젝트 실측 없음) |
+
 ## 1. 개요
 
 01(ORB-SLAM3, 키프레임 SLAM)과 02(OpenVINS, MSCKF 필터)에 이어 세 번째 방식인 **최적화 기반(optimization-based) 슬라이딩 윈도우** VIO를 다룬다. VINS-Fusion은 홍콩과기대(HKUST) Aerial Robotics Group의 VINS-Mono를 확장한 시스템으로, 모노큘러뿐 아니라 스테레오·스테레오+IMU 등 다양한 센서 조합을 지원한다.

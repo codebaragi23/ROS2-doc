@@ -3,6 +3,15 @@
 > 지상로봇 적용 — Nav2 내비게이션 시리즈
 > 이전 문서: [[04_Controller_경로_추종|04. Controller — 경로 추종]]
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 적용 |
+| 예상 선행 지식 | [[04_Controller_경로_추종\|Nav2 내비게이션 04]] |
+| 학습 목표 | Behavior Tree를 읽을 수 있다(SUCCESS/FAILURE/RUNNING, Sequence/Fallback) / behavior_server가 제공하는 동작 전체를 안다 / 표준 recovery와 relocalization이 다른 개념임을 설명할 수 있다 / 로봇을 물리적으로 움직이는 동작을 식별할 수 있다 |
+| 기준 환경 | Yahboom ROSMASTER X3, Nav2 bt_navigator |
+
 ## 1. 개요
 
 `bt_navigator`는 목표 지점까지의 전체 행동 흐름(경로 계획 → 추종 → 도착 판정 → 실패 시 recovery)을 관리한다. 이 문서에서는 Nav2가 기본 제공하는 recovery 동작을 정리하고, **이것이 relocalization과는 다른 개념**이라는 점을 명확히 한다.

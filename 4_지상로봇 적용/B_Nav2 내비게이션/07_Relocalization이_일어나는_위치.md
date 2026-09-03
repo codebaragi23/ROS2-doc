@@ -3,6 +3,15 @@
 > 지상로봇 적용 — Nav2 내비게이션 시리즈 (마지막 문서)
 > 이전 문서: [[06_Waypoint_Follower_Velocity_Smoother|06. Waypoint Follower & Velocity Smoother]]
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 적용 (Nav2 마무리, 다음 시리즈로의 다리) |
+| 예상 선행 지식 | Nav2 내비게이션 00~06 전체 |
+| 학습 목표 | Nav2 전체가 TF 전제 위에서만 동작한다는 것을 설명할 수 있다 / Nav2 내부 실패와 로컬라이제이션 실패를 구분할 수 있다 / relocalization이 Nav2 바깥의 문제임을 이해한다 |
+| 기준 환경 | Yahboom ROSMASTER X3, Nav2 + RTAB-Map |
+
 ## 1. 개요
 
 Nav2 내비게이션에서 다룬 bt_navigator, planner, controller, costmap, recovery는 전부 **`map→odom→base_footprint` TF가 항상 정확하다는 전제 위에서** 동작한다. 이 문서는 Nav2 내비게이션 전체를 마무리하며, "그 전제를 실제로 채워주는 것이 무엇인가"를 짚고 Relocalization 심화로 넘어가는 다리 역할을 한다.

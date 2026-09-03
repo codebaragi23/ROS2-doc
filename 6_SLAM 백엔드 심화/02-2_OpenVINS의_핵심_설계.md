@@ -4,6 +4,15 @@
 > 이전 문서: [[02-1_OpenVINS_개요와_MSCKF_알고리즘_원리|02-1. OpenVINS 개요와 MSCKF 알고리즘 원리]]
 > 참고 논문: Geneva et al., "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 4 — 심화 |
+| 예상 선행 지식 | [[02-1_OpenVINS_개요와_MSCKF_알고리즘_원리\|심화 02-1]] |
+| 학습 목표 | FEJ가 왜 필요한지(관측 가능성 일관성) 설명할 수 있다 / 온라인 캘리브레이션의 범위를 안다 / MSCKF feature와 SLAM feature의 이원화를 이해한다 |
+| 기준 환경 | 개념 위주 (논문 + 프로젝트 파라미터) |
+
 ## 1. 개요
 
 02-1에서 MSCKF의 기본 아이디어를 다뤘다. OpenVINS 공식 논문은 이 기본 MSCKF 위에 **연구·실전 양쪽에 유용한 추가 설계**들을 얹었다고 소개한다. 이 문서는 그 설계 요소들을 정리한다.

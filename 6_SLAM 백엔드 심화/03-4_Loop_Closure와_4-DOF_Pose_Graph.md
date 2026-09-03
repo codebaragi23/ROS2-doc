@@ -4,6 +4,15 @@
 > 이전 문서: [[03-3_Sliding_Window_최적화와_Marginalization|03-3. Sliding Window 최적화와 Marginalization]]
 > ⚠️ 문헌 기반 문서 — 프로젝트 실측 없음(03-1 안내 참고)
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 4 — 심화 (문헌 기반) |
+| 예상 선행 지식 | [[03-3_Sliding_Window_최적화와_Marginalization\|심화 03-3]], [[01-4_Loop_Closing과_Place_Recognition\|심화 01-4]](대조군) |
+| 학습 목표 | 왜 6-DOF가 아니라 4-DOF로 최적화하는지 설명할 수 있다 / loop closure가 별도 프로세스로 분리된 구조의 이점을 안다 |
+| 기준 환경 | 문헌 기반 |
+
 ## 1. 개요
 
 02-1에서 "OpenVINS는 기본적으로 loop closure가 없다"고 배웠다. VINS-Fusion은 이와 달리 **별도의 노드로 분리된 loop closure 기능**을 제공한다. 이 문서는 그 구조와, 01(ORB-SLAM3)의 통합형 loop closure(01-3, 01-4)와 어떻게 다른지 다룬다.

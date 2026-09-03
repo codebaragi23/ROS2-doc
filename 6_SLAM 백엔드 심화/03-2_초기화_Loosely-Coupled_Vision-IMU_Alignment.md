@@ -5,6 +5,15 @@
 > 참고: Qin, Li, Shen, "VINS-Mono," IEEE T-RO 2018, IV장(Estimator Initialization)
 > ⚠️ 문헌 기반 문서 — 프로젝트 실측 없음(03-1 안내 참고)
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 4 — 심화 (문헌 기반) |
+| 예상 선행 지식 | [[03-1_VINS-Fusion_개요와_최적화_기반_알고리즘_원리\|심화 03-1]], [[01-2_Visual-Inertial_초기화_알고리즘\|심화 01-2]] |
+| 학습 목표 | loosely-coupled 정렬 방식의 절차를 안다 / ORB-SLAM3가 이 방식을 비판한 지점을 설명할 수 있다 |
+| 기준 환경 | 문헌 기반 |
+
 ## 1. 개요
 
 01-2(ORB-SLAM3의 MAP 기반 3단계 초기화)와 02-3(OpenVINS의 static/dynamic 초기화)에 이어, VINS-Fusion(VINS-Mono 계승)의 초기화 방식을 다룬다. 세 시스템의 초기화 철학을 나란히 놓고 보면 VIO 초기화 문제 전체의 지형이 잘 드러난다.

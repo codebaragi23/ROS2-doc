@@ -4,6 +4,15 @@
 > 이전 문서: [[01_SLAM_백엔드_종류_한눈에_보기|SLAM 공통 기초 - 01. SLAM 백엔드 종류 한눈에 보기]]
 > 선행 학습: `ROS2 기초` 00~09 — 특히 [[03_Topic과_Message|03(Topic/Message)]], [[07_TF2_기초|07(TF2 기초)]]을 읽었다는 전제로 작성됨
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 적용 (지상로봇 SLAM의 시작) |
+| 예상 선행 지식 | [[00_SLAM이란_무엇이고_왜_쓰는가\|SLAM 공통 기초 00]], [[03_Topic과_Message\|ROS2 기초 03]], [[07_TF2_기초\|07. TF2]] |
+| 학습 목표 | RTAB-Map이 SLAM 일반 개념을 어떻게 구현하는지 설명할 수 있다 / 특징점·bag-of-words·inlier의 관계를 안다 / ICP가 카메라를 어떻게 보완하는지 설명할 수 있다 / WM/STM/LTM 메모리 관리가 실시간성을 어떻게 보장하는지 안다 / 그래프 최적화가 실제로 무엇을 최소화하는지 설명할 수 있다 |
+| 기준 환경 | Yahboom ROSMASTER X3, RTAB-Map, ROS2 Humble |
+
 ## 1. 개요
 
 RTAB-Map(Real-Time Appearance-Based Mapping)은 카메라·LiDAR 데이터를 이용해 **지도를 만들면서 동시에 로봇 자신의 위치를 추정**하는 그래프 기반 SLAM 라이브러리다. [[00_SLAM이란_무엇이고_왜_쓰는가|SLAM 공통 기초]]에서 배운 SLAM의 일반 개념(Odometry, Mapping, Loop Closure, 프론트엔드/백엔드 구분)이 RTAB-Map에서 실제로 어떻게 구현되는지가 이 문서의 주제다. 이 문서는 이후 Nav2 문서들과 relocalization 심화 문서를 이해하기 위한 기초 개념을 다룬다. RTAB-Map은 카메라만(Visual), LiDAR만(ICP), 또는 둘을 함께 쓰는 Visual+LiDAR 융합 방식 중 원하는 조합으로 구성할 수 있다.

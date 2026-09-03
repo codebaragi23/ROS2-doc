@@ -3,6 +3,15 @@
 > 지상로봇 적용 — Nav2 내비게이션 시리즈
 > 이전 문서: [[03_Global_Planner|03. Global Planner]]
 
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 적용 |
+| 예상 선행 지식 | [[03_Global_Planner\|Nav2 내비게이션 03]] |
+| 학습 목표 | ROS1의 local planner와 ROS2의 controller가 같은 것임을 안다 / controller 플러그인 전체와 선택 기준을 안다 / MPPI가 궤적을 어떻게 고르는지 설명할 수 있다 / 주행이 거칠 때 어떤 파라미터를 볼지 판단할 수 있다 |
+| 기준 환경 | Yahboom ROSMASTER X3, Nav2 controller_server (MPPI) |
+
 ## 0. 용어 정리 — Controller인가 Local Planner인가
 
 **둘 다 같은 것을 가리키지만, ROS2 Nav2의 공식 용어는 "Controller"다.**
