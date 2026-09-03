@@ -1,11 +1,22 @@
-# 문제 해결 - colcon 빌드 오류 모음
+# 04. colcon 빌드 오류 모음
 
-> ROS2 응용 & 센서 연동 시리즈 · 4편
-> 선행 학습: ROS2 기초 1편(개발 환경과 워크스페이스 구조), 9편(자주 발생하는 오류 모음)
+> ROS2 응용 & 센서 연동 시리즈
+
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 응용 (참조용 — 막혔을 때 펼쳐보는 문서) |
+| 예상 선행 지식 | [[01_개발_환경과_워크스페이스_구조\|ROS2 기초 01. 개발 환경과 워크스페이스 구조]], [[09_문제_해결_자주_발생하는_오류_모음\|09. 문제 해결]] |
+| 학습 목표 | 빌드 실패를 유형별로 분류해 접근할 수 있다 / 빌드 타입 혼용·캐시 오염 문제를 인식하고 해결할 수 있다 / `rosdep`으로 의존성을 먼저 해결하는 습관을 갖는다 |
+| 기준 환경 | Ubuntu 22.04, ROS2 Humble, colcon |
+| 관련 문서 | 이전: [[03_센서_연동_LiDAR_C1\|응용 03. LiDAR C1]] / 다음: [[05_Launch_시스템_디버깅\|응용 05. Launch 시스템 디버깅]] |
+
+> **읽는 방법**: 이 문서는 처음부터 끝까지 정독하는 문서가 아니다. **소스 빌드에서 막혔을 때 증상으로 찾아보는 참조 문서**다. apt 설치만으로 진행 중이라면 지금은 건너뛰고, 나중에 RTAB-Map이나 SLAM 백엔드를 소스로 빌드할 때 돌아오면 된다.
 
 ## 1. 개요
 
-ROS2 기초 9편은 "빌드/source 누락"을 가장 흔한 원인으로만 다뤘다. 이 문서는 **빌드가 실행은 되는데 실패하는** 더 구체적인 유형들 — 실제 로봇 프로젝트(RealSense, LiDAR, RTAB-Map 소스 빌드)에서 1편의 단순 "Package not found"보다 훨씬 자주 등장하는 문제들 — 을 다룬다.
+ROS2 기초 09는 "빌드/source 누락"을 가장 흔한 원인으로만 다뤘다. 이 문서는 **빌드가 실행은 되는데 실패하는** 더 구체적인 유형들 — 실제 로봇 프로젝트(RealSense, LiDAR, RTAB-Map 소스 빌드)에서 ROS2 기초 09의 단순 "Package not found"보다 훨씬 자주 등장하는 문제들 — 을 다룬다.
 
 ## 2. 핵심 개념: 실패의 세 갈래
 
@@ -53,7 +64,7 @@ CMake Error: The current CMakeCache.txt directory ... is different from the dire
 CMake Error: Could not find a package configuration file provided by "realsense2"
 ```
 
-`realsense2` SDK가 시스템에 먼저 설치되어 있어야 `realsense2_camera` 패키지가 빌드된다 — `rosdep install`로 잡히지 않는 경우 [센서 연동 - RealSense D435i](05_센서_연동_RealSense_D435i.md) 문서의 설치 절차를 먼저 따른다. RTAB-Map, LiDAR 00 드라이버 소스 빌드에서도 유형 B(빌드 타입 혼용)와 유형 C(캐시 오염)가 실제로 여러 차례 발생했다([[ros2-nav-yahboom]] 참고).
+`realsense2` SDK가 시스템에 먼저 설치되어 있어야 `realsense2_camera` 패키지가 빌드된다 — `rosdep install`로 잡히지 않는 경우 [[02_센서_연동_RealSense_D435i|응용 02. 센서 연동 - RealSense D435i]] 문서의 설치 절차를 먼저 따른다. RTAB-Map, LiDAR C1 드라이버 소스 빌드에서도 유형 B(빌드 타입 혼용)와 유형 C(캐시 오염)가 실제로 여러 차례 발생했다([[ros2-nav-yahboom]] 참고).
 
 ## 5. 관련 명령어
 
@@ -73,7 +84,20 @@ CMake Error: Could not find a package configuration file provided by "realsense2
 
 - 다음: **[[05_Launch_시스템_디버깅|Launch 시스템 디버깅]]** — 노드가 여러 개로 늘어난 뒤 "떴는데 동작하지 않는" 상황을 Launch 레벨에서 진단한다.
 
-## 8. 참고자료
+## 8. 이해도 점검
+
+1. 빌드 실패를 만났을 때, 로그를 자세히 읽기 **전에** 먼저 해볼 만한 조치는 무엇인가?
+2. `rosdep install`이 하는 일은 무엇이며, 왜 소스 빌드 전에 먼저 실행하는가?
+3. 어제까지 잘 되던 빌드가 코드를 안 바꿨는데 갑자기 깨졌다. 무엇을 의심하는가?
+4. 패키지 하나만 다시 빌드하고 싶을 때 쓰는 옵션은?
+
+> [!info]- 정답 및 해설 보기
+> 1. **`build/`·`install/` 디렉터리를 지우고 다시 빌드**해본다(캐시 오염 배제). 상당수의 "이해할 수 없는" 빌드 오류가 이전 빌드 잔여물 때문이며, 이걸 먼저 배제해야 로그가 진짜 원인을 가리킨다.
+> 2. `package.xml`에 선언된 의존 패키지들을 찾아 **시스템에 자동 설치**해준다. 소스 빌드는 의존성이 갖춰져 있다고 가정하므로, 이걸 건너뛰면 "헤더를 못 찾겠다"류의 오류가 줄줄이 나온다.
+> 3. **캐시 오염 또는 빌드 타입 혼용**을 의심한다. 특히 같은 워크스페이스를 서로 다른 빌드 타입/컴파일러 설정으로 빌드한 적이 있다면 잔여물이 충돌한다. 이 프로젝트에서도 실제로 겪은 유형이다([[ros2-nav-yahboom]]).
+> 4. `colcon build --packages-select <패키지명>`. 전체 재빌드는 시간이 오래 걸리므로, 문제가 되는 패키지만 반복 시도할 때 필수적이다.
+
+## 9. 참고자료
 
 - [colcon 공식 문서](https://colcon.readthedocs.io/) — 빌드 옵션 전체 목록
 - [rosdep 공식 문서](https://docs.ros.org/en/independent/api/rosdep/html/) — 의존성 해석 방식

@@ -1,11 +1,20 @@
-# 문제 해결 - Launch 시스템 디버깅
+# 05. Launch 시스템 디버깅
 
-> ROS2 응용 & 센서 연동 시리즈 · 5편
-> 선행 학습: ROS2 기초 6편(Launch 파일 작성법), 9편(문제 해결)
+> ROS2 응용 & 센서 연동 시리즈
+
+## 문서 정보
+
+| 항목 | 내용 |
+|---|---|
+| 학습 단계 | Level 2 — 응용 (노드가 여러 개가 된 뒤 필요해지는 문서) |
+| 예상 선행 지식 | [[06_Launch_파일_작성법\|ROS2 기초 06. Launch 파일 작성법]], [[09_문제_해결_자주_발생하는_오류_모음\|09. 문제 해결]] |
+| 학습 목표 | Launch 실패를 세 갈래(미실행/즉시종료/순서문제)로 나눠 진단할 수 있다 / 오류 메시지가 없는데도 노드가 안 뜨는 경우의 원인을 찾을 수 있다 / 이벤트 핸들러로 노드 실행 순서를 강제할 수 있다 |
+| 기준 환경 | Ubuntu 22.04, ROS2 Humble |
+| 관련 문서 | 이전: [[04_colcon_빌드_오류_모음\|응용 04. colcon 빌드 오류]] / 다음: [[06_Composable_Node와_Executor_구조\|응용 06. Composable Node와 Executor]] |
 
 ## 1. 개요
 
-ROS2 기초 6편은 "노드 하나가 죽어도 나머지는 계속 실행된다"는 기본 동작만 다뤘다. 이 문서는 **왜 특정 노드만 실패하는지**를 진단하는 방법을 다룬다. 실제 로봇 시스템(LiDAR+카메라+RTAB-Map+Nav2)처럼 노드가 10개 이상인 Launch 파일에서는 "어느 노드가, 왜" 실패했는지 로그에서 찾아내는 것 자체가 일이다.
+ROS2 기초 06은 "노드 하나가 죽어도 나머지는 계속 실행된다"는 기본 동작만 다뤘다. 이 문서는 **왜 특정 노드만 실패하는지**를 진단하는 방법을 다룬다. 실제 로봇 시스템(LiDAR+카메라+RTAB-Map+Nav2)처럼 노드가 10개 이상인 Launch 파일에서는 "어느 노드가, 왜" 실패했는지 로그에서 찾아내는 것 자체가 일이다.
 
 ## 2. 핵심 개념
 
@@ -49,7 +58,20 @@ event_handler = RegisterEventHandler(
 
 - 다음: **[[06_Composable_Node와_Executor_구조|Composable Node와 Executor 구조]]** — 시스템이 동작한 뒤 "CPU가 부족하다"는 단계에서 읽는 성능 최적화 문서다.
 
-## 7. 참고자료
+## 7. 이해도 점검
+
+1. Launch를 실행했는데 **오류 메시지가 하나도 없이** 특정 노드만 안 떴다. 로그를 아무리 봐도 단서가 없다면 무엇을 해야 하는가?
+2. 노드가 떴다가 즉시 죽는다. 로그에서 무엇을 단서로 찾는가?
+3. A 노드가 준비된 뒤에 B 노드가 떠야 하는데 동시에 실행된다. 어떻게 순서를 강제하는가?
+4. 여러 노드 중 하나만 따로 떼어 확인하고 싶다면?
+
+> [!info]- 정답 및 해설 보기
+> 1. **Launch 파일 자체를 소스 코드처럼 직접 읽는다.** 해당 `Node`/`IncludeLaunchDescription`이 주석 처리되어 있거나, `condition=` 인자의 조건이 실제로 거짓이라 실행 대상에서 빠졌을 수 있다. **오류가 없다고 정상인 것이 아니다** — 이 프로젝트의 "Nav2 패널 unknown" 사례가 정확히 이 경우였다([[ros2-nav-yahboom]]).
+> 2. 터미널 출력에서 **`[node_name-N]` 접두어가 붙은 로그 줄**을 찾는다. Launch는 여러 노드의 출력을 섞어서 보여주므로 이 접두어로 걸러내야 한다. 대부분 파라미터 누락이나 초기화 단계 예외다.
+> 3. **`RegisterEventHandler` + `OnProcessStart`**로 A의 시작을 감지해 그때 B를 실행하도록 구성한다.
+> 4. Launch 대신 **`ros2 run <pkg> <node>`로 그 노드만 단독 실행**한다. 다른 노드들의 로그에 묻히지 않아 원인이 훨씬 잘 보인다.
+
+## 8. 참고자료
 
 - [ROS2 — Using event handlers](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Event-Handlers.html) — `OnProcessStart`, `OnProcessExit`
 - [ROS2 — Using substitutions](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-Substitutions.html) — `IfCondition`, `UnlessCondition` 조건부 실행
