@@ -67,7 +67,7 @@ VINS-Fusion은 모든 프레임을 슬라이딩 윈도우에 넣지 않고, 다�
 
 ## 7. 다음 문서와의 연결
 
-- 다음: **03-4. Loop Closure와 4-DOF Pose Graph** — 슬라이딩 윈도우 밖에서 장기적인 드리프트를 어떻게 관리하는지 다룬다.
+- 다음: **[[03-4_Loop_Closure와_4-DOF_Pose_Graph|SLAM 백엔드 심화 - 03-4. Loop Closure와 4-DOF Pose Graph]]** — 슬라이딩 윈도우 밖에서 장기적인 드리프트를 어떻게 관리하는지 다룬다.
 
 ## 8. 참고자료
 

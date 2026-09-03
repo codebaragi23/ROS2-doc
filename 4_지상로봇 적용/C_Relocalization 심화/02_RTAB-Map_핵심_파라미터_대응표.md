@@ -39,7 +39,7 @@ Mem/IncrementalMemory: false   # 로컬라이제이션 모드 진입
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **03. Pose Jump 제어와 안정화** — 위 표의 `RGBD/OptimizeFromGraphEnd`를 포함해, relocalization 자체는 맞게 일어나더라도 그 순간의 "점프"를 어떻게 완화할지 다룬다.
+- 다음: **[[03_Pose_Jump_제어와_안정화|지상로봇 적용 - Relocalization 심화 - 03. Pose Jump 제어와 안정화]]** — 위 표의 `RGBD/OptimizeFromGraphEnd`를 포함해, relocalization 자체는 맞게 일어나더라도 그 순간의 "점프"를 어떻게 완화할지 다룬다.
 
 ## 7. 참고자료
 

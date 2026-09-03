@@ -57,7 +57,7 @@ VINS-Mono 논문(IV장)이 설명하는 절차는 크게 4단계다.
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **03-3. Sliding Window 최적화와 Marginalization** — 초기화 이후 정상 운영 중 VINS-Fusion이 어떻게 슬라이딩 윈도우를 유지하는지 다룬다.
+- 다음: **[[03-3_Sliding_Window_최적화와_Marginalization|SLAM 백엔드 심화 - 03-3. Sliding Window 최적화와 Marginalization]]** — 초기화 이후 정상 운영 중 VINS-Fusion이 어떻게 슬라이딩 윈도우를 유지하는지 다룬다.
 
 ## 7. 참고자료
 

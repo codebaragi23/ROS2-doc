@@ -114,7 +114,7 @@ Nav2 공식 `nav_to_pose_recovery` Behavior Tree는 실패 시 두 단계로 회
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **06. Waypoint Follower & Velocity Smoother** — recovery로도 해결 안 되는 실패를 다중 목표 상황에서 어떻게 다루는지.
+- 다음: **[[06_Waypoint_Follower_Velocity_Smoother|지상로봇 적용 - Nav2 내비게이션 - 06. Waypoint Follower & Velocity Smoother]]** — recovery로도 해결 안 되는 실패를 다중 목표 상황에서 어떻게 다루는지.
 - 이 문서에서 정리한 "표준 Recovery ≠ Relocalization" 구분은 **07과 Relocalization 심화 전체의 출발점**이다.
 
 ## 7. 참고자료

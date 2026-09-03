@@ -44,7 +44,7 @@ OdomOpenVINS/ZUPTOnlyAtBeginning: false  # 시작 시점뿐 아니라 정지할 
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **02-6. RTAB-Map 통합 구조 — 코드 레벨 분석** — 지금까지 다룬 OpenVINS 개념들이 실제로 `OdometryOpenVINS.cpp`에서 어떻게 RTAB-Map과 연결되는지 다룬다.
+- 다음: **[[02-6_RTAB-Map_통합_구조_코드_레벨_분석|SLAM 백엔드 심화 - 02-6. RTAB-Map 통합 구조 — 코드 레벨 분석]]** — 지금까지 다룬 OpenVINS 개념들이 실제로 `OdometryOpenVINS.cpp`에서 어떻게 RTAB-Map과 연결되는지 다룬다.
 - 이 프로젝트에서 이 기능이 실제로 문제를 일으키고 있는지에 대한 사례 연구는 **02-8**에서 이어진다.
 
 ## 7. 참고자료

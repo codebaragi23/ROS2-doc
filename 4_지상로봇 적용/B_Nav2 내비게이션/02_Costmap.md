@@ -79,7 +79,7 @@ Global의 robot_radius가 Local보다 약간 크게 잡혀 있는 것은, 전역
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **03. Global Planner** — Global costmap 위에서 실제로 경로를 계산하는 SmacPlanner2D를 다룬다.
+- 다음: **[[03_Global_Planner|지상로봇 적용 - Nav2 내비게이션 - 03. Global Planner]]** — Global costmap 위에서 실제로 경로를 계산하는 SmacPlanner2D를 다룬다.
 - Costmap의 `robot_radius`/`inflation_radius`는 04(MPPI Controller)의 ObstaclesCritic과 항상 함께 봐야 하는 값이다 — costmap이 "안전하다"고 판단해도 controller의 critic이 다르게 판단하면 로봇이 멈추거나 회피가 과도해질 수 있다.
 
 ## 7. 참고자료

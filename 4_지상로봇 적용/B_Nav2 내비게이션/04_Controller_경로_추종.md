@@ -128,7 +128,7 @@ MPPI는 매 제어 주기마다 다음 과정을 반복한다.
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **05. Behavior Tree와 표준 Recovery** — MPPI가 멈춘 상황(progress_checker 실패)을 Nav2가 어떻게 회복 시도하는지 다룬다.
+- 다음: **[[05_Behavior_Tree와_표준_Recovery|지상로봇 적용 - Nav2 내비게이션 - 05. Behavior Tree와 표준 Recovery]]** — MPPI가 멈춘 상황(progress_checker 실패)을 Nav2가 어떻게 회복 시도하는지 다룬다.
 - costmap(02)의 `robot_radius`/`inflation_radius`와 이 문서의 critic weight는 항상 짝을 지어 튜닝해야 한다.
 
 ## 7. 참고자료

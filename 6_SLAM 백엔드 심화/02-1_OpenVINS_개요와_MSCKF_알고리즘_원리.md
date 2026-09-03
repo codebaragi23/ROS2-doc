@@ -2,7 +2,8 @@
 
 > SLAM 백엔드 심화 시리즈
 > 참고 논문: Geneva, Eckenhoff, Lee, Yang, Huang, "OpenVINS: A Research Platform for Visual-Inertial Estimation," ICRA 2020 / Mourikis, Roumeliotis, "A Multi-State Constraint Kalman Filter for Vision-Aided Inertial Navigation," ICRA 2007
-> 선행 학습: 01-1(ORB-SLAM3 시스템 개요) — 같은 문제(카메라+IMU로 위치 추정)를 완전히 다른 방식으로 푸는 두 시스템을 대비해서 읽으면 이해가 빠르다.
+> 이전 문서: [[01-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 심화 - 01-5. 이 프로젝트의 VIO 이슈 재해석]] (01 ORB-SLAM3 시리즈 마지막)
+> 선행 학습: [[01-1_ORB-SLAM3_시스템_개요|01-1. ORB-SLAM3 시스템 개요]] — 같은 문제(카메라+IMU로 위치 추정)를 완전히 다른 방식으로 푸는 두 시스템을 대비해서 읽으면 이해가 빠르다.
 
 ## 1. 개요
 
@@ -63,7 +64,7 @@ flowchart LR
 
 ## 7. 다음 문서와의 연결
 
-- 다음: **02-2. OpenVINS의 핵심 설계 — FEJ, 온라인 캘리브레이션, Feature 표현** — 공식 논문이 강조하는 OpenVINS만의 설계 요소들을 다룬다.
+- 다음: **[[02-2_OpenVINS의_핵심_설계|SLAM 백엔드 심화 - 02-2. OpenVINS의 핵심 설계 — FEJ, 온라인 캘리브레이션, Feature 표현]]** — 공식 논문이 강조하는 OpenVINS만의 설계 요소들을 다룬다.
 
 ## 8. 참고자료
 

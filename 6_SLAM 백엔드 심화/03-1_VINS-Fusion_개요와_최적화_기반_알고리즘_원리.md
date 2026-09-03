@@ -1,6 +1,7 @@
 # 03-1. VINS-Fusion 개요와 최적화 기반 알고리즘 원리
 
 > SLAM 백엔드 심화 시리즈
+> 이전 문서: [[02-8_이_프로젝트의_ZUPT_오발동_가설과_검증_계획|SLAM 백엔드 심화 - 02-8. 이 프로젝트의 ZUPT 오발동 가설과 검증 계획]] (02 OpenVINS 시리즈 마지막)
 > 참고: Qin, Li, Shen, "VINS-Mono: A Robust and Versatile Monocular Visual-Inertial State Estimator," IEEE T-RO 2018 / [GitHub HKUST-Aerial-Robotics/VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion)
 > ⚠️ **이 03 시리즈 전체는 이 프로젝트에서 아직 코드 통합·실측이 이루어지지 않은 상태로, 공개 문헌(논문·GitHub)만을 근거로 작성됐다.** 01(ORB-SLAM3), 02(OpenVINS)처럼 프로젝트 실측 데이터를 포함하지 않는다는 점을 유의해야 한다.
 
@@ -55,7 +56,7 @@ GitHub 공식 저장소는 VINS-Fusion을 "최적화 기반 멀티센서 상태 
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **03-2. 초기화 — Loosely-Coupled Vision-IMU Alignment** — VINS-Fusion(및 그 기반인 VINS-Mono)의 초기화가 01-2(ORB-SLAM3 MAP 추정), 02-3(OpenVINS static/dynamic)과 어떻게 다른 철학인지 다룬다.
+- 다음: **[[03-2_초기화_Loosely-Coupled_Vision-IMU_Alignment|SLAM 백엔드 심화 - 03-2. 초기화 — Loosely-Coupled Vision-IMU Alignment]]** — VINS-Fusion(및 그 기반인 VINS-Mono)의 초기화가 01-2(ORB-SLAM3 MAP 추정), 02-3(OpenVINS static/dynamic)과 어떻게 다른 철학인지 다룬다.
 
 ## 7. 참고자료
 

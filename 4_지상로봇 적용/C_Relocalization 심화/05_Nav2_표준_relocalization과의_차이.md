@@ -42,7 +42,7 @@
 
 ## 6. 다음 문서와의 연결
 
-- 다음: **06. Relocalization 감시 로직 구현** — 04에서 언급한 "감시 로직 노드화"를 실제 ROS2 노드 설계로 구체화하며 Relocalization 심화를 마무리한다.
+- 다음: **[[06_Relocalization_감시_로직_구현|지상로봇 적용 - Relocalization 심화 - 06. Relocalization 감시 로직 구현]]** — 04에서 언급한 "감시 로직 노드화"를 실제 ROS2 노드 설계로 구체화하며 Relocalization 심화를 마무리한다.
 - ORB-SLAM3/OpenVINS/VINS-Fusion처럼 [[ros2-nav-yahboom]]에 기록된 대안 SLAM 백엔드 검토는 별도의 "SLAM 백엔드 심화" 시리즈(01~04)에서 다룬다.
 
 ## 7. 참고자료

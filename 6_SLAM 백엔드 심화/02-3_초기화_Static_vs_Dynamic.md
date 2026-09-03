@@ -53,7 +53,7 @@ OdomOpenVINS/InitDynUse:       false  # 동적(모션 기반) 초기화 사용 �
 
 ## 7. 다음 문서와의 연결
 
-- 다음: **02-4. 상태 표현 — Sliding Window와 MSCKF/SLAM Feature 이원화** — 02-1에서 소개한 슬라이딩 윈도우가 이 프로젝트에서 실제로 어떤 크기·구성으로 운영되는지 다룬다.
+- 다음: **[[02-4_상태_표현_Sliding_Window와_Feature_이원화|SLAM 백엔드 심화 - 02-4. 상태 표현 — Sliding Window와 MSCKF/SLAM Feature 이원화]]** — 02-1에서 소개한 슬라이딩 윈도우가 이 프로젝트에서 실제로 어떤 크기·구성으로 운영되는지 다룬다.
 
 ## 8. 참고자료
 
