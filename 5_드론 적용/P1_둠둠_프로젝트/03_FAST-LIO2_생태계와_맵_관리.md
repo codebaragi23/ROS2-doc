@@ -30,7 +30,7 @@
 
 ### 2.3 LiDAR 드라이버 — `livox_ros_driver2`
 
-Livox 계열(Mid-360 등) 3D LiDAR를 쓴다면 드라이버는 **`Livox-SDK/livox_ros_driver2`**를 쓴다. ROS2 Humble을 공식 지원하며 최근까지 활발히 유지보수되고 있다. 구형 `livox_ros_driver`(v1)는 구형 SDK/기기용이라 혼동하지 않는다.
+이 프로젝트가 쓰는 **Livox Mid-360**(00번 문서 하드웨어 표 참고)의 드라이버는 **`Livox-SDK/livox_ros_driver2`**다. ROS2 Humble을 공식 지원하며 최근까지 활발히 유지보수되고 있고, Mid-360을 명시적으로 지원 목록에 포함한다. 구형 `livox_ros_driver`(v1)는 구형 SDK/기기용이라 혼동하지 않는다.
 
 ## 3. 핵심 개념: 매핑 시 고려사항
 
