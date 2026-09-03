@@ -1,11 +1,11 @@
-# 센서 연동 - LiDAR C1
+# 센서 연동 - LiDAR 00
 
 > ROS2 응용 & 센서 연동 시리즈 · 3편
 > 선행 학습: ROS2 기초 7편(TF2 기초), 8편(rqt/RViz2 활용), 이 시리즈 5편(RealSense D435i)
 
 ## 1. 개요
 
-RPLiDAR C1은 2D 스캔 데이터를 `sensor_msgs/LaserScan` 타입으로 발행하는 회전형 LiDAR다. 2편(RealSense)과 마찬가지로 노드 실행 + Topic + Parameter + TF + RViz2 확인의 조합이며, 이 결과물은 지도제작(Part A) A1(매핑)과 Nav2 내비게이션(Part B) B3(Costmap)의 LiDAR 입력으로 이어진다.
+RPLiDAR C1은 2D 스캔 데이터를 `sensor_msgs/LaserScan` 타입으로 발행하는 회전형 LiDAR다. 2편(RealSense)과 마찬가지로 노드 실행 + Topic + Parameter + TF + RViz2 확인의 조합이며, 이 결과물은 지도제작 00(매핑)과 Nav2 내비게이션 02(Costmap)의 LiDAR 입력으로 이어진다.
 
 ## 2. 핵심 개념
 

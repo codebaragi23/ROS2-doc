@@ -54,7 +54,7 @@ Launch 파일은 **여러 노드를 어떤 설정으로, 어떤 순서와 조건
 
 X3를 실제로 켜서 자율주행을 시키려면 다음과 같은 노드들이 동시에 필요하다.
 
-- LiDAR C1 드라이버 노드
+- LiDAR 00 드라이버 노드
 - RealSense D435i 카메라 드라이버 노드
 - 모터/베이스 컨트롤러 노드
 - TF 변환 관련 노드(다음 문서에서 다룸)
@@ -312,7 +312,7 @@ ros2 node list
 
 * Launch 파일의 `Node(...)` 액션은 1편(노드)에서 배운 `ros2 run`을, `parameters=[...]`는 5편(Parameter)에서 배운 파라미터 지정 방식을 그대로 코드로 옮긴 것이다. 즉 이 문서는 새로운 통신 개념이 아니라, 지금까지 배운 것을 "동시에, 반복 가능하게" 실행하는 방법을 다룬다.
 * 다음 문서에서 배울 **TF2**는 여러 좌표계 변환 노드가 동시에 실행되어야 제대로 동작하므로, 대부분 Launch 파일과 함께 실행된다. 이 문서가 TF2 실습의 실행 기반이 된다.
-* 앞으로 다룰 LiDAR C1, RealSense D435i, Nav2, ORB-SLAM3의 "실행" 단계는 대부분 `ros2 launch` 명령으로 시작되며, 이 문서의 `Node`, `IncludeLaunchDescription`, `DeclareLaunchArgument` 구조가 반복적으로 등장한다.
+* 앞으로 다룰 LiDAR 00, RealSense D435i, Nav2, ORB-SLAM3의 "실행" 단계는 대부분 `ros2 launch` 명령으로 시작되며, 이 문서의 `Node`, `IncludeLaunchDescription`, `DeclareLaunchArgument` 구조가 반복적으로 등장한다.
 
 ---
 
@@ -339,7 +339,7 @@ lidar_launch = IncludeLaunchDescription(
 )
 ```
 
-이 구조는 벤더가 제공하는 센서 드라이버 패키지가 이미 자체 Launch 파일을 갖고 있는 경우, 이를 직접 수정하지 않고 그대로 재사용하면서 내 시스템에 포함시킬 때 흔히 쓰인다. 앞으로의 센서 연동 문서(LiDAR C1, RealSense D435i)에서 이 패턴이 실제로 등장한다.
+이 구조는 벤더가 제공하는 센서 드라이버 패키지가 이미 자체 Launch 파일을 갖고 있는 경우, 이를 직접 수정하지 않고 그대로 재사용하면서 내 시스템에 포함시킬 때 흔히 쓰인다. 앞으로의 센서 연동 문서(LiDAR 00, RealSense D435i)에서 이 패턴이 실제로 등장한다.
 
 > **공식 문서 기준**: ROS2 공식 문서는 Launch 시스템을 "여러 노드를 포함한 복잡한 시스템을 동시에 시작하고 구성하기 위한 도구"로 설명하며, 큰 시스템일수록 기능 단위로 Launch 파일을 나누고 조합하는 구조를 권장한다.
 

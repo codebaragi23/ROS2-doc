@@ -62,13 +62,13 @@
 ```mermaid
 flowchart LR
     subgraph Service["Service 통신"]
-        C1[Client 노드] -->|Request| S1[Server 노드]
-        S1 -->|Response| C1
+        00[Client 노드] -->|Request| S1[Server 노드]
+        S1 -->|Response| 00
     end
     subgraph Action["Action 통신"]
-        C2[Action Client] -->|Goal| S2[Action Server]
-        S2 -->|Feedback 반복| C2
-        S2 -->|Result 1회| C2
+        01[Action Client] -->|Goal| S2[Action Server]
+        S2 -->|Feedback 반복| 01
+        S2 -->|Result 1회| 01
     end
 ```
 
@@ -347,7 +347,7 @@ Action Server가 여전히 정상적으로 등록되어 있는지 확인한다.
 
 1. **바로 다음**: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] — 이 문서에서 배운 Service 구조가 실제로 파라미터 조회/설정에 어떻게 쓰이는지 배운다.
 2. **함께 보면 좋은 주제**: [[06_Launch_파일_작성법|ROS2 기초 - Launch 파일 작성법]] — Action 서버/클라이언트처럼 여러 노드가 함께 실행되어야 하는 시스템을 한 번에 띄우는 방법이 필요해진다.
-3. **나중에 학습할 심화 주제**: [[B1-1_Nav2_Action_기반_경로_이동_구조|Nav2 - Action 기반 경로 이동 구조 이해하기]] — 이 문서의 Action 개념이 Nav2의 실제 동작 구조(BT Navigator, Action Server)로 어떻게 확장되는지 다룬다.
+3. **나중에 학습할 심화 주제**: [[00-1_Nav2_Action_기반_경로_이동_구조|지상로봇 적용 - Nav2 내비게이션 - 00-1. Nav2 Action 기반 경로 이동 구조]] — 이 문서의 Action 개념이 Nav2의 실제 동작 구조(BT Navigator, Action Server)로 어떻게 확장되는지 다룬다.
 
 ---
 

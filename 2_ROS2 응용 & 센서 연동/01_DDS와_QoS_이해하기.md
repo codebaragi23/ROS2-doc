@@ -33,7 +33,7 @@ Reliability는 "Publisher가 제공하는 수준이 Subscriber가 요구하는 �
 
 ## 3. 이 프로젝트에서의 적용
 
-LiDAR·카메라처럼 빠르게 계속 들어오는 센서 데이터는 손실을 좀 감수하더라도(`BEST_EFFORT`) 최신 데이터가 빨리 오는 게 중요하다. 반대로 로봇 제어 명령이나 지도(map) 데이터처럼 "반드시 전달돼야 하는" 데이터는 `RELIABLE`을 쓴다. RViz2에 `/map`이 늦게 구독해도 마지막 지도를 받을 수 있는 것은 `Durability: TRANSIENT_LOCAL` 덕분이다 — 지상로봇 적용의 B3(Costmap)에서 다룬 `map_subscribe_transient_local: True` 설정이 바로 이 QoS 항목이다.
+LiDAR·카메라처럼 빠르게 계속 들어오는 센서 데이터는 손실을 좀 감수하더라도(`BEST_EFFORT`) 최신 데이터가 빨리 오는 게 중요하다. 반대로 로봇 제어 명령이나 지도(map) 데이터처럼 "반드시 전달돼야 하는" 데이터는 `RELIABLE`을 쓴다. RViz2에 `/map`이 늦게 구독해도 마지막 지도를 받을 수 있는 것은 `Durability: TRANSIENT_LOCAL` 덕분이다 — 지상로봇 적용의 02(Costmap)에서 다룬 `map_subscribe_transient_local: True` 설정이 바로 이 QoS 항목이다.
 
 ## 4. 진단 예시
 

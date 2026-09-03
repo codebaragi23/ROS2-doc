@@ -53,7 +53,7 @@ CMake Error: The current CMakeCache.txt directory ... is different from the dire
 CMake Error: Could not find a package configuration file provided by "realsense2"
 ```
 
-`realsense2` SDK가 시스템에 먼저 설치되어 있어야 `realsense2_camera` 패키지가 빌드된다 — `rosdep install`로 잡히지 않는 경우 [센서 연동 - RealSense D435i](05_센서_연동_RealSense_D435i.md) 문서의 설치 절차를 먼저 따른다. RTAB-Map, LiDAR C1 드라이버 소스 빌드에서도 유형 B(빌드 타입 혼용)와 유형 C(캐시 오염)가 실제로 여러 차례 발생했다([[ros2-nav-yahboom]] 참고).
+`realsense2` SDK가 시스템에 먼저 설치되어 있어야 `realsense2_camera` 패키지가 빌드된다 — `rosdep install`로 잡히지 않는 경우 [센서 연동 - RealSense D435i](05_센서_연동_RealSense_D435i.md) 문서의 설치 절차를 먼저 따른다. RTAB-Map, LiDAR 00 드라이버 소스 빌드에서도 유형 B(빌드 타입 혼용)와 유형 C(캐시 오염)가 실제로 여러 차례 발생했다([[ros2-nav-yahboom]] 참고).
 
 ## 5. 관련 명령어
 

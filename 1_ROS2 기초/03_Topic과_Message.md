@@ -54,7 +54,7 @@ Topic은 **이름이 붙은 데이터 통로**이고, 그 통로를 통해 흐�
 
 **실제 로봇 관점 (ROSMASTER X3 기준)**
 
-- LiDAR C1 드라이버 노드는 `/scan`이라는 Topic에 거리 데이터를 계속 발행한다.
+- LiDAR 00 드라이버 노드는 `/scan`이라는 Topic에 거리 데이터를 계속 발행한다.
 - Nav2의 장애물 회피 노드는 이 `/scan` Topic을 구독해서 장애물을 인식한다.
 - 동시에 RViz2(시각화 도구)도 같은 `/scan` Topic을 구독해서 화면에 LiDAR 점들을 그려준다.
 
@@ -333,7 +333,7 @@ ros2 topic list
 * Topic 통신의 주체는 이전 문서에서 배운 **노드**다. 즉 "노드 = 일하는 사람", "Topic = 정보가 흐르는 통로", "Message = 통로를 흐르는 데이터의 형식"으로 세 개념이 이어진다.
 * 이 문서에서 만든 Publisher/Subscriber는 앞선 문서 [[01_개발_환경과_워크스페이스_구조|개발 환경과 워크스페이스 구조]]에서 배운 `colcon build → source → ros2 run` 절차를 그대로 사용한다.
 * Topic은 "한쪽이 계속 보내고 다른 쪽은 언제든 받는" 비동기 방식이라, "요청하면 응답이 오는" 방식이 필요한 경우에는 적합하지 않다. 이런 경우를 위한 통신 방식이 다음 문서에서 다룰 **Service**와 **Action**이다.
-* 앞으로 다룰 LiDAR C1의 `/scan`, RealSense D435i의 `/camera/color/image_raw`, 로봇 속도 명령 `/cmd_vel`은 모두 이 문서에서 배운 Topic 구조를 그대로 사용한다.
+* 앞으로 다룰 LiDAR 00의 `/scan`, RealSense D435i의 `/camera/color/image_raw`, 로봇 속도 명령 `/cmd_vel`은 모두 이 문서에서 배운 Topic 구조를 그대로 사용한다.
 
 ---
 
