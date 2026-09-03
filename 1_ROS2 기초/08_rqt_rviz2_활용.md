@@ -52,7 +52,7 @@ rqt는 **여러 개의 작은 진단/디버깅 플러그인을 하나의 창에 
 
 **실제 로봇 관점 (ROSMASTER X3 기준)**
 
-- LiDAR C1과 RealSense D435i를 동시에 연결했을 때, RViz2 화면에 LiDAR 점군과 카메라 포인트클라우드가 서로 겹치지 않고 어긋나 있다면 TF 설정(7편에서 배운 `laser_link`, `camera_link` 위치값)이 잘못되었다는 것을 즉시 알 수 있다.
+- LiDAR C1과 RealSense D435i를 동시에 연결했을 때, RViz2 화면에 LiDAR 점군과 카메라 포인트클라우드가 서로 겹치지 않고 어긋나 있다면 TF 설정(07에서 배운 `laser_link`, `camera_link` 위치값)이 잘못되었다는 것을 즉시 알 수 있다.
 - Nav2로 자율주행을 시킬 때, 로봇이 왜 이상한 경로로 도는지 로그만 봐서는 알기 어렵지만 RViz2에서 costmap(장애물 지도)을 시각적으로 보면 원인을 바로 파악할 수 있는 경우가 많다.
 - `rqt_console`은 여러 노드에서 동시에 쏟아지는 로그를 심각도별(정보/경고/오류)로 필터링해서 보여주므로, 터미널 여러 개를 띄워놓고 로그를 눈으로 쫓는 것보다 훨씬 효율적이다.
 
@@ -84,7 +84,7 @@ flowchart LR
 | `rqt_graph` | 노드와 Topic의 연결 관계를 그래프로 표시 | "지금 시스템이 어떻게 연결되어 있는지" 한눈에 확인 |
 | `rqt_plot` | 특정 숫자 데이터를 실시간 그래프로 표시 | 값의 변화 추이나 이상치를 볼 때 유용 |
 | `rqt_console` | 여러 노드의 로그를 모아 필터링해서 표시 | 오류(ERROR)만 걸러서 보는 데 유용 |
-| `rqt_reconfigure` | 파라미터를 슬라이더/입력창으로 실시간 조정 | 5편에서 배운 `ros2 param set`의 GUI 버전 |
+| `rqt_reconfigure` | 파라미터를 슬라이더/입력창으로 실시간 조정 | 05에서 배운 `ros2 param set`의 GUI 버전 |
 | RViz2 | 3차원 공간에 센서/TF/지도 데이터를 시각화 | Display 목록에 필요한 항목을 추가해서 사용 |
 | Fixed Frame | RViz2가 화면을 그릴 때 기준으로 삼는 좌표계 | 보통 `map` 또는 `base_link`를 지정 |
 | Display | RViz2에서 특정 데이터 종류를 화면에 그리는 항목 | TF, LaserScan, Image, PointCloud2 등 |
@@ -105,12 +105,12 @@ flowchart LR
 
 ### 실습 목표
 
-2편~7편에서 사용한 turtlesim, 발행 노드, TF 실습을 rqt와 RViz2로 다시 확인하며 CLI로 봤던 정보가 GUI에서 어떻게 보이는지 비교한다.
+02~07에서 사용한 turtlesim, 발행 노드, TF 실습을 rqt와 RViz2로 다시 확인하며 CLI로 봤던 정보가 GUI에서 어떻게 보이는지 비교한다.
 
 ### 준비 사항
 
 * `rqt`, `rqt-graph`, `rqt-plot`, `rqt-console`, `rviz2` 패키지
-* 2편의 `turtlesim`, 7편의 TF 실습 환경
+* 02의 `turtlesim`, 07의 TF 실습 환경
 
 ### 설치
 
@@ -168,9 +168,9 @@ ros2 run rviz2 rviz2
 
 ### 예상 결과
 
-* `rqt_graph` 화면에는 `turtlesim_node`와 `teleop_key` 노드가 `/turtle1/cmd_vel` Topic으로 연결된 화살표가 보여야 한다. 3편에서 배운 Publisher-Subscriber 관계가 그림으로 확인되는 것이다.
+* `rqt_graph` 화면에는 `turtlesim_node`와 `teleop_key` 노드가 `/turtle1/cmd_vel` Topic으로 연결된 화살표가 보여야 한다. 03에서 배운 Publisher-Subscriber 관계가 그림으로 확인되는 것이다.
 * `rqt_plot`에는 거북이를 움직일 때마다 `/turtle1/pose/x` 값이 곡선으로 변하는 그래프가 그려져야 한다.
-* RViz2에는 `turtle1`의 좌표계가 TF 축(빨강/초록/파랑 화살표)으로 표시되고, 거북이를 움직이면 그 축도 함께 움직여야 한다. 이는 7편에서 CLI로 확인했던 TF 관계를 시각적으로 재확인하는 것이다.
+* RViz2에는 `turtle1`의 좌표계가 TF 축(빨강/초록/파랑 화살표)으로 표시되고, 거북이를 움직이면 그 축도 함께 움직여야 한다. 이는 07에서 CLI로 확인했던 TF 관계를 시각적으로 재확인하는 것이다.
 
 ---
 
@@ -190,7 +190,7 @@ ros2 run rviz2 rviz2
 ros2 run rviz2 rviz2 -d ~/ros2_ws/src/my_first_pkg/rviz/default.rviz
 ```
 
-* `-d <경로>`: 이 옵션이 하는 일 → RViz2를 실행하면서 저장해둔 `.rviz` 설정 파일을 즉시 불러온다. 실제 로봇 프로젝트에서는 이 `.rviz` 파일을 Launch 파일(6편)에 포함시켜, `ros2 launch` 한 번으로 필요한 Display가 모두 갖춰진 RViz2 화면이 뜨도록 구성하는 것이 표준적인 방식이다.
+* `-d <경로>`: 이 옵션이 하는 일 → RViz2를 실행하면서 저장해둔 `.rviz` 설정 파일을 즉시 불러온다. 실제 로봇 프로젝트에서는 이 `.rviz` 파일을 Launch 파일(06)에 포함시켜, `ros2 launch` 한 번으로 필요한 Display가 모두 갖춰진 RViz2 화면이 뜨도록 구성하는 것이 표준적인 방식이다.
 
 ### Launch 파일에서 RViz2를 함께 실행하기
 
@@ -212,7 +212,7 @@ rviz_node = Node(
 )
 ```
 
-* `arguments=['-d', rviz_config]`: 6편에서 배운 `Node` 액션 구조를 그대로 사용해, RViz2도 다른 센서/제어 노드와 함께 한 번에 실행되도록 만든 것이다. 앞으로 다룰 센서 연동 문서의 Launch 파일에는 대부분 이런 형태로 RViz2 실행이 포함된다.
+* `arguments=['-d', rviz_config]`: 06에서 배운 `Node` 액션 구조를 그대로 사용해, RViz2도 다른 센서/제어 노드와 함께 한 번에 실행되도록 만든 것이다. 앞으로 다룰 센서 연동 문서의 Launch 파일에는 대부분 이런 형태로 RViz2 실행이 포함된다.
 
 ---
 
@@ -224,7 +224,7 @@ rviz_node = Node(
 | 노드-Topic 그래프 | `rqt_graph` | 시스템 전체 연결 구조를 그림으로 확인 |
 | 실시간 값 그래프 | `rqt_plot` | 특정 숫자 필드의 시간별 변화를 그래프로 확인 |
 | 로그 필터링 창 | `rqt_console` | 여러 노드의 로그를 모아 심각도별로 필터링 |
-| 파라미터 GUI 조정 | `rqt_reconfigure` | 5편의 `ros2 param set`을 슬라이더/입력창으로 조정 |
+| 파라미터 GUI 조정 | `rqt_reconfigure` | 05의 `ros2 param set`을 슬라이더/입력창으로 조정 |
 | RViz2 실행 | `ros2 run rviz2 rviz2` | 3차원 시각화 창 실행 |
 | 설정 불러와 실행 | `ros2 run rviz2 rviz2 -d <파일.rviz>` | 저장해둔 Display 구성으로 바로 실행 |
 
@@ -249,7 +249,7 @@ RViz2 좌측 패널 최상단의 `Global Status`가 빨간색 `Error`로 표시�
 ros2 run tf2_tools view_frames
 ```
 
-`Fixed Frame`에 입력한 이름이 실제 TF 트리에 존재하는지 7편에서 배운 방법으로 먼저 확인한다.
+`Fixed Frame`에 입력한 이름이 실제 TF 트리에 존재하는지 07에서 배운 방법으로 먼저 확인한다.
 
 **해결 방법**
 
@@ -268,8 +268,8 @@ Display 목록에 항목은 추가되었지만 화면에 아무것도 그려지�
 **가능한 원인**
 
 1. 해당 Display의 `Topic` 항목에 실제 존재하는 Topic 이름이 지정되지 않음
-2. 데이터의 `frame_id`가 TF 트리에 없는 이름 (7편 10장에서 다룬 문제와 동일한 유형)
-3. QoS 설정 불일치 (3편 12장 심화 내용 참고)
+2. 데이터의 `frame_id`가 TF 트리에 없는 이름 (07 10장에서 다룬 문제와 동일한 유형)
+3. QoS 설정 불일치 (03 12장 심화 내용 참고)
 
 **확인 방법**
 
@@ -289,9 +289,9 @@ Display를 추가만 하고 `Topic` 필드를 비워두거나 잘못 입력해�
 
 ## 11. 개념 간 연결
 
-* rqt와 RViz2가 보여주는 모든 정보는 근본적으로 이전 문서들에서 배운 **Topic**(3편), **TF**(7편) 데이터다. 이 문서는 새로운 통신 개념이 아니라, 지금까지 CLI로 확인해온 것을 시각적으로 보는 방법을 다룬다.
-* `rqt_reconfigure`는 5편에서 배운 **Parameter**의 `ros2 param set`을 GUI로 감싼 도구이며, 내부 동작 방식(Service 호출)은 동일하다.
-* RViz2 설정을 Launch 파일에 포함시키는 방식은 6편에서 배운 **Launch 파일**의 `Node` 액션 구조를 그대로 재사용한다.
+* rqt와 RViz2가 보여주는 모든 정보는 근본적으로 이전 문서들에서 배운 **Topic**(03), **TF**(07) 데이터다. 이 문서는 새로운 통신 개념이 아니라, 지금까지 CLI로 확인해온 것을 시각적으로 보는 방법을 다룬다.
+* `rqt_reconfigure`는 05에서 배운 **Parameter**의 `ros2 param set`을 GUI로 감싼 도구이며, 내부 동작 방식(Service 호출)은 동일하다.
+* RViz2 설정을 Launch 파일에 포함시키는 방식은 06에서 배운 **Launch 파일**의 `Node` 액션 구조를 그대로 재사용한다.
 * 앞으로 다룰 [[02_센서_연동_RealSense_D435i|센서 연동 - RealSense D435i]], [[03_센서_연동_LiDAR_C1|센서 연동 - LiDAR C1]] 문서의 "확인" 단계는 대부분 이 문서에서 배운 RViz2 Display(Image, PointCloud2, LaserScan)를 활용한다.
 
 ---
@@ -341,14 +341,14 @@ Display를 추가만 하고 `Topic` 필드를 비워두거나 잘못 입력해�
 > 1. rqt는 노드/Topic 관계나 수치 데이터를 확인할 때, RViz2는 3차원 공간 정보(센서 데이터, TF, 지도)를 확인할 때 적합하다.
 > 2. 현재 실행 중인 노드들이 어떤 Topic으로 서로 연결되어 있는지 전체 구조를 그림으로 확인할 때 사용한다.
 > 3. `Fixed Frame`에 지정한 좌표계 이름이 실제 TF 트리에 존재하는지부터 확인해야 한다.
-> 4. 5편에서 배운 Parameter의 `ros2 param set` 기능을 GUI로 감싼 도구다.
-> 5. 7편에서 배운 TF2 설정(각 센서의 `frame_id`와 TF 트리 상의 위치값)을 점검해야 한다.
+> 4. 05에서 배운 Parameter의 `ros2 param set` 기능을 GUI로 감싼 도구다.
+> 5. 07에서 배운 TF2 설정(각 센서의 `frame_id`와 TF 트리 상의 위치값)을 점검해야 한다.
 
 ---
 
 ## 15. 다음 학습 주제
 
-1. **바로 다음**: [[01_DDS와_QoS_이해하기|ROS2 응용 1편 - DDS와 QoS 이해하기]] — 이 문서에서 배운 Display에 실제 카메라 데이터를 채우기 전에, "Topic은 보이는데 화면에 안 나오는" 문제의 원인인 QoS를 먼저 다룬다.
+1. **바로 다음**: [[01_DDS와_QoS_이해하기|응용 01 - DDS와 QoS 이해하기]] — 이 문서에서 배운 Display에 실제 카메라 데이터를 채우기 전에, "Topic은 보이는데 화면에 안 나오는" 문제의 원인인 QoS를 먼저 다룬다.
 2. **함께 보면 좋은 주제**: [[03_센서_연동_LiDAR_C1|센서 연동 - LiDAR C1]] — `LaserScan` Display를 활용해 실제 LiDAR 데이터를 시각적으로 검증하게 된다.
 3. **나중에 학습할 심화 주제**: [[09_문제_해결_자주_발생하는_오류_모음|문제 해결 - ROS2 자주 발생하는 오류 모음]] — 이 문서에서 다룬 GUI 진단 도구들이 실전 트러블슈팅에서 어떻게 조합되어 쓰이는지 다룬다.
 

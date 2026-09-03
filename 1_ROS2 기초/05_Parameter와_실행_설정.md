@@ -106,11 +106,11 @@ Service 호출| OUT[현재 값 확인]
 
 ### 실습 목표
 
-3편에서 만든 Publisher 노드의 발행 주기(1초 고정값)를 파라미터로 바꿔, 코드 수정 없이 실행 시점에 주기를 변경할 수 있도록 만든다.
+03에서 만든 Publisher 노드의 발행 주기(1초 고정값)를 파라미터로 바꿔, 코드 수정 없이 실행 시점에 주기를 변경할 수 있도록 만든다.
 
 ### 준비 사항
 
-* 3편에서 만든 `~/ros2_ws/src/my_first_pkg` 패키지와 `simple_publisher.py`
+* 03에서 만든 `~/ros2_ws/src/my_first_pkg` 패키지와 `simple_publisher.py`
 * ROS2 환경이 source된 터미널
 
 ### 실행 (코드 수정 후 빌드)
@@ -123,7 +123,7 @@ colcon build --packages-select my_first_pkg
 source install/setup.bash
 ```
 
-* 이 명령어들은 3편에서 이미 익힌 과정과 동일하다. 코드 수정 후에는 항상 재빌드가 필요하다는 점을 다시 한번 확인한다.
+* 이 명령어들은 03에서 이미 익힌 과정과 동일하다. 코드 수정 후에는 항상 재빌드가 필요하다는 점을 다시 한번 확인한다.
 
 ```bash
 # 기본값(1.0초)으로 실행

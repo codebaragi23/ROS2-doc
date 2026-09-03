@@ -114,7 +114,7 @@ bringup.launch.py] --> N1[노드 A]
 
 ### 준비 사항
 
-* 3편, 5편에서 만든 `my_first_pkg` 패키지 (`simple_publisher`, `simple_subscriber` 포함)
+* 03, 05에서 만든 `my_first_pkg` 패키지 (`simple_publisher`, `simple_subscriber` 포함)
 * `ros2 launch` 명령이 정상 동작하는 환경 (Humble 데스크톱 설치 시 기본 포함)
 
 ### 설치
@@ -189,11 +189,11 @@ def generate_launch_description():
 
 * `from launch_ros.actions import Node`: `ros2 run`으로 실행하던 노드를 Launch 파일 안에서 실행 가능한 형태(`Node` 액션)로 표현하기 위해 가져온다.
 * `package='my_first_pkg', executable='simple_publisher'`: `ros2 run my_first_pkg simple_publisher`와 정확히 동일한 의미다. 즉 Launch 파일은 지금까지 손으로 입력하던 `ros2 run` 명령을 코드로 옮긴 것에 가깝다.
-* `parameters=[{'publish_period': 0.5}]`: 5편에서 배운 `--ros-args -p publish_period:=0.5`와 동일한 역할을 한다. 여러 파라미터가 필요하면 딕셔너리에 계속 추가하거나, YAML 파일 경로를 이 리스트에 넣을 수도 있다. (아래 참고)
+* `parameters=[{'publish_period': 0.5}]`: 05에서 배운 `--ros-args -p publish_period:=0.5`와 동일한 역할을 한다. 여러 파라미터가 필요하면 딕셔너리에 계속 추가하거나, YAML 파일 경로를 이 리스트에 넣을 수도 있다. (아래 참고)
 * `output='screen'`: 노드의 로그를 터미널 화면에 바로 출력하라는 옵션이다. 이 옵션이 없으면 로그가 파일로만 저장되고 화면에는 안 보일 수 있다.
 * `return LaunchDescription([publisher_node, subscriber_node])`: 정의한 두 노드를 리스트에 담아 반환한다. 실행할 노드가 늘어나면 이 리스트에 계속 추가하면 된다.
 
-### YAML 파라미터 파일을 Launch 파일에 연결하는 방법 (5편과의 연결)
+### YAML 파라미터 파일을 Launch 파일에 연결하는 방법 (05과의 연결)
 
 ```python
 from launch_ros.actions import Node
@@ -216,7 +216,7 @@ publisher_node = Node(
 ```
 
 * `get_package_share_directory('my_first_pkg')`: 빌드된 후 `install` 폴더 안에 설치된 패키지 경로를 코드가 실행되는 시점에 자동으로 찾아준다. 경로를 직접 하드코딩하지 않는 이유는, 사용자마다 워크스페이스 위치(`~/ros2_ws`)가 다를 수 있기 때문이다.
-* `parameters=[config_path]`: 딕셔너리 대신 YAML 파일 경로를 그대로 넣으면, 5편에서 만든 YAML 파일의 모든 파라미터가 한 번에 적용된다. 실제 LiDAR나 카메라 드라이버 Launch 파일은 대부분 이 방식을 사용한다.
+* `parameters=[config_path]`: 딕셔너리 대신 YAML 파일 경로를 그대로 넣으면, 05에서 만든 YAML 파일의 모든 파라미터가 한 번에 적용된다. 실제 LiDAR나 카메라 드라이버 Launch 파일은 대부분 이 방식을 사용한다.
 
 ### `setup.py`에 launch 폴더 등록
 
@@ -278,7 +278,7 @@ ls $(ros2 pkg prefix my_first_pkg)/share/my_first_pkg/launch
 
 **초보자가 자주 하는 실수**
 
-`launch/` 폴더에 파일을 넣기만 하면 자동으로 인식될 것이라 생각하고 `setup.py` 등록을 빠뜨리는 경우가 매우 흔하다. 3편에서 배운 `entry_points` 등록을 빠뜨렸을 때와 같은 종류의 실수다.
+`launch/` 폴더에 파일을 넣기만 하면 자동으로 인식될 것이라 생각하고 `setup.py` 등록을 빠뜨리는 경우가 매우 흔하다. 03에서 배운 `entry_points` 등록을 빠뜨렸을 때와 같은 종류의 실수다.
 
 ### 문제: Launch로 실행한 노드 중 하나만 죽고 나머지는 계속 실행됨
 
@@ -310,7 +310,7 @@ ros2 node list
 
 ## 11. 개념 간 연결
 
-* Launch 파일의 `Node(...)` 액션은 1편(노드)에서 배운 `ros2 run`을, `parameters=[...]`는 5편(Parameter)에서 배운 파라미터 지정 방식을 그대로 코드로 옮긴 것이다. 즉 이 문서는 새로운 통신 개념이 아니라, 지금까지 배운 것을 "동시에, 반복 가능하게" 실행하는 방법을 다룬다.
+* Launch 파일의 `Node(...)` 액션은 01(노드)에서 배운 `ros2 run`을, `parameters=[...]`는 05(Parameter)에서 배운 파라미터 지정 방식을 그대로 코드로 옮긴 것이다. 즉 이 문서는 새로운 통신 개념이 아니라, 지금까지 배운 것을 "동시에, 반복 가능하게" 실행하는 방법을 다룬다.
 * 다음 문서에서 배울 **TF2**는 여러 좌표계 변환 노드가 동시에 실행되어야 제대로 동작하므로, 대부분 Launch 파일과 함께 실행된다. 이 문서가 TF2 실습의 실행 기반이 된다.
 * 앞으로 다룰 LiDAR C1, RealSense D435i, Nav2, ORB-SLAM3의 "실행" 단계는 대부분 `ros2 launch` 명령으로 시작되며, 이 문서의 `Node`, `IncludeLaunchDescription`, `DeclareLaunchArgument` 구조가 반복적으로 등장한다.
 

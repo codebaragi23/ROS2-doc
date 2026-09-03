@@ -122,7 +122,7 @@ flowchart LR
 
 ### 준비 사항
 
-* 1편 실습에서 사용한 `turtlesim` 패키지 (설치 완료 상태)
+* 01 실습에서 사용한 `turtlesim` 패키지 (설치 완료 상태)
 * ROS2 환경이 source된 터미널 3개 이상
 
 ### 실행
@@ -133,7 +133,7 @@ source /opt/ros/humble/setup.bash
 ros2 run turtlesim turtlesim_node
 ```
 
-거북이 화면을 띄운다. (2편 노드 실습과 동일)
+거북이 화면을 띄운다. (02 노드 실습과 동일)
 
 ### 확인 - Service
 

@@ -2,11 +2,11 @@
 
 > 지상로봇 적용 — Nav2 내비게이션 시리즈 · 보충
 > 이전 문서: [[05_Behavior_Tree와_표준_Recovery|05. Behavior Tree와 표준 Recovery]]
-> 선행 학습: ROS2 기초 4편(Service와 Action)
+> 선행 학습: ROS2 기초 04(Service와 Action)
 
 ## 1. 개요
 
-ROS2 기초 4편에서 Action을 "목표 전달 → Feedback 반복 → Result 1회"의 통신 방식으로 배웠다. 이 문서는 그 개념이 Nav2 내부에서 `ComputePathToPose`, `FollowPath`, `NavigateToPose` 같은 **실제 Action 서버/클라이언트 쌍**으로 어떻게 구현되어 있는지 정리한다.
+ROS2 기초 04에서 Action을 "목표 전달 → Feedback 반복 → Result 1회"의 통신 방식으로 배웠다. 이 문서는 그 개념이 Nav2 내부에서 `ComputePathToPose`, `FollowPath`, `NavigateToPose` 같은 **실제 Action 서버/클라이언트 쌍**으로 어떻게 구현되어 있는지 정리한다.
 
 ## 2. 핵심 개념: Nav2의 Action 계층 구조
 
@@ -24,7 +24,7 @@ flowchart TB
 - `bt_navigator`는 목표를 받으면, **자기 자신이 다시 Action Client가 되어** Behavior Tree 안에서 `ComputePathToPose`(planner_server가 서버), `FollowPath`(controller_server가 서버)를 순서대로 호출한다.
 - 05에서 다룬 Spin/Wait/BackUp도 마찬가지로 각각 독립된 Action이며, `behavior_server`가 이들의 서버 역할을 한다.
 
-즉 ROS2 기초 4편에서 배운 "하나의 Action Client-Server 쌍"이 Nav2에서는 **여러 겹으로 중첩되어, 하나의 노드가 상위 계층에 대해서는 Server이면서 동시에 하위 계층에 대해서는 Client인 중간자**로 동작한다. 예를 들어 `bt_navigator`는 사용자의 목표 요청에 대해서는 Server이지만, `planner_server`·`controller_server`에 대해서는 Client다.
+즉 ROS2 기초 04에서 배운 "하나의 Action Client-Server 쌍"이 Nav2에서는 **여러 겹으로 중첩되어, 하나의 노드가 상위 계층에 대해서는 Server이면서 동시에 하위 계층에 대해서는 Client인 중간자**로 동작한다. 예를 들어 `bt_navigator`는 사용자의 목표 요청에 대해서는 Server이지만, `planner_server`·`controller_server`에 대해서는 Client다.
 
 ## 3. 이 프로젝트에서의 적용 (Yahboom X3)
 
@@ -37,12 +37,12 @@ flowchart TB
 | 명령어 | 역할 |
 |---|---|
 | `ros2 action list` | Nav2가 제공하는 모든 Action 확인(`/navigate_to_pose` 등) |
-| `ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "{pose: {...}}" --feedback` | 코드 없이 CLI로 목표를 보내고 Feedback을 직접 관찰(ROS2 기초 4편 실습과 동일한 방식) |
+| `ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "{pose: {...}}" --feedback` | 코드 없이 CLI로 목표를 보내고 Feedback을 직접 관찰(ROS2 기초 04 실습과 동일한 방식) |
 | `ros2 action info /navigate_to_pose` | 현재 이 Action에 연결된 Client/Server 개수 확인 |
 
 ## 5. 진단 관점
 
-- 목표를 보냈는데 반응이 없다면, ROS2 기초 4편에서 배운 것처럼 `ros2 action list`로 `/navigate_to_pose` 서버(`bt_navigator`)가 실제로 떠 있는지부터 확인한다 — 00에서 다룬 "핵심 서버 노드 존재 확인"과 같은 진단이지만, 이번엔 노드가 아니라 Action 관점에서 접근하는 것이다.
+- 목표를 보냈는데 반응이 없다면, ROS2 기초 04에서 배운 것처럼 `ros2 action list`로 `/navigate_to_pose` 서버(`bt_navigator`)가 실제로 떠 있는지부터 확인한다 — 00에서 다룬 "핵심 서버 노드 존재 확인"과 같은 진단이지만, 이번엔 노드가 아니라 Action 관점에서 접근하는 것이다.
 - 경로 계획만 실패하는지, 경로 추종만 실패하는지 구분하려면 `/compute_path_to_pose`와 `/follow_path`를 각각 개별 Action으로 테스트해볼 수 있다 — 이는 03(Global Planner)와 04(Controller)의 문제를 구분하는 실전 진단 수단이다.
 
 ## 6. 다음 문서와의 연결
