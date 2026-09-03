@@ -119,10 +119,10 @@ ros2 run tf2_ros static_transform_publisher 0.1 0 0.2 0 0 0 base_link camera_lin
 | 증상 | 확인 순서 | 관련 사례 |
 |---|---|---|
 | 특정 각도 구간에 스캔이 안 찍힘(사각지대) | LiDAR 각도 제한 파라미터(`angle_min`/`angle_max`), 물리적 가림(마운트 위치/케이블) | [[ros2-nav-yahboom]] 후방 사각지대 해결 사례 — 파라미터 해제 + 마운트 높이 조정으로 360도 확보 |
-| `/scan`이 RViz2에 안 보임 | `frame_id`와 TF 트리 이름 일치 여부, Fixed Frame 설정 |
-| 스캔에 노이즈가 많음 | 반사가 심한 표면(유리, 거울) 근처인지, `range_min`/`range_max` 필터링 |
-| 드라이버가 실행 직후 죽음 | 시리얼 포트 권한(`dialout` 그룹), 포트 번호(`/dev/ttyUSB*`)가 실제와 맞는지 — 실습 1단계 |
-| LiDAR와 카메라의 벽 위치가 어긋남 | 두 센서의 Static Transform 값이 실제 장착 위치와 다른 것 — 실습 6단계 |
+| `/scan`이 RViz2에 안 보임 | `frame_id`와 TF 트리 이름 일치 여부, Fixed Frame 설정 | 실습 3·5단계 |
+| 스캔에 노이즈가 많음 | 반사가 심한 표면(유리, 거울) 근처인지, `range_min`/`range_max` 필터링 | — |
+| 드라이버가 실행 직후 죽음 | 시리얼 포트 권한(`dialout` 그룹), 포트 번호(`/dev/ttyUSB*`)가 실제와 맞는지 | 실습 1단계 |
+| LiDAR와 카메라의 벽 위치가 어긋남 | 두 센서의 Static Transform 값이 실제 장착 위치와 다른 것 | 실습 6단계 |
 
 ## 6. 다음 문서와의 연결
 

@@ -7,10 +7,10 @@
 | 항목       | 내용                                                                                                 |
 | -------- | -------------------------------------------------------------------------------------------------- |
 | 학습 단계    | Level 2 ~ Level 3                                                                                  |
-| 예상 선행 지식 | [[03_Topic과_Message|ROS2 통신 - Topic과 Message]], [[04_Service와_Action|ROS2 통신 - Service와 Action]]                                            |
+| 예상 선행 지식 | [[03_Topic과_Message\|ROS2 통신 - Topic과 Message]], [[04_Service와_Action\|ROS2 통신 - Service와 Action]]                                            |
 | 학습 목표    | Parameter가 왜 필요한지 설명할 수 있다 / 노드에 Parameter를 선언하고 실행 시 값을 바꿀 수 있다 / YAML 파일로 여러 파라미터를 한 번에 관리할 수 있다 |
 | 기준 환경    | Ubuntu 22.04, ROS2 Humble                                                                          |
-| 관련 문서    | 이전: [[04_Service와_Action|ROS2 통신 - Service와 Action]] / 다음: [[06_Launch_파일_작성법|ROS2 기초 - Launch 파일 작성법]]                                    |
+| 관련 문서    | 이전: [[04_Service와_Action\|ROS2 통신 - Service와 Action]] / 다음: [[06_Launch_파일_작성법\|ROS2 기초 - Launch 파일 작성법]]                                    |
 
 ---
 

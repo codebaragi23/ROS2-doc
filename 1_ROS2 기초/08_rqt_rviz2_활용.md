@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 2 — 도구 활용 |
-| 예상 선행 지식 | [[03_Topic과_Message|ROS2 통신 - Topic과 Message]], [[07_TF2_기초|ROS2 좌표계 - TF2 기초]] |
+| 예상 선행 지식 | [[03_Topic과_Message\|ROS2 통신 - Topic과 Message]], [[07_TF2_기초\|ROS2 좌표계 - TF2 기초]] |
 | 학습 목표 | rqt의 주요 플러그인을 활용할 수 있다 / RViz2에서 센서 데이터와 TF를 시각화할 수 있다 / 상황에 맞게 CLI와 GUI 도구를 선택할 수 있다 |
 | 기준 환경 | Ubuntu 22.04, ROS2 Humble |
-| 관련 문서 | 이전: [[07_TF2_기초|ROS2 좌표계 - TF2 기초]] / 다음: [[02_센서_연동_RealSense_D435i|센서 연동 - RealSense D435i]] (예정) |
+| 관련 문서 | 이전: [[07_TF2_기초\|ROS2 좌표계 - TF2 기초]] / 다음: [[02_센서_연동_RealSense_D435i\|센서 연동 - RealSense D435i]] (예정) |
 
 ---
 

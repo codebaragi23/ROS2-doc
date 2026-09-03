@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | [[01-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 심화 - 01-3. Multi-Map System(Atlas)과 재추적·병합]](place recognition이 Loop Closing/Map Merging을 가르는 기준) |
+| 예상 선행 지식 | [[01-3_Multi-Map_System_Atlas와_재추적_병합\|SLAM 백엔드 심화 - 01-3. Multi-Map System(Atlas)과 재추적·병합]](place recognition이 Loop Closing/Map Merging을 가르는 기준) |
 | 학습 목표 | DBoW2 기반 place recognition의 동작 원리와 기존 방식의 한계를 설명할 수 있다 / ORB-SLAM3가 recall과 지연 문제를 각각 어떻게 개선했는지 설명할 수 있다 / RTAB-Map의 loop closure 방식과 비교할 수 있다 |
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 |
-| 관련 문서 | 이전: [[01-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 심화 - 01-3. Multi-Map System(Atlas)과 재추적·병합]] / 다음: [[01-5_이_프로젝트의_VIO_이슈_재해석|SLAM 백엔드 심화 - 01-5. 이 프로젝트의 VIO 이슈 재해석]] |
+| 관련 문서 | 이전: [[01-3_Multi-Map_System_Atlas와_재추적_병합\|SLAM 백엔드 심화 - 01-3. Multi-Map System(Atlas)과 재추적·병합]] / 다음: [[01-5_이_프로젝트의_VIO_이슈_재해석\|SLAM 백엔드 심화 - 01-5. 이 프로젝트의 VIO 이슈 재해석]] |
 
 > 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장 A절(Place Recognition), Gálvez-López & Tardós, "Bags of Binary Words for Fast Place Recognition in Image Sequences," IEEE T-RO 2012 ([DOI: 10.1109/TRO.2012.2197158](https://doi.org/10.1109/TRO.2012.2197158)) (DBoW2 원 논문)
 

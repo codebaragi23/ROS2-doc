@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | [[01-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 심화 - 01-1. ORB-SLAM3 시스템 개요]](세 스레드 구조, 특히 Local Mapping Thread) |
+| 예상 선행 지식 | [[01-1_ORB-SLAM3_시스템_개요\|SLAM 백엔드 심화 - 01-1. ORB-SLAM3 시스템 개요]](세 스레드 구조, 특히 Local Mapping Thread) |
 | 학습 목표 | Visual-Inertial 초기화가 왜 필요한지 설명할 수 있다 / 3단계 MAP 추정 알고리즘의 각 단계가 무엇을 추정하는지 설명할 수 있다 / 이 프로젝트의 리셋 현상을 3단계 중 어디와 연결할 수 있는지 판단할 수 있다 |
 | 기준 환경 | ORB-SLAM3 RGB-D-Inertial 모드, Yahboom X3 (RealSense D435i) |
-| 관련 문서 | 이전: [[01-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 심화 - 01-1. ORB-SLAM3 시스템 개요]] / 다음: [[01-3_Multi-Map_System_Atlas와_재추적_병합|SLAM 백엔드 심화 - 01-3. Multi-Map System(Atlas)과 재추적·병합]] |
+| 관련 문서 | 이전: [[01-1_ORB-SLAM3_시스템_개요\|SLAM 백엔드 심화 - 01-1. ORB-SLAM3 시스템 개요]] / 다음: [[01-3_Multi-Map_System_Atlas와_재추적_병합\|SLAM 백엔드 심화 - 01-3. Multi-Map System(Atlas)과 재추적·병합]] |
 
 > 참고 논문: Campos, Montiel, Tardós, "Inertial-Only Optimization for Visual-Inertial Initialization," ICRA 2020 ([arXiv:2003.05766](https://arxiv.org/abs/2003.05766)) / ORB-SLAM3 논문 4장(IMU Initialization)
 

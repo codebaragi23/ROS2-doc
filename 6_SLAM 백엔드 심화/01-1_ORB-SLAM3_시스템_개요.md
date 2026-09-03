@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | [[00-1_심화_시리즈를_위한_최소_수학|SLAM 백엔드 심화 - 00-1. SLAM 백엔드 심화를 위한 최소 수학]], [[00-2_특징점_검출_기술자_매칭_비교|SLAM 백엔드 심화 - 00-2. 특징점 검출·기술자·매칭 비교]], [[00_SLAM이란_무엇이고_왜_쓰는가|SLAM 공통 기초 - 00. SLAM이란 무엇이고 왜 쓰는가]](SLAM 일반 개념, 프론트엔드/백엔드 구분), [[00_RTAB-Map_매핑_원리|지상로봇 적용 - 지도제작 - 00. RTAB-Map 매핑 원리]](그래프 기반 SLAM, Loop Closure 개념), [[07_TF2_기초|ROS2 기초 - 07. TF2 기초]](좌표계 개념) |
+| 예상 선행 지식 | [[00-1_심화_시리즈를_위한_최소_수학\|SLAM 백엔드 심화 - 00-1. SLAM 백엔드 심화를 위한 최소 수학]], [[00-2_특징점_검출_기술자_매칭_비교\|SLAM 백엔드 심화 - 00-2. 특징점 검출·기술자·매칭 비교]], [[00_SLAM이란_무엇이고_왜_쓰는가\|SLAM 공통 기초 - 00. SLAM이란 무엇이고 왜 쓰는가]](SLAM 일반 개념, 프론트엔드/백엔드 구분), [[00_RTAB-Map_매핑_원리\|지상로봇 적용 - 지도제작 - 00. RTAB-Map 매핑 원리]](그래프 기반 SLAM, Loop Closure 개념), [[07_TF2_기초\|ROS2 기초 - 07. TF2 기초]](좌표계 개념) |
 | 학습 목표 | ORB-SLAM3의 세 가지 병렬 스레드(Tracking/Local Mapping/Loop&Map Merging)의 역할을 설명할 수 있다 / Atlas가 무엇이고 왜 필요한지 설명할 수 있다 / RTAB-Map과 ORB-SLAM3의 구조적 차이를 비교할 수 있다 |
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 (RealSense D435i) |
-| 관련 문서 | 이전: [[00_RTAB-Map_매핑_원리|지상로봇 적용 - 지도제작 - 00. RTAB-Map 매핑 원리]] / 다음: [[01-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 심화 - 01-2. Visual-Inertial 초기화 알고리즘]] |
+| 관련 문서 | 이전: [[00_RTAB-Map_매핑_원리\|지상로봇 적용 - 지도제작 - 00. RTAB-Map 매핑 원리]] / 다음: [[01-2_Visual-Inertial_초기화_알고리즘\|SLAM 백엔드 심화 - 01-2. Visual-Inertial 초기화 알고리즘]] |
 
 > 이 문서부터 01-5까지는 ORB-SLAM3 공식 GitHub 저장소(UZ-SLAMLab/ORB_SLAM3)가 1차 인용 문헌으로 명시하는 논문을 근거로 구조를 정리한 시리즈다.
 > 참고 논문: Campos et al., "ORB-SLAM3: An Accurate Open-Source Library for Visual, Visual-Inertial and Multi-Map SLAM," IEEE T-RO, 2021 ([arXiv:2007.11898](https://arxiv.org/abs/2007.11898))

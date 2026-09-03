@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 4 — SLAM 백엔드 심화 |
-| 예상 선행 지식 | [[01-1_ORB-SLAM3_시스템_개요|SLAM 백엔드 심화 - 01-1. ORB-SLAM3 시스템 개요]](Atlas, 세 스레드), [[01-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 심화 - 01-2. Visual-Inertial 초기화 알고리즘]](초기화 실패 개념) |
+| 예상 선행 지식 | [[01-1_ORB-SLAM3_시스템_개요\|SLAM 백엔드 심화 - 01-1. ORB-SLAM3 시스템 개요]](Atlas, 세 스레드), [[01-2_Visual-Inertial_초기화_알고리즘\|SLAM 백엔드 심화 - 01-2. Visual-Inertial 초기화 알고리즘]](초기화 실패 개념) |
 | 학습 목표 | Tracking 유실 이후 시스템이 거치는 세 단계(relocalization 시도 → 실패 시 새 지도 생성 → 재방문 시 병합)를 설명할 수 있다 / Loop Closing과 Map Merging이 같은 메커니즘의 두 결과임을 설명할 수 있다 / Welding Window의 역할을 설명할 수 있다 |
 | 기준 환경 | ORB-SLAM3 (RGB-D / RGB-D-Inertial 모드), Yahboom X3 |
-| 관련 문서 | 이전: [[01-2_Visual-Inertial_초기화_알고리즘|SLAM 백엔드 심화 - 01-2. Visual-Inertial 초기화 알고리즘]] / 다음: [[01-4_Loop_Closing과_Place_Recognition|SLAM 백엔드 심화 - 01-4. Loop Closing과 Place Recognition]] |
+| 관련 문서 | 이전: [[01-2_Visual-Inertial_초기화_알고리즘\|SLAM 백엔드 심화 - 01-2. Visual-Inertial 초기화 알고리즘]] / 다음: [[01-4_Loop_Closing과_Place_Recognition\|SLAM 백엔드 심화 - 01-4. Loop Closing과 Place Recognition]] |
 
 > 참고 논문: ORB-SLAM3 논문(Campos et al., 2021) 6장(Map Merging and Loop Closing), Elvira et al., "ORBSLAM-Atlas: a robust and accurate multi-map system," IROS 2019 ([arXiv:1908.11585](https://arxiv.org/abs/1908.11585))
 

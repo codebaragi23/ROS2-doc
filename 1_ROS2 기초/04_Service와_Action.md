@@ -7,10 +7,10 @@
 | 항목 | 내용 |
 |---|---|
 | 학습 단계 | Level 2 — 기초 실습 |
-| 예상 선행 지식 | [[03_Topic과_Message|ROS2 통신 - Topic과 Message]], [[01_개발_환경과_워크스페이스_구조|ROS2 기초 - 개발 환경과 워크스페이스 구조]] |
+| 예상 선행 지식 | [[03_Topic과_Message\|ROS2 통신 - Topic과 Message]], [[01_개발_환경과_워크스페이스_구조\|ROS2 기초 - 개발 환경과 워크스페이스 구조]] |
 | 학습 목표 | Service와 Action의 개념과 차이를 설명할 수 있다 / 언제 Topic 대신 Service나 Action을 써야 하는지 판단할 수 있다 / `ros2 service`, `ros2 action` 명령으로 상태를 확인할 수 있다 |
 | 기준 환경 | Ubuntu 22.04, ROS2 Humble |
-| 관련 문서 | 이전: [[03_Topic과_Message|ROS2 통신 - Topic과 Message]] / 다음: [[05_Parameter와_실행_설정|ROS2 기초 - Parameter와 실행 설정]] |
+| 관련 문서 | 이전: [[03_Topic과_Message\|ROS2 통신 - Topic과 Message]] / 다음: [[05_Parameter와_실행_설정\|ROS2 기초 - Parameter와 실행 설정]] |
 
 ---
 
