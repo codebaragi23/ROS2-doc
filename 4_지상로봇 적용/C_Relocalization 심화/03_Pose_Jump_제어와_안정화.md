@@ -33,7 +33,7 @@ RGBD/OptimizeFromGraphEnd: true
 
 ### 방법 B: `robot_localization` 패키지로 필터링
 
-공식 답변은 relocalization을 "GPS처럼 취급"할 것을 제안한다. 즉 RTAB-Map의 `map→odom` 결과를 EKF(`robot_localization`)의 한 입력 소스로 넣고, 휠 오도메트리/IMU와 함께 융합해 급격한 점프를 부드럽게 흡수시키는 방식이다. 01에서 다룬 `odom→base_footprint`를 만드는 EKF와 같은 계열의 기법을 `map` 레벨 보정에도 적용하는 셈이다.
+공식 답변은 relocalization을 "GPS처럼 취급"할 것을 제안한다. 즉 RTAB-Map의 `map→odom` 결과를 EKF(`robot_localization`)의 한 입력 소스로 넣고, 휠 오도메트리/IMU와 함께 융합해 급격한 점프를 부드럽게 흡수시키는 방식이다. Nav2 내비게이션 01에서 다룬 `odom→base_footprint`를 만드는 EKF와 같은 계열의 기법을 `map` 레벨 보정에도 적용하는 셈이다.
 
 ## 4. 관련 파라미터
 
@@ -46,7 +46,7 @@ RGBD/OptimizeFromGraphEnd: true
 ## 5. 진단 관점
 
 - relocalization 직후 로봇이 급정지하거나 튄다면: `RGBD/OptimizeFromGraphEnd` 설정을 먼저 확인한다. false(기본값) 상태라면 A 방법 적용을 검토한다.
-- relocalization 직후 costmap의 장애물이 잘못된 위치에 남아있다면: 점프 직후 costmap을 클리어하는 로직(05의 `ClearEntireCostmap` recovery 액션)을 relocalization 이벤트와 연동할 수 있는지 검토한다.
+- relocalization 직후 costmap의 장애물이 잘못된 위치에 남아있다면: 점프 직후 costmap을 클리어하는 로직(Nav2 내비게이션 05의 `ClearEntireCostmap` recovery 액션)을 relocalization 이벤트와 연동할 수 있는지 검토한다.
 - 흔들리는 상태에서 자주 relocalization이 발동해 로봇이 계속 덜컥거린다면: 4장에서 언급한 "가속도 기반 게이팅"처럼, 로봇이 정지/저속 상태일 때만 relocalization을 승인하는 조건을 추가하는 것이 원인 완화에 직접적이다.
 
 ## 6. 다음 문서와의 연결

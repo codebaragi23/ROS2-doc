@@ -28,7 +28,7 @@ rosrun loop_fusion loop_fusion_node <config.yaml>   # (선택) Loop closure 전�
 
 ## 4. 왜 "4-DOF"인가 — 6-DOF와의 차이
 
-01(ORB-SLAM3)의 pose graph 최적화나 00(RTAB-Map)의 그래프 최적화는 일반적으로 **6자유도(6-DOF: x, y, z, roll, pitch, yaw)** 전체를 최적화 대상으로 삼는다. VINS-Fusion의 pose graph는 **4자유도(x, y, z, yaw)**만 최적화한다.
+01(ORB-SLAM3)의 pose graph 최적화나 지도제작 00(RTAB-Map)의 그래프 최적화는 일반적으로 **6자유도(6-DOF: x, y, z, roll, pitch, yaw)** 전체를 최적화 대상으로 삼는다. VINS-Fusion의 pose graph는 **4자유도(x, y, z, yaw)**만 최적화한다.
 
 - IMU가 중력 방향(roll, pitch에 해당하는 정보)을 항상 관측 가능(observable)하게 만들어주기 때문에, **roll과 pitch는 이미 충분히 정확하다고 보고 최적화 대상에서 제외**한다는 것이 이 설계의 논리다.
 - 이렇게 하면 최적화해야 할 변수가 줄어들어 pose graph 최적화가 더 가볍고 빨라진다 — VINS-Mono 논문은 이를 "loop detection과 결합된 tightly-coupled 구조 덕분에 최소한의 계산 비용으로 relocalization이 가능하다"고 설명한다.
@@ -48,7 +48,7 @@ rosrun loop_fusion loop_fusion_node <config.yaml>   # (선택) Loop closure 전�
 
 ## 7. 이 프로젝트와의 관련성 (가상 적용 시나리오)
 
-- 02-1에서 "OpenVINS는 loop closure가 없어 순수 odometry로만 쓰면 드리프트가 누적된다"고 지적했다. 이 프로젝트는 현재 RTAB-Map(00)이 loop closure와 지도 관리를 전담하고 OpenVINS는 odometry 소스로만 통합되어 있으므로(02-6), 이 구조에서는 OpenVINS 자체에 loop closure가 없어도 RTAB-Map이 이를 보완한다.
+- 02-1에서 "OpenVINS는 loop closure가 없어 순수 odometry로만 쓰면 드리프트가 누적된다"고 지적했다. 이 프로젝트는 현재 RTAB-Map(지도제작 00)이 loop closure와 지도 관리를 전담하고 OpenVINS는 odometry 소스로만 통합되어 있으므로(02-6), 이 구조에서는 OpenVINS 자체에 loop closure가 없어도 RTAB-Map이 이를 보완한다.
 - 만약 VINS-Fusion을 도입한다면, `loop_fusion_node`를 켤지 끌지에 따라 "RTAB-Map의 loop closure와 VINS-Fusion 자체의 loop closure가 중복되는" 상황이 생길 수 있다 — OpenVINS와 달리 이 중복/충돌 가능성을 설계 단계에서 고려해야 한다는 점이 VINS-Fusion 도입 시의 특이점이다.
 - 05(Relocalization 심화, Relocalization 심화)에서 다룬 "relocalization을 누가 담당하는가"라는 질문이, VINS-Fusion을 쓸 경우 RTAB-Map과 VINS-Fusion(`loop_fusion_node`) 중 **어느 쪽의 loop closure를 최종 신뢰할지**라는 새로운 형태의 질문으로 바뀐다.
 

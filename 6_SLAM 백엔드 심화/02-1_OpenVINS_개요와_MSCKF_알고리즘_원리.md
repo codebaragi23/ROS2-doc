@@ -33,7 +33,7 @@ Mourikis와 Roumeliotis(2007)가 제안한 MSCKF는 이 문제를 다음과 같�
 ```mermaid
 flowchart LR
     subgraph MSCKF["MSCKF 방식"]
-        00[새 카메라 프레임] -->|pose를 상태에 clone| SW[Sliding Window
+        지도제작 00[새 카메라 프레임] -->|pose를 상태에 clone| SW[Sliding Window
 과거 pose들의 집합]
         F1[특징점 여러 프레임에서 관측] -->|Null-space projection| SW
         SW -->|오래된 pose는 marginalize로 압축| SW
@@ -55,8 +55,8 @@ flowchart LR
 
 ## 5. 이 프로젝트에서의 적용 (Yahboom X3)
 
-- Loop closure가 없다는 것은, RTAB-Map(00)이나 ORB-SLAM3(01-3)처럼 "이미 지나간 곳을 재방문해서 드리프트를 청소"하는 능력이 OpenVINS 자체에는 없다는 뜻이다. 순수 odometry로만 쓰면 시간이 지날수록 누적 오차가 쌓인다.
-- 이 프로젝트에서 RTAB-Map은 OpenVINS를 **odometry 소스 중 하나**로만 사용하고, loop closure와 지도 관리는 여전히 RTAB-Map 자체(00)가 담당하는 구조로 통합되어 있다(02-6에서 코드 레벨로 다룸). 즉 "OpenVINS의 정확한 odometry" + "RTAB-Map의 loop closure/지도 관리"를 조합하는 설계다.
+- Loop closure가 없다는 것은, RTAB-Map(지도제작 00)이나 ORB-SLAM3(01-3)처럼 "이미 지나간 곳을 재방문해서 드리프트를 청소"하는 능력이 OpenVINS 자체에는 없다는 뜻이다. 순수 odometry로만 쓰면 시간이 지날수록 누적 오차가 쌓인다.
+- 이 프로젝트에서 RTAB-Map은 OpenVINS를 **odometry 소스 중 하나**로만 사용하고, loop closure와 지도 관리는 여전히 RTAB-Map 자체(지도제작 00)가 담당하는 구조로 통합되어 있다(02-6에서 코드 레벨로 다룸). 즉 "OpenVINS의 정확한 odometry" + "RTAB-Map의 loop closure/지도 관리"를 조합하는 설계다.
 
 ## 6. 진단 관점
 

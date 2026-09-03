@@ -243,9 +243,9 @@ grep -i "nfeatures\|extracted" pr_debug.log
 - 결정적으로, 이 시간적 일관성 검사는 **최소 3개 키프레임에 걸쳐 지연**된다 — 매칭이 실제로 맞더라도 인정받기까지 시간이 걸린다는 뜻이다.
 - 논문 저자들은 이 지연과 낮은 recall이 **Atlas(다중 지도) 시스템에서 같은/다른 지도 안에 중복된 영역**을 너무 자주 만든다는 것을 발견했다 — 01-3에서 다룬 "지도가 계속 늘어나는" 문제와 직결되는 배경이다.
 
-**RTAB-Map(00)과의 대비 (요약 비교)**
+**RTAB-Map(지도제작 00)과의 대비 (요약 비교)**
 
-| 항목 | RTAB-Map (00) | ORB-SLAM3 |
+| 항목 | RTAB-Map (지도제작 00) | ORB-SLAM3 |
 |---|---|---|
 | 검색 기반 | 자체 appearance-based bag-of-words, `Rtabmap/LoopThr` 유사도 임계값 | DBoW2, 다중 후보 조회 |
 | 검증 방식 | `Vis/MinInliers` 기하학적 검증 | Hamming distance + distance ratio 기반 다단계 검증 |
@@ -262,7 +262,7 @@ grep -i "nfeatures\|extracted" pr_debug.log
 2. 기존 DBoW2 방식은 1개 후보만 보고 시간적 일관성까지 요구해, precision은 높지만 recall이 낮고(30~40%) 3키프레임의 지연이 있었다.
 3. ORB-SLAM3는 여러 후보를 동시에 조회하고(recall 개선), 연속 키프레임 요구 없이 즉시 Sim(3)/SE(3) 정합을 시도해(지연 제거) 두 문제를 함께 해결했다.
 4. 검증은 Hamming distance(개별 특징점 매칭)와 distance ratio(1·2순위 후보 구분)의 다단계로 이루어져 100% precision을 유지한다.
-5. Precision과 recall은 트레이드오프 관계이며, 이 문서와 RTAB-Map(00) 모두 같은 긴장 관계를 서로 다른 방식으로 다룬다.
+5. Precision과 recall은 트레이드오프 관계이며, 이 문서와 RTAB-Map(지도제작 00) 모두 같은 긴장 관계를 서로 다른 방식으로 다룬다.
 
 ---
 

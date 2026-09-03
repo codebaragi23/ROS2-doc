@@ -31,7 +31,7 @@ Nav2 서버들은 이 그림에서 `TF` 박스가 어떻게 만들어지는지 �
 
 지금까지 지도제작, B에서 다룬 내용을 relocalization 관점으로 다시 연결하면:
 
-- 00~02(지도제작): RTAB-Map DB가 정확할수록, 이후 로컬라이제이션 모드에서 재매칭할 "기준"이 튼튼해진다. 지도 품질이 relocalization 안정성의 전제 조건이다.
+- 지도제작 00~02(지도제작): RTAB-Map DB가 정확할수록, 이후 로컬라이제이션 모드에서 재매칭할 "기준"이 튼튼해진다. 지도 품질이 relocalization 안정성의 전제 조건이다.
 - 01(좌표계): `Mem/IncrementalMemory=false`로 로컬라이제이션 모드에 들어가야 RTAB-Map이 "새 지도를 만드는 것"이 아니라 "기존 지도에서 내 위치를 찾는 것"으로 동작한다.
 - 02(Costmap): relocalization 중 `map→odom`이 순간적으로 크게 바뀌면 costmap 장애물 위치가 왜곡되어 급제동이 걸릴 수 있다(Relocalization 심화에서 자세히).
 - 05(Recovery): Spin recovery가 Nav2 표준 기능이면서 동시에 이 프로젝트의 relocalization 전략의 실행 수단이 된다는 이중적 위치를 이해해야 한다.

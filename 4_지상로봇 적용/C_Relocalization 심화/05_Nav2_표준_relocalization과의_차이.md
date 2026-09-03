@@ -5,7 +5,7 @@
 
 ## 1. 개요
 
-05·00에서 반복해온 "Nav2 표준 relocalization(AMCL 전용) vs 이 프로젝트의 RTAB-Map 커스텀 전략"의 차이를 한곳에 정리하고, 향후 구조 개선 방향을 짚는다.
+Nav2 내비게이션 05와 이 시리즈 00에서 반복해온 "Nav2 표준 relocalization(AMCL 전용) vs 이 프로젝트의 RTAB-Map 커스텀 전략"의 차이를 한곳에 정리하고, 향후 구조 개선 방향을 짚는다.
 
 ## 2. 핵심 개념: 전체 대응표
 
@@ -29,9 +29,9 @@
 
 | 계층 | 핵심 파라미터 | 관련 문서 |
 |---|---|---|
-| 매핑 품질 | `Vis/MinInliers`, `Rtabmap/LoopThr`, `Mem/*` | 00~02 |
-| Nav2 좌표계/costmap | `robot_radius`, `inflation_radius` | 01~02 |
-| Nav2 recovery | `progress_checker`, `goal_checker`, Spin/Wait/BackUp | 05 |
+| 매핑 품질 | `Vis/MinInliers`, `Rtabmap/LoopThr`, `Mem/*` | 지도제작 00~02 |
+| Nav2 좌표계/costmap | `robot_radius`, `inflation_radius` | Nav2 내비게이션 01~02 |
+| Nav2 recovery | `progress_checker`, `goal_checker`, Spin/Wait/BackUp | Nav2 내비게이션 05 |
 | RTAB-Map relocalization | `Mem/IncrementalMemory`, `RGBD/SavedLocalizationIgnored`, `RGBD/OptimizeMaxError` | 02 |
 | Pose Jump 안정화 | `RGBD/OptimizeFromGraphEnd`, `robot_localization` 필터링 | 03 |
 
@@ -43,7 +43,7 @@
 ## 6. 다음 문서와의 연결
 
 - 다음: **[[06_Relocalization_감시_로직_구현|지상로봇 적용 - Relocalization 심화 - 06. Relocalization 감시 로직 구현]]** — 04에서 언급한 "감시 로직 노드화"를 실제 ROS2 노드 설계로 구체화하며 Relocalization 심화를 마무리한다.
-- ORB-SLAM3/OpenVINS/VINS-Fusion처럼 [[ros2-nav-yahboom]]에 기록된 대안 SLAM 백엔드 검토는 별도의 "SLAM 백엔드 심화" 시리즈(01~04)에서 다룬다.
+- ORB-SLAM3/OpenVINS/VINS-Fusion처럼 [[ros2-nav-yahboom]]에 기록된 대안 SLAM 백엔드 검토는 별도의 "SLAM 백엔드 심화" 시리즈(SLAM 백엔드 심화 01~04)에서 다룬다.
 
 ## 7. 참고자료
 

@@ -6,7 +6,7 @@
 
 ## 1. 개요
 
-02-1~02-5가 OpenVINS 자체의 알고리즘을 다뤘다면, 이 문서는 "그 알고리즘이 RTAB-Map이라는 상위 시스템 안에서 실제로 어떻게 호출되고 연결되는지"를 다룬다. 00~02(RTAB-Map 매핑)에서 배운 RTAB-Map의 odometry 플러그인 구조에 OpenVINS가 어떻게 꽂히는지 확인하는 문서다.
+02-1~02-5가 OpenVINS 자체의 알고리즘을 다뤘다면, 이 문서는 "그 알고리즘이 RTAB-Map이라는 상위 시스템 안에서 실제로 어떻게 호출되고 연결되는지"를 다룬다. 지도제작 00~02(RTAB-Map 매핑)에서 배운 RTAB-Map의 odometry 플러그인 구조에 OpenVINS가 어떻게 꽂히는지 확인하는 문서다.
 
 ## 2. 핵심 개념: OdometryOpenVINS의 동작 흐름
 
@@ -21,7 +21,7 @@ OdometryOpenVINS::computeTransform()
 │       state->_imu->pos()/quat()에서 현재 pose를 읽어와 반환
 ```
 
-RTAB-Map의 odometry 인터페이스(01에서 다룬 파이프라인의 "Odometry" 단계)가 매 프레임 `computeTransform()`을 호출하고, 이 함수 내부에서 OpenVINS의 핵심 객체인 `ov_msckf::VioManager`(02-1의 MSCKF 필터 본체)를 초기화하거나 갱신한다.
+RTAB-Map의 odometry 인터페이스(지도제작 01에서 다룬 파이프라인의 "Odometry" 단계)가 매 프레임 `computeTransform()`을 호출하고, 이 함수 내부에서 OpenVINS의 핵심 객체인 `ov_msckf::VioManager`(02-1의 MSCKF 필터 본체)를 초기화하거나 갱신한다.
 
 ## 3. Pose 반환 로직의 핵심 코드
 
@@ -51,7 +51,7 @@ void OdometryOpenVINS::reset(const Transform & initialPose) {
 즉 RTAB-Map 상위 레이어(Odometry 기반 클래스)가 "재초기화해라"라고 호출해도, **OpenVINS 래퍼는 한 번 초기화된 뒤엔 사실상 리셋 요청을 무시한다.**
 
 - 이 설계는 의도적으로 보인다 — 02-1에서 배웠듯 MSCKF는 리셋하면 그동안 쌓은 슬라이딩 윈도우 상태 추정을 전부 버리는 셈이라 계산 비용상 "비싼" 작업이다. OpenVINS 통합 코드는 이 비용을 피하려는 것으로 해석할 수 있다.
-- 하지만 이는 **RTAB-Map 쪽에서 "지금 상태가 이상하니 재초기화해야 한다"고 판단한 상황에서도 실제로는 리셋이 먹히지 않을 수 있다**는 뜻이다. 07(Nav2와 RTAB-Map의 관계)에서 다룬 "Nav2가 relocalization을 요청해도 실제 백엔드가 이를 받아들이지 않을 수 있다"는 문제의식과 같은 계열의 이슈다.
+- 하지만 이는 **RTAB-Map 쪽에서 "지금 상태가 이상하니 재초기화해야 한다"고 판단한 상황에서도 실제로는 리셋이 먹히지 않을 수 있다**는 뜻이다. Nav2 내비게이션 07(Nav2와 RTAB-Map의 관계)에서 다룬 "Nav2가 relocalization을 요청해도 실제 백엔드가 이를 받아들이지 않을 수 있다"는 문제의식과 같은 계열의 이슈다.
 
 ## 5. 이 프로젝트에서의 적용 (Yahboom X3)
 

@@ -31,7 +31,7 @@ Costmap은 "여기는 지나가도 되는지, 얼마나 위험한지"를 격자(
 
 **레이어는 순서대로 겹쳐진다.** `plugins:` 배열에 적은 순서대로 아래에서 위로 적용되며, 위 레이어가 아래 결과를 덮어쓴다. **`inflation_layer`는 반드시 맨 마지막**이어야 한다 — 앞선 레이어들이 확정한 장애물 위에 경사를 씌우는 역할이기 때문이다.
 
-> **layer와 filter는 다르다**: 위 목록은 전부 **레이어(layer)**로, 센서·지도 정보를 costmap에 쌓는 것들이다. 이와 별개로 **Costmap Filter**라는 계열이 있는데(속도 제한 구역, 진입 금지 구역 등), 이는 별도의 마스크 지도를 추가로 요구한다 — 03에서 `speed_limit` 필터를 다룰 때 다시 나온다.
+> **layer와 filter는 다르다**: 위 목록은 전부 **레이어(layer)**로, 센서·지도 정보를 costmap에 쌓는 것들이다. 이와 별개로 **Costmap Filter**라는 계열이 있는데(속도 제한 구역, 진입 금지 구역 등), 이는 별도의 마스크 지도를 추가로 요구한다 — Relocalization 심화 03에서 `speed_limit` 필터를 다룰 때 다시 나온다.
 
 #### 이 프로젝트가 쓰는 레이어
 
@@ -72,7 +72,7 @@ Global의 robot_radius가 Local보다 약간 크게 잡혀 있는 것은, 전역
 
 | 증상 | 확인 순서 |
 |---|---|
-| 전역 경로가 아예 안 나옴 | `allow_unknown` 설정, global `robot_radius`/`inflation_radius`, map 품질(02 참고) |
+| 전역 경로가 아예 안 나옴 | `allow_unknown` 설정, global `robot_radius`/`inflation_radius`, map 품질(지도제작 02 참고) |
 | 좁은 통로에서 진입을 거부 | local `inflation_radius`, `robot_radius`가 실제보다 과도하게 크지 않은지 |
 | 장애물에 너무 붙어서 이동 | `robot_radius`가 실제보다 작지 않은지, footprint가 센서 위치와 맞는지 |
 | 낮은 장애물(의자다리 등)에 부딪힘 | `/camera_scan`이 실제로 costmap에 반영되고 있는지 RViz로 확인 |

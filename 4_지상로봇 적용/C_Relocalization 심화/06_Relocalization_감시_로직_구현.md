@@ -16,7 +16,7 @@
 | 포즈 공분산 | `map→odom` TF 또는 커스텀 covariance 토픽 | ②③ |
 | 오도메트리 연속성 | `/odom` | ③ 누적 드리프트 |
 | AprilTag 검출 결과 | (AprilTag 노드의 detection topic) | ④ 랜드마크 보정 |
-| 목표 진입 상태 | Nav2 Action Feedback(00-1 참고) | ⑤ 정밀 작업 직전 |
+| 목표 진입 상태 | Nav2 Action Feedback(Nav2 내비게이션 00-1 참고) | ⑤ 정밀 작업 직전 |
 
 `/rtabmap/info`는 RTAB-Map이 표준으로 발행하는 진단 정보 토픽으로, loop closure 성공 여부와 매칭 통계를 담고 있다 — 이 문서의 감시 로직이 새로 만들어야 하는 것은 이 정보를 **해석해서 행동을 트리거하는 판단 계층**이다.
 
@@ -60,7 +60,7 @@ class RelocalizationMonitor(Node):
       self.consecutive_low_inlier_count = 0
 
   def trigger_spin_recovery(self):
-    # Reuse Nav2's standard Spin behavior (05) for relocalization purposes (07/01)
+    # Reuse Nav2's standard Spin behavior (Nav2 내비게이션 05) for relocalization purposes (07/01)
     if self.spin_in_progress:
       return  # already spinning — do not stack goals
     if not self.spin_client.server_is_ready():
@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
 * **콜백 안에서 절대 블로킹 대기를 하면 안 된다.** 위 코드가 `wait_for_server()` 대신 `server_is_ready()`로 확인만 하고 넘어가는 이유가 이것이다. 기본 실행기(`SingleThreadedExecutor`)는 콜백 하나를 처리하는 동안 다른 콜백을 처리하지 못하므로, 구독 콜백 안에서 다른 결과를 기다리면 **그 결과를 받아야 할 콜백 자체가 실행되지 못해 노드가 영구히 멈춘다(데드락)**. 이는 `ROS2 응용 & 센서 연동 - 02. Composable Node와 Executor 구조`에서 다룬 실행기 구조와 직결되는 문제다.
 * **`spin_in_progress` 플래그가 필수다.** 이것이 없으면 Spin이 도는 중에도 `/rtabmap/info`가 계속 들어오면서 5프레임마다 새 goal을 계속 쏘게 되어, 로봇이 회전을 끝내지 못하고 같은 명령을 반복해서 받는다. goal 수락 응답과 최종 결과를 콜백으로 받아 플래그를 해제하는 구조가 함께 있어야 한다.
-* `goal.target_yaw = 6.28`(한 바퀴)인 이유: 00에서 다룬 appearance-based loop closure는 **저장된 장면과 지금 보는 장면의 시각적 유사도**로 재매칭을 시도한다. 한 바퀴를 돌면 카메라가 사방의 장면을 모두 훑게 되어, 지도에 저장된 어느 방향의 키프레임과든 매칭될 기회가 최대가 된다.
+* `goal.target_yaw = 6.28`(한 바퀴)인 이유: 지도제작 00에서 다룬 appearance-based loop closure는 **저장된 장면과 지금 보는 장면의 시각적 유사도**로 재매칭을 시도한다. 한 바퀴를 돌면 카메라가 사방의 장면을 모두 훑게 되어, 지도에 저장된 어느 방향의 키프레임과든 매칭될 기회가 최대가 된다.
 * `Info` 메시지 필드는 실제 `rtabmap_msgs` 버전에 따라 이름이 다를 수 있어, 이 코드는 **구조 예시**로만 취급해야 한다 — 실제 구현 전 `ros2 interface show rtabmap_msgs/msg/Info`로 정확한 필드를 확인해야 한다.
 * `LOST_THRESHOLD`, `MIN_INLIERS` 값은 02에서 다룬 `Vis/MinInliers`와 같은 맥락의 임계값이며, 실환경 데이터로 튜닝이 필요하다.
 
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 
 - 이것으로 Relocalization 심화(00~06)가 완결된다. 지도제작 → Nav2 내비게이션 → Relocalization 심화로 이어지는 **지상로봇 적용** 흐름이 여기서 마무리되며, 다음은 지금까지의 스택이 드론에서 어떻게 달라지는지 다루는 **[[00_지상로봇과_드론은_무엇이_다른가|드론 적용 - 00. 지상로봇과 드론은 무엇이 다른가]]**으로 이어진다. SLAM 백엔드 자체를 더 깊게 비교하는 [[00-1_심화_시리즈를_위한_최소_수학|SLAM 백엔드 심화 - 00-1. SLAM 백엔드 심화를 위한 최소 수학]]는 지상로봇·드론 적용을 모두 읽은 뒤 보는 것을 권한다.
 - 향후 이 감시 노드가 실제로 구현·검증되면, 결과를 04(실전 진단 체크리스트)에 반영하는 별도 갱신이 필요하다.
-- 별도 심화가 필요한 대안 SLAM 백엔드 논의(ORB-SLAM3, OpenVINS, VINS-Fusion)는 독립된 "SLAM 백엔드 심화" 시리즈(01~04)에서 다룬다.
+- 별도 심화가 필요한 대안 SLAM 백엔드 논의(ORB-SLAM3, OpenVINS, VINS-Fusion)는 독립된 "SLAM 백엔드 심화" 시리즈(SLAM 백엔드 심화 01~04)에서 다룬다.
 
 ## 7. 참고자료
 

@@ -93,7 +93,7 @@ relocalization 시도}
 | 구성 요소 | 역할 | 초보자가 기억할 점 |
 |---|---|---|
 | Relocalization | Tracking 유실 직후 Atlas 전체에서 현재 프레임의 위치를 재탐색 | 성공하면 즉시 tracking 재개, 지도가 바뀔 수도(active map 전환) |
-| Loop Closure | Place recognition 매칭이 **같은(Active) 지도** 안에서 나왔을 때의 처리 | 그래프 최적화로 누적 드리프트를 전체적으로 편다(00과 원리 동일) |
+| Loop Closure | Place recognition 매칭이 **같은(Active) 지도** 안에서 나왔을 때의 처리 | 그래프 최적화로 누적 드리프트를 전체적으로 편다(지도제작 00과 원리 동일) |
 | Map Merging | Place recognition 매칭이 **다른(Non-Active) 지도** 안에서 나왔을 때의 처리 | 두 지도의 좌표계를 하나로 정합시킴 |
 | Welding Window | 매칭된 키프레임과 covisibility graph 상 이웃들로 구성된 국소 탐색 영역 | 여기서 중기(mid-term) 데이터 연관을 집중 탐색해 정확도를 높임 |
 | Covisibility Graph | 같은 지점을 함께 관측한 키프레임들끼리 연결된 그래프 | Welding Window를 정의하는 데 쓰임 |
