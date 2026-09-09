@@ -14,7 +14,9 @@
 
 ## 1. 개요
 
-[[01_통합_노드_아키텍처|01]]에서 "odom 노드는 FAST-LIO2, 그 위에 루프클로저/맵 저장이 얹힌다"고 그렸는데, **실제로 어떤 패키지를 쓸 것인가**는 별도로 조사가 필요했다 — FAST-LIO2 생태계의 확장 패키지 상당수가 아직 ROS1/구형 Python 기반이기 때문이다. 이 문서는 조사 결과와 최종 선택, 그리고 맵 관리 관련 실무 사항을 정리한다.
+[[01_통합_노드_아키텍처|01]]에서 "odom 노드는 FAST-LIO2, 그 위에 루프클로저/맵 저장이 얹힌다"고 그렸는데, **실제로 어떤 패키지를 쓸 것인가**는 별도로 조사가 필요했다 — FAST-LIO2 생태계의 확장 패키지 상당수가 아직 ROS1/구형 Python 기반이기 때문이다. 이 문서는 조사 결과와 선택, 그리고 맵 관리 관련 실무 사항을 정리한다.
+
+> **⚠ 이 문서에는 정정이 있다.** 2.1~2.2절은 **계획 시점의 판단**이고, **실제로는 다른 저장소를 선택했다**(2.3절). 계획과 결과가 어긋난 기록을 지우지 않고 남겨둔 것이니, **2.3절까지 반드시 읽는다.**
 
 ## 2. 핵심 개념: 패키지 선택 — 왜 하나로 합쳐지는가
 
@@ -29,17 +31,52 @@
 | `deepglint/FAST_LIO_LOCALIZATION_HUMANOID` | ROS2(Humble 브랜치) 지원을 공식 명시, 활발히 유지보수됨. 이름은 "휴머노이드"지만 내용은 범용 LiDAR 재위치 | 대안 후보 |
 | **`liangheming/FASTLIO2_ROS2`** | **FAST-LIO2 + PGO(루프클로저) + 온라인 재위치를 한 워크스페이스에 통합**. ROS2 Humble 네이티브, 가장 최근까지 유지보수됨 | **1순위 채택** |
 
-### 2.2 최종 선택 — `liangheming/FASTLIO2_ROS2`
+### 2.2 계획 시점의 선택 — `liangheming/FASTLIO2_ROS2`
 
-원래 이 프로젝트의 아이디어는 "FAST-LIO2(odometry) + Scan Context 루프클로저(별도 패키지) + FAST-LIO-LOCALIZATION(별도 패키지)"를 각각 붙이는 것이었다. 조사 결과 **그중 둘(루프클로저, 재위치)이 사실상 죽은 ROS1/구형 스택**이라, 대신 **odometry·루프클로저·재위치를 한 번에 제공하는 `liangheming/FASTLIO2_ROS2`를 채택**한다.
+원래 이 프로젝트의 아이디어는 "FAST-LIO2(odometry) + Scan Context 루프클로저(별도 패키지) + FAST-LIO-LOCALIZATION(별도 패키지)"를 각각 붙이는 것이었다. 조사 결과 **그중 둘(루프클로저, 재위치)이 사실상 죽은 ROS1/구형 스택**이라, 대신 **odometry·루프클로저·재위치를 한 번에 제공하는 `liangheming/FASTLIO2_ROS2`를 채택**하기로 했다.
 
 이 선택은 [[00_프로젝트_개요와_시나리오_정의|00]]이 원했던 "작은 노드 조합"이라는 방향과 완전히 배치되지는 않는다 — **odometry, 매핑(PGO), 재위치가 여전히 별도 ROS2 노드/서비스로 분리**되어 있고([[01_통합_노드_아키텍처|01]]의 ①/②-매핑/②-재위치 구분과 그대로 대응한다), 다만 "누가 관리하는 패키지인가"가 하나로 합쳐질 뿐이다. RTAB-Map처럼 설정과 내부 동작까지 하나로 뭉친 프레임워크가 아니라, **패키지는 하나지만 기능은 여전히 노드 단위로 나뉘어 있는 구조**다.
 
-> **주의**: README가 중국어로만 제공된다. 빌드·실행 명령은 코드/launch 파일을 직접 읽고 확인해야 하며, Phase 1([[02_빠른_적용_로드맵과_체크리스트|02]])에서 이 부분에 시간이 걸릴 수 있음을 감안한다.
+> **주의**: README가 중국어로만 제공되고 샘플 데이터셋도 중국 클라우드에 있다. 빌드·실행 명령은 코드/launch 파일을 직접 읽고 확인해야 하며, Phase 1([[02_빠른_적용_로드맵과_체크리스트|02]])에서 이 부분에 시간이 걸릴 수 있음을 감안한다.
 
-### 2.3 LiDAR 드라이버 — `livox_ros_driver2`
+### 2.3 ⚠ 실제 결과 — 공식 `hku-mars/FAST_LIO@ROS2`로 전환했다
 
-이 프로젝트가 쓰는 **Livox Mid-360**(00번 문서 하드웨어 표 참고)의 드라이버는 **`Livox-SDK/livox_ros_driver2`**다. ROS2 Humble을 공식 지원하며 최근까지 활발히 유지보수되고 있고, Mid-360을 명시적으로 지원 목록에 포함한다. 구형 `livox_ros_driver`(v1)는 구형 SDK/기기용이라 혼동하지 않는다.
+> **이 절은 실측 이후 추가된 정정이다.** 위 2.1~2.2절은 **계획 시점의 판단**이며, 실제로는 다른 선택을 했다. 왜 바뀌었고, 그 판단이 지금 보기에 얼마나 옳았는지를 정직하게 남긴다.
+
+Phase 1 착수 후 vendoring 대상을 **공식 `hku-mars/FAST_LIO`의 `ROS2` 브랜치**로 옮겼다. **버그가 고쳐져서가 아니라**(아래 참고) **출처의 신뢰성과 장기 유지보수 가능성** 때문이었다 — 공식 저장소는 5천 개 이상의 스타를 가진 원저자 저장소다.
+
+**그런데 조사해 보니 이 판단에는 반전이 있다.**
+
+| 저장소 | 별 | 최근 활동 | 실상 |
+|---|---|---|---|
+| `hku-mars/FAST_LIO` `ROS2` 브랜치 | ~5,160 | **2025-01** | **README가 "ROS2 Fork repo maintainer: Ericsii"로 시작한다.** 즉 공식 브랜치의 정체는 커뮤니티 포팅을 머지한 것이고, 그 뒤로 거의 갱신되지 않았다. `main`의 README에는 ROS2 언급이 아예 없다 |
+| `Ericsii/FAST_LIO_ROS2` | ~680 | 2025-11 | 원 포팅자의 포크. **공식 브랜치보다 최근에 손댔다** |
+| `liangheming/FASTLIO2_ROS2` | ~750 | **2026-08** | **셋 중 가장 최근까지 유지보수되고 있다** |
+
+> **교훈**: **"공식"과 "활발히 유지보수됨"은 다른 축이다.** 스타 수는 출처의 신뢰성을 말해줄 뿐 유지보수 활동의 지표가 아니다. 저장소를 고를 때 두 축을 **따로** 평가해야 한다. 이 프로젝트는 그것을 사후에 배웠다.
+
+**그리고 결정적으로, 저장소 선택으로 피할 수 있는 문제가 아니었다.** [[09_사례연구_28km_발산과_ROS2_포팅_회귀|09]] 2.3절에서 파일 해시로 대조한 결과, **세 저장소의 핵심 소스가 사실상 동일**하다 — 공식 브랜치에도 [[08_사례연구_정지_상태_발산|08]]의 무한 누적 버그가 그대로 있다.
+
+**전환하며 드러난 실질적 차이**:
+
+| 항목 | 기존 포크 | 공식 | 영향 |
+|---|---|---|---|
+| `dense_publish_en` | `true` | `false` | 누적 지도 증가율 **3,412 → 369 pts/s**(9.2배 완화). **단 여전히 선형·무한** |
+| `CMakeLists.txt` | C++17 | C++14 | Humble에서 C++14로도 정상 빌드 확인 |
+
+> **아이러니 하나**: 채택하지 않은 `liangheming/FASTLIO2_ROS2`의 README에는 **"타이머·구독·서비스 콜백이 한 스레드를 공유하니 무거운 콜백은 별도 스레드로 옮기라"**는 경고가 적혀 있다. [[08_사례연구_정지_상태_발산|08]] 6.3절에서 이 프로젝트를 정확히 무너뜨린 그 구조다. **읽지 않은 문서가 답을 갖고 있었다.**
+
+### 2.4 지금 이 문서를 읽는 사람에게 주는 권고
+
+- **odometry만 필요하다면**: 공식 `hku-mars/FAST_LIO@ROS2` 또는 `Ericsii/FAST_LIO_ROS2`. 둘은 사실상 같은 코드다.
+- **루프클로저·재위치까지 한 번에 필요하다면**: `liangheming/FASTLIO2_ROS2`를 다시 진지하게 검토할 만하다. 중국어 README라는 장벽은 실재하지만, **유지보수 활동은 가장 낫다.**
+- **어느 쪽을 고르든**: `map_en: true`로 장시간 운용할 계획이면 [[08_사례연구_정지_상태_발산|08]]의 무한 누적 문제를 **반드시 먼저 확인한다.** 공식 저장소에는 아직 수정이 머지되지 않았다.
+
+### 2.5 LiDAR 드라이버 — `livox_ros_driver2`
+
+이 프로젝트가 쓰는 **Livox Mid-360**(00번 문서 하드웨어 표 참고)의 드라이버는 **`Livox-SDK/livox_ros_driver2`**다. ROS2 Foxy/Humble/Jazzy를 공식 지원하며, Mid-360을 명시적으로 지원 목록에 포함한다. 구형 `livox_ros_driver`(v1)는 구형 SDK/기기용이라 혼동하지 않는다.
+
+이 드라이버의 출력 형식(`xfer_format`)과 그것이 FAST-LIO2 내부 경로를 어떻게 가르는지는 [[04-2_Livox_Mid-360과_비반복_스캔|드론 적용 04-2]] 4장에, **실제로 붙이며 겪은 문제**는 [[07_Mid-360_Bringup_실측_기록|07]]에 있다.
 
 ## 3. 핵심 개념: 매핑 시 고려사항
 
@@ -71,8 +108,9 @@
 
 ## 7. 참고자료
 
-- [liangheming/FASTLIO2_ROS2](https://github.com/liangheming/FASTLIO2_ROS2) — 채택한 통합 패키지(odometry+PGO+재위치)
-- [Ericsii/FAST_LIO_ROS2](https://github.com/Ericsii/FAST_LIO_ROS2) — FAST-LIO2 단독 ROS2 포팅(Phase 1 대안)
-- [deepglint/FAST_LIO_LOCALIZATION_HUMANOID](https://github.com/deepglint/FAST_LIO_LOCALIZATION_HUMANOID) — 대안 재위치 노드(Humble 브랜치)
+- [hku-mars/FAST_LIO](https://github.com/hku-mars/FAST_LIO) — **실제로 채택한 저장소**. `main`은 ROS1, `ROS2` 브랜치가 ROS2용(README가 커뮤니티 포팅자를 유지보수자로 명시)
+- [liangheming/FASTLIO2_ROS2](https://github.com/liangheming/FASTLIO2_ROS2) — 계획 시점의 1순위(odometry+PGO+재위치 통합). 셋 중 유지보수가 가장 활발하다
+- [Ericsii/FAST_LIO_ROS2](https://github.com/Ericsii/FAST_LIO_ROS2) — 공식 ROS2 브랜치의 원 포팅. 사실상 같은 코드
+- [deepglint/FAST_LIO_LOCALIZATION_HUMANOID](https://github.com/deepglint/FAST_LIO_LOCALIZATION_HUMANOID) — 대안 재위치 노드(`humble` 브랜치 존재)
 - [Livox-SDK/livox_ros_driver2](https://github.com/Livox-SDK/livox_ros_driver2) — Livox LiDAR ROS2 드라이버
-- [hku-mars/FAST_LIO](https://github.com/hku-mars/FAST_LIO) — 원 저장소(ROS1 메인, ROS2 브랜치는 비공식)
+- [[08_사례연구_정지_상태_발산|08. 사례연구 — 정지 상태 발산 버그]] — 이 저장소들 **전부에 공통으로 존재하는** 무한 누적 문제
