@@ -16,7 +16,7 @@
 
 ## 1. 개요
 
-D 시리즈와 04가 지금까지 비교한 ORB-SLAM3·OpenVINS·VINS-Fusion은 **전부 카메라(+IMU) 기반 VIO**다. 하지만 드론용 SLAM 백엔드에는 완전히 다른 센싱 원리를 쓰는 축이 하나 더 있다 — **LiDAR-Inertial SLAM**(대표적으로 FAST-LIO2)이다.
+SLAM 백엔드 심화 시리즈와 04가 지금까지 비교한 ORB-SLAM3·OpenVINS·VINS-Fusion은 **전부 카메라(+IMU) 기반 VIO**다. 하지만 드론용 SLAM 백엔드에는 완전히 다른 센싱 원리를 쓰는 축이 하나 더 있다 — **LiDAR-Inertial SLAM**(대표적으로 FAST-LIO2)이다.
 
 이 문서는 "카메라 기반이냐 LiDAR 기반이냐"가 파라미터 몇 개 다른 수준이 아니라 **센서의 근본 원리부터 다른 선택**이라는 점을 정리하고, 임무 성격에 따라 어느 쪽이 유리한지, 그리고 실제로는 둘을 결합하는 경우가 많다는 점까지 다룬다.
 
