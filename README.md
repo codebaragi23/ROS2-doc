@@ -1,6 +1,6 @@
 # ROS2 · SLAM · 자율주행 학습 자료
 
-ROS2를 처음 배우는 단계부터 지상로봇과 드론에 SLAM을 적용하고, 백엔드를 논문 수준까지 파고드는 데까지를 한국어로 정리한 학습 자료다. 실제 하드웨어(Yahboom ROSMASTER X3, Livox Mid-360 + PX4 드론)로 겪은 실측과 사고 기록을 함께 담고 있다.
+ROS2를 처음 배우는 단계부터 지상로봇과 드론에 SLAM을 적용하고, 백엔드를 논문 수준까지 파고드는 데까지를 한국어로 정리한 학습 자료다. 실제 하드웨어(Yahboom ROSMASTER X3, Livox Mid-360S + PX4 드론)로 겪은 실측과 사고 기록을 함께 담고 있다.
 
 | | |
 |---|---|
@@ -101,7 +101,7 @@ flowchart TB
 |---|---|---|
 | 플랫폼 | Yahboom ROSMASTER X3 (메카넘 휠) | 멀티로터 + PX4 |
 | 연산 | Jetson + 호스트 PC | Jetson Orin NX |
-| 주 센서 | RealSense D435i, RPLiDAR C1 (2D) | Livox Mid-360 (3D) |
+| 주 센서 | RealSense D435i, RPLiDAR C1 (2D) | Livox Mid-360S (3D) |
 | SLAM | RTAB-Map | FAST-LIO2 |
 
 ---

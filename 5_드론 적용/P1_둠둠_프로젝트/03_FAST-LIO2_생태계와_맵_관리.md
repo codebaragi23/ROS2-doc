@@ -10,7 +10,7 @@
 | 학습 단계 | Level 4 — 프로젝트 (패키지 선정) |
 | 예상 선행 지식 | [[02_빠른_적용_로드맵과_체크리스트\|둠둠 02]] |
 | 학습 목표 | FAST-LIO2 생태계의 ROS2 지원 현황을 안다 / 왜 통합 패키지를 택했는지 설명할 수 있다 / 매핑 시 다각도 커버리지가 왜 중요한지 안다 / 맵 저장 포맷과 재위치 입력의 호환을 확인할 수 있다 |
-| 기준 환경 | ROS2 Humble, Livox Mid-360, livox_ros_driver2 |
+| 기준 환경 | ROS2 Humble, Livox Mid-360S, livox_ros_driver2 |
 
 ## 1. 개요
 
@@ -74,9 +74,9 @@ Phase 1 착수 후 vendoring 대상을 **공식 `hku-mars/FAST_LIO`의 `ROS2` �
 
 ### 2.5 LiDAR 드라이버 — `livox_ros_driver2`
 
-이 프로젝트가 쓰는 **Livox Mid-360**(00번 문서 하드웨어 표 참고)의 드라이버는 **`Livox-SDK/livox_ros_driver2`**다. ROS2 Foxy/Humble/Jazzy를 공식 지원하며, Mid-360을 명시적으로 지원 목록에 포함한다. 구형 `livox_ros_driver`(v1)는 구형 SDK/기기용이라 혼동하지 않는다.
+이 프로젝트가 쓰는 **Livox Mid-360S**(00번 문서 하드웨어 표 참고)의 드라이버는 **`Livox-SDK/livox_ros_driver2`**다. ROS2 Foxy/Humble/Jazzy를 공식 지원하며, Mid-360S를 명시적으로 지원 목록에 포함한다. 구형 `livox_ros_driver`(v1)는 구형 SDK/기기용이라 혼동하지 않는다.
 
-이 드라이버의 출력 형식(`xfer_format`)과 그것이 FAST-LIO2 내부 경로를 어떻게 가르는지는 [[04-2_Livox_Mid-360과_비반복_스캔|드론 적용 04-2]] 4장에, **실제로 붙이며 겪은 문제**는 [[07_Mid-360_Bringup_실측_기록|07]]에 있다.
+이 드라이버의 출력 형식(`xfer_format`)과 그것이 FAST-LIO2 내부 경로를 어떻게 가르는지는 [[04-2_Livox_Mid-360S와_비반복_스캔|드론 적용 04-2]] 4장에, **실제로 붙이며 겪은 문제**는 [[07_Mid-360S_Bringup_실측_기록|07]]에 있다.
 
 ## 3. 핵심 개념: 매핑 시 고려사항
 
