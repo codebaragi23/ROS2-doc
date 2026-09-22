@@ -235,6 +235,7 @@ PX4는 요즘 **"ROS 2 인터페이스 라이브러리"**를 권한다. ROS2 쪽
 
 ## 12. 참고자료
 
+- [[02-1_수동_조종과_제어_인터페이스_설계|드론 적용 - 02-1. 수동 조종과 제어 인터페이스 설계]] — 6장 "멈추는 법"과 같은 문제를 **입력 유실** 쪽에서 본 것(데드맨). 3장 제어 수준 선택은 02-1 2.3절의 축별 혼합과 짝을 이룬다
 - [PX4 — Offboard Mode](https://docs.px4.io/main/en/flight_modes/offboard.html) — 3·5장. 제어 수준 규칙, 2 Hz 하한
 - [PX4 — ROS 2 Offboard Control Example](https://docs.px4.io/main/en/ros2/offboard_control.html) — 5.2절 진입 순서(10회 발행 후 모드 전환)
 - [OffboardControlMode.msg](https://github.com/PX4/px4_msgs/blob/main/msg/OffboardControlMode.msg) — 3장 필드 목록

@@ -96,5 +96,6 @@ flowchart TB
 ## 8. 참고자료
 
 - [[02_비행_컨트롤러_연동|드론 적용 - 02. 비행 컨트롤러 연동]] 5장·7장 — setpoint 좌표계, Offboard heartbeat 상세
+- [[11_수동_조종_가상_조이스틱_실측|11. 수동 조종(가상 조이스틱) 실측 기록]] — 같은 `cmd_vel`을 **사람이** 만들 때의 정지 처리(데드맨). 이 문서는 자동 비행 쪽이다
 - [PX4 — Offboard Mode](https://docs.px4.io/main/en/flight_modes/offboard.html) — `OffboardControlMode` 요구사항, MAVLink와의 차이
 - [PX4 — TrajectorySetpoint](https://docs.px4.io/main/en/msg_docs/TrajectorySetpoint) — position/velocity/acceleration 필드
